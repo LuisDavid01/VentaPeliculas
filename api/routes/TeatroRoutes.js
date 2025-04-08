@@ -6,6 +6,7 @@ const Router = express.Router();
 
 
 Router.post('/Teatro', teatroController.createTeatro);
+Router.get('/Teatro', teatroController.getTeatros);
 Router.get('/Teatro/:id', teatroController.getTeatro);
 Router.put('/Teatro/:id', teatroController.UpdateTeatro);
 Router.delete('/Teatro/:id', teatroController.DeleteTeatro);

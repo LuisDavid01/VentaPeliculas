@@ -1,5 +1,8 @@
 import moviesModel from "../models/moviesModel.js";
 class MoviesService {
+    /*
+    Crea una nueva pelicula
+    */
     async createMovie(data) {
       
       const Movie = new moviesModel(data);
@@ -7,19 +10,27 @@ class MoviesService {
       await Movie.save();
       return Movie;
     }
-
-    async getMovies(id){
-        if(id != 0){
+    /*
+    Para poder obtener pelicula por el id
+    */
+    async getMovie(id){
             return await moviesModel.findById(id);
-        }
-        return await moviesModel.find();
-        
     }
-
+    /*
+    Para poder obtener todas las peliculas
+    */
+    async getMovies(){
+        return await moviesModel.find();
+    }
+    /*
+    Actualiza pelicula
+    */
     async updateMovie(id, data){
         return await moviesModel.findByIdAndUpdate(id,data, {new: true});
     }
-
+    /*
+    Elimina una pelicula
+    */
     async deleteMovie(id){
         return await moviesModel.findByIdAndDelete(id);
 

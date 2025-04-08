@@ -9,13 +9,15 @@ const SalasSchema = new mongoose.Schema({
     required: true,
     ref: "movies",
    },
-    asientos: 
-    [{ 
-        numAsiento: {type: String},
-        ocupado: {type: Boolean}
-    
-    }],
-    precioAsiento: { type: Number}
+   asientos: 
+   [[{ 
+    numAsiento: { type: String },
+    ocupado: { type: Boolean }
+    }]],
+    precioAsiento: 
+    { 
+        type: Number
+    }
 },{ collection: 'salas' });
 
 export default mongoose.model('salas', SalasSchema)

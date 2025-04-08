@@ -22,6 +22,26 @@ class TeatroController {
         }
     }
 
+    async getTeatros(req, res){
+        try{
+            const Teatro = await teatroService.getTeatros();
+            if(!Teatro) res.status(404).json({error: 'not found'});
+            res.status(201).json(Teatro);
+        }catch(err){
+            res.status(500).json({error: err.message});
+        }
+    }
+
+    async getTeatros(req, res){
+        try{
+            const Teatro = await teatroService.getTeatros();
+            if(!Teatro) res.status(404).json({error: 'not found'});
+            res.status(201).json(Teatro);
+        }catch(err){
+            res.status(500).json({error: err.message});
+        }
+    }
+
     async UpdateTeatro(req, res){
         try{
             const Teatro = await teatroService.updateTeatro(req.params.id, req.body);

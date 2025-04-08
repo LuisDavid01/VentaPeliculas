@@ -14,20 +14,19 @@ import teatroRouter from "./routes/TeatroRoutes.js"
 dotenv.config();
 const port = process.env.PORT ?? 8901;
 const app = express();
-//app.use(express.json);
 const server = createServer(app);
 
-// Middleware
+// Middleware del web
 app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(cors({
-    origin: "*", // Origen del frontend
+    origin: "*", // Cors del servidor http
     methods: ["GET", "POST"],
     credentials: true
 }));
 
 
-
+//creamos el servidor de WebSocket
 const io = new Server(server,{
     cors: {
         origin: "http://127.0.0.1:5500", // CORS para Socket.IO
@@ -36,6 +35,7 @@ const io = new Server(server,{
     },
     connectionStateRecovery: {}
 });
+
 //conexion a la base de datos
 connectDB();
 
@@ -51,9 +51,9 @@ io.on('connection', async ( socket ) => {
         console.log('a user has disconnected')
     })
 
-    socket.on('comprar asiento', async (msg) => {
+    socket.on('comprar asiento', async (user) => {
         
-        
+        //to do: meter en cola al usuarios is hay sobrecarga en la pagina
     })
 });
 //rutas del api

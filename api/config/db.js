@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 dotenv.config()
 const connectDB = async () =>{
     try{
-
+        //Crear archivo .env en la ruta del API
         await mongoose.connect(process.env.DATABASE_URL,{
             dbName: "movies",
         });

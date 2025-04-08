@@ -14,7 +14,17 @@ class MoviesController {
 
     async getMovie(req, res){
         try{
-            const Movies = await moviesService.getMovies(req.params.id);
+            const Movies = await moviesService.getMovie(req.params.id);
+            if(!Movies) res.status(404).json({error: 'not found'});
+            res.status(201).json(Movies);
+        }catch(err){
+            res.status(500).json({error: err.message});
+        }
+    }
+
+    async getMovies(req, res){
+        try{
+            const Movies = await moviesService.getMovies();
             if(!Movies) res.status(404).json({error: 'not found'});
             res.status(201).json(Movies);
         }catch(err){

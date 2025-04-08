@@ -2,6 +2,9 @@ import TeatroModel from "../models/TeatroModel.js";
 import SalasModel from "../models/SalasModel.js";
 import mongoose from "mongoose";
 class TeatroService {
+    /*
+    Crea un cine
+    */
     async createTeatro(data) {
       
       const Teatro = new TeatroModel(data);
@@ -9,24 +12,34 @@ class TeatroService {
       await Teatro.save();
       return Teatro;
     }
-
+    /*
+    Obtiene un cine por id
+    */
     async getTeatro(id){
-        if(id != 0){
             return await TeatroModel.findById(id).populate("id_salas", "_id nombre");
-        }
-        return await TeatroModel.find().populate("id_salas", "_id nombre");
-        
     }
-
+    /*
+    Obtiene todos los cines
+    */
+    async getTeatros(){
+        return await TeatroModel.find().populate("id_salas", "_id nombre");
+    }
+    /*
+    Actualiza un cine
+    */
     async updateTeatro(id, data){
         return await TeatroModel.findByIdAndUpdate(id,data, {new: true});
     }
-
+    /*
+    borra un cine
+    */
     async deleteTeatro(id){
         return await TeatroModel.findByIdAndDelete(id);
 
     }
-
+    /*
+    Agrega una sala al array de salas en cine 
+    */
     async addSala(id, data){
         if(mongoose.isValidObjectId(id)){
             
@@ -41,7 +54,9 @@ class TeatroService {
         }
         
     }
-
+    /*
+    Saca del array de salas la sala que se pase como id y actializa el cine
+    */
     async deleteSala(id, idSala){
         if(mongoose.isValidObjectId(id) && mongoose.isValidObjectId(idSala)){
             
@@ -51,11 +66,10 @@ class TeatroService {
                 { $pull: { id_salas: idSala } }
             );
 
-            const deleteSala = await SalasModel.deleteOne({_id: idSala});
-            if(deleteFromTeatro.acknowledged === false || deleteSala.acknowledged === false){
-                return false;
+            if(deleteFromTeatro.acknowledged === false ){
+                return ("No se encontro la sala");
             }
-            return true;
+            return ("Se elimino la sala del cine");
         }
         
 
