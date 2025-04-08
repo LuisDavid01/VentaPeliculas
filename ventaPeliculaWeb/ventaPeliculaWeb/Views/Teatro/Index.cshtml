@@ -1,0 +1,68 @@
+﻿@model List<TeatroModel>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No hay Teatros para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de Teatros de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="Teatro" asp-action="CrearTeatro"> Crear nuevo cine</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>cine</th>
+                <th>salas</th>
+                <th>ubicacion</th>
+
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Teatro in Model)
+            {
+                <tr>
+                    <td>@Teatro.nombre</td>
+                    <td>@if (Teatro.id_salas.Any()) 
+                        {
+                            @foreach (var sala in Teatro.id_salas)
+                            {
+                                <p>@sala.nombre</p>
+                                @if (sala.asientos != null)
+                                {
+                                    @sala.asientos.Count
+                                }
+                                else
+                                {
+                                    <p>No hay elementos</p>
+                                }
+                            }
+                        }else{
+                            <p>No hay salas todavia</p>
+                        }
+                        
+                    </td>
+                   
+                    <td>
+                        @Teatro.ubicacion
+                    </td>
+
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Teatro" asp-route-id="@Teatro._id" asp-action="VerTeatro"> Editar Teatro</a>
+                        <form asp-controller="Teatro" asp-action="EliminarTeatro" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Teatro._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Teatro?');">Eliminar Teatro</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

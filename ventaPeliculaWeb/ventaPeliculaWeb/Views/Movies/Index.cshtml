@@ -1,0 +1,47 @@
+﻿@model List<MoviesModel>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No hay Movies para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="Movies" asp-action="CrearPelicula"> Crear pelicula</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>titulo</th>
+                <th>sinopsis</th>
+                <th>duracion</th>
+                <th>productora</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Movies in Model)
+            {
+                <tr>
+                    <td>@Movies.titulo</td>
+                    <td>@Movies.sinopsis</td>
+                    <td>@Movies.duracion</td>
+                    <td>@Movies.productora</td>
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Movies" asp-route-id="@Movies._id" asp-action="VerPelicula"> Editar pelicula</a>
+                        <form asp-controller="Movies" asp-action="EliminarPelicula" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Movies._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Movie?');">Eliminar pelicula</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

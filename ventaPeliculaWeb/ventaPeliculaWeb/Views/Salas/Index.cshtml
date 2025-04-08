@@ -1,0 +1,57 @@
+﻿@model List<SalasModel>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No hay Salas para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de salas de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSala"> Crear sala nueva</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nombre de la sala</th>
+                <th>pelicula titulo</th>
+                <th>cantidad asientos</th>
+                <th>costo por asieneto</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Salas in Model)
+            {
+                <tr>
+                    <td>@Salas.nombre</td>
+                    <td>@Salas.id_movie.titulo</td>
+                    <td>
+                        @if (Salas.asientos != null) {
+                            @Salas.asientos.Count
+                        }else{
+                        <p>No hay elementos</p>
+                        }
+                        
+                    </td>
+                    <td>
+                        @Salas.precioAsiento
+                    </td>
+                    
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-route-id="@Salas._id" asp-action="VerSala"> Editar sala</a>
+                        <form asp-controller="Salas" asp-action="EliminarSala" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Salas._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Sala?');">Eliminar sala</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

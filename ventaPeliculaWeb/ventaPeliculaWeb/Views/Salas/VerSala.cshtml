@@ -1,0 +1,55 @@
+﻿@model SalasModel
+@if (Model == null )
+{
+    <p>No hay Salas para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de sala</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nombre de la sala</th>
+                <th>pelicula titulo</th>
+                <th>cantidad asientos</th>
+                <th>costo por asieneto</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            
+                <tr>
+                    <td>@Model.nombre</td>
+                    <td>@Model.id_movie.titulo</td>
+                <td>
+                    @if (Model.asientos != null)
+                    {
+                        @Model.asientos.Count
+                    }
+                    else
+                    {
+                        <p>No hay elementos</p>
+                    }
+
+                </td>
+                    <td>
+                    @Model.precioAsiento
+                    </td>
+
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-route-id="@Model._id" asp-action="EditarSala"> Editar sala</a>
+                        
+
+                    </td>
+
+
+
+                </tr>
+            
+        </tbody>
+    </table>
+}

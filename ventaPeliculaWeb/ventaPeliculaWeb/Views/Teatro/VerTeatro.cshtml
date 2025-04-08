@@ -1,0 +1,63 @@
+﻿@model TeatroModel
+@if (Model == null)
+{
+    <p>No hay nada para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">@Model.nombre</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                
+                <th>Salas</th>
+                <th>ubicacion</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    @if (Model.id_salas.Any())
+                    {
+                        @foreach (var sala in Model.id_salas)
+                        {
+                            <p>@sala.nombre</p>
+                            @if (sala.asientos != null)
+                            {
+                                @sala.asientos.Count
+                            }
+                            else
+                            {
+                                <p>No hay elementos</p>
+                            }
+                        }
+                    }
+                    else
+                    {
+                        <p>No hay salas todavia</p>
+                    }
+
+                </td>
+                <td>
+                    @Model.ubicacion
+                </td>
+
+                <td>
+
+                    <a class="btn btn-success " asp-area="" asp-controller="Teatro" asp-route-id="@Model._id" asp-action="EditarTeatro"> Editar cine</a>
+
+
+                </td>
+
+
+
+            </tr>
+
+        </tbody>
+    </table>
+}
