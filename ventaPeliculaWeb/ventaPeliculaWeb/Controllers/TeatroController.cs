@@ -17,7 +17,7 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/0";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {

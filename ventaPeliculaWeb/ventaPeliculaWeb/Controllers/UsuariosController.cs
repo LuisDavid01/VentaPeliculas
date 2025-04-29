@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
+
 namespace ventaPeliculaWeb.Controllers
 {
-    public class MoviesController : Controller
+    public class UsuariosController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
 
-        public MoviesController(IConfiguration configuration, IHttpClientFactory httpClient)
+        public UsuariosController(IConfiguration configuration, IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
             _configuration = configuration;
@@ -16,11 +17,11 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+                    var result = response.Content.ReadFromJsonAsync<List<UsuariosModel>>().Result;
 
                     return View(result);
                 }
@@ -28,36 +29,36 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-        
-        public IActionResult CrearPelicula()
+
+        public IActionResult CrearUsuario()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult CrearPelicula(MoviesModel model)
+        public IActionResult CrearUsuario(UsuariosModel model)
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios";
                 var response = http.PostAsJsonAsync(url, model).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    return RedirectToAction("Index", "Movies");
+                    return RedirectToAction("Index", "Usuarios");
                 }
-                return RedirectToAction("Index", "Movies");
+                return RedirectToAction("Index", "Usuarios");
 
             }
         }
 
-        public IActionResult VerPelicula(string id)
+        public IActionResult VerUsuario(string id)
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<MoviesModel>().Result;
+                    var result = response.Content.ReadFromJsonAsync<UsuariosModel>().Result;
 
                     return View(result);
                 }
@@ -66,27 +67,27 @@ namespace ventaPeliculaWeb.Controllers
             }
         }
         [HttpPost]
-        public IActionResult EditarPelicula(MoviesModel model)
+        public IActionResult EditarUsuario(UsuariosModel model)
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + model._id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + model._id;
                 var response = http.PutAsJsonAsync(url, model).Result;
 
-                return RedirectToAction("Index", "Movies");
+                return RedirectToAction("Index", "Usuarios");
 
             }
         }
 
-        public IActionResult EliminarPelicula(string id)
+        public IActionResult EliminarUsuario(string id)
         {
 
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
                 var response = http.DeleteAsync(url).Result;
 
-                return RedirectToAction("Index", "Movies");
+                return RedirectToAction("Index", "Usuarios");
 
             }
         }

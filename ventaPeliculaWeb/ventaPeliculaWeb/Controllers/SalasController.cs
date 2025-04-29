@@ -18,7 +18,7 @@ namespace ventaSalaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/0";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -39,13 +39,22 @@ namespace ventaSalaWeb.Controllers
         public IActionResult CrearSala(SalasModelDto model)
         {
             
-            model.asientos = new List<AsientosModel>(30);
-            for (var i = 0; i < 30; i++) {
-                model.asientos.Add(new AsientosModel
+            model.asientos = new List<List<AsientosModel>>(15);
+            for (var i = 0; i < 15; i++) {
+                for (var j = 0; j < 15; j++)
                 {
-                    numAsiento = $"A{i + 1}", 
-                    ocupado = false
-                });
+                    model.asientos[0].Add(new AsientosModel
+                    {
+                        numAsiento = $"A{i + 1}",
+                        ocupado = false
+                    });
+                    model.asientos[1].Add(new AsientosModel
+                    {
+                        numAsiento = $"B{j + 1}",
+                        ocupado = false
+                    });
+                }
+               
             }
 
             if (!ModelState.IsValid)

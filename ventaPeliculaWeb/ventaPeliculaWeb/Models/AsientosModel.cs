@@ -3,7 +3,7 @@
     public class AsientosModel
     {
        
-        public string numAsiento { get; set; }
+        public string? numAsiento { get; set; }
         public Boolean ocupado { get; set; }
     }
 }
