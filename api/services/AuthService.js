@@ -11,8 +11,7 @@ class AuthService
 	async Register (data){
 		const user = new UsuariosModel(data);
 		user.rol = 'user';
-		const RegisterUser = await usuariosService.createUsuarios(user);
-		console.log('Usuarios Registrado: ', RegisterUser);
+		await usuariosService.createUsuarios(user);
 		
 	}
 
@@ -25,7 +24,6 @@ class AuthService
 					expiresIn:'20m'
 				}); 
 			userLookUp.token = token;
-			console.log(userLookUp);
 			await usuariosService.updateUsuario(userLookUp._id,userLookUp);
 			return userLookUp;
 			

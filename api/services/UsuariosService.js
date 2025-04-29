@@ -2,13 +2,19 @@ import UsuariosModel from '../models/UsuariosModel.js'
 import mongoose from "mongoose";
 import dotenv from "dotenv"
 import bcrypt from "bcryptjs"
+import SecurityService from './SecurityService.js';
+const securityService = new SecurityService;
 class UsuariosService{
 
     async createUsuarios(data) {
-      const usuario = new UsuariosModel(data);
-      usuario.password = await this.hashPassword(usuario.password); 
-      await usuario.save();
-      return usuario;
+		if(securityService.verifyToken(data.token)){
+			const usuario = new UsuariosModel(data);
+			usuario.token=null;
+			usuario.password = await this.hashPassword(usuario.password); 
+			await usuario.save();
+			return usuario;
+			
+		}
     }
 
     async getUsuario(id){

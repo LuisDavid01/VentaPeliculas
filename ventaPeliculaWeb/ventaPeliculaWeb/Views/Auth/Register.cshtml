@@ -1,0 +1,31 @@
+﻿@model UsuariosModel
+
+<form asp-controller="Auth" asp-action="Register">
+    <div class="row">
+
+        <h2 class="text-center">Registrarse</h2>
+
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="nombre" placeholder="nombre">
+        </div>
+
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="username" placeholder="username">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="email" placeholder="email">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="password" placeholder="password">
+        </div>
+
+        
+
+        <div class="col-md-12">
+
+            <button type="submit" class="btn btn-primary btn-pill mb-4">Registrarse</button>
+
+
+        </div>
+    </div>
+</form>

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 namespace ventaPeliculaWeb.Controllers
 {
+    
     public class UsuariosController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -15,19 +17,24 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
-            {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
-                var response = http.GetAsync(url).Result;
-                if (response.IsSuccessStatusCode)
+            if (Request.Cookies["Token"] != null) {
+                using (var http = _httpClient.CreateClient())
                 {
-                    var result = response.Content.ReadFromJsonAsync<List<UsuariosModel>>().Result;
+                    var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
+                    var response = http.GetAsync(url).Result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = response.Content.ReadFromJsonAsync<List<UsuariosModel>>().Result;
 
-                    return View(result);
+                        return View(result);
+                    }
+
+                    return View();
                 }
-                return View(null);
-
+                
             }
+            return RedirectToAction("Index", "Home");
+
         }
 
         public IActionResult CrearUsuario()
