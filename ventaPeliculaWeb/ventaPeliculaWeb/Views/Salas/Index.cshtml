@@ -2,6 +2,7 @@
 
 @if (Model == null || !Model.Any())
 {
+    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSala"> Crear sala nueva</a>
     <p>No hay Salas para mostrar.</p>
 }
 else
@@ -12,6 +13,7 @@ else
         <thead>
             <tr>
                 <th>nombre de la sala</th>
+                <th>Cine</th>
                 <th>pelicula titulo</th>
                 <th>cantidad asientos</th>
                 <th>costo por asieneto</th>
@@ -25,14 +27,18 @@ else
             {
                 <tr>
                     <td>@Salas.nombre</td>
+                    <td>@Salas.id_teatro.nombre</td>
                     <td>@Salas.id_movie.titulo</td>
+                    
                     <td>
-                        @if (Salas.asientos != null) {
-                            @Salas.asientos.Count
-                        }else{
-                        <p>No hay elementos</p>
+                        @if (Salas.totalAsientos != null)
+                        {
+                            @Salas.totalAsientos
+                            
+                        } else {
+                            <p>No hay elementos</p>
                         }
-                        
+
                     </td>
                     <td>
                         @Salas.precioAsiento

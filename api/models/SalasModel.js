@@ -9,6 +9,13 @@ const SalasSchema = new mongoose.Schema({
     required: true,
     ref: "movies",
    },
+	id_teatro:
+	{
+		type: mongoose.Types.ObjectId,
+		required: true,
+		ref: "teatro"
+	
+	},
    asientos: 
    [[{ 
     numAsiento: { type: String },

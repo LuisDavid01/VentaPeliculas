@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Reflection;
+using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 
@@ -22,8 +23,18 @@ namespace ventaSalaWeb.Controllers
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                  
                     var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
-
+                    
+                    for (int i = 0; i < result.Count; i++)
+                    {
+                        int conteoAsientos = 0;
+                        for (int j = 0; j < result[i].asientos.Count; j++) {
+                            conteoAsientos += result[i].asientos[j].Count;
+                        }
+                        result[i].totalAsientos = conteoAsientos;
+                    }
+                    
                     return View(result);
                 }
                 return View(null);
@@ -38,24 +49,31 @@ namespace ventaSalaWeb.Controllers
         [HttpPost]
         public IActionResult CrearSala(SalasModelDto model)
         {
-            
-            model.asientos = new List<List<AsientosModel>>(15);
-            for (var i = 0; i < 15; i++) {
-                for (var j = 0; j < 15; j++)
+
+            int letraAscii = 65;
+            var newAsientos = new List<List<AsientosModel>>();
+                for (int i = 0; i < 20; i++)
                 {
-                    model.asientos[0].Add(new AsientosModel
+
+                    newAsientos.Add(new List<AsientosModel>());
+
+                    
+                    int numeroDeAsiento = 1; 
+
+                    for (int j = 0; j < 20; j++)
                     {
-                        numAsiento = $"A{i + 1}",
-                        ocupado = false
-                    });
-                    model.asientos[1].Add(new AsientosModel
-                    {
-                        numAsiento = $"B{j + 1}",
-                        ocupado = false
-                    });
-                }
-               
+                        newAsientos[i].Add(new AsientosModel
+                        {
+                            numAsiento = $"{(char)letraAscii}{numeroDeAsiento++}", 
+                            ocupado = false,
+                            
+                        });
+                    }
+                    letraAscii = letraAscii++;
             }
+
+            
+            model.asientos = newAsientos;
 
             if (!ModelState.IsValid)
             {
@@ -74,6 +92,7 @@ namespace ventaSalaWeb.Controllers
             }
         }
 
+
         public IActionResult VerSala(string id)
         {
             using (var http = _httpClient.CreateClient())
@@ -83,7 +102,13 @@ namespace ventaSalaWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SalasModel>().Result;
-
+                    int conteoAsientos = 0;
+                        for (int i = 0; i < result.asientos.Count; i++)
+                        {
+                            conteoAsientos += result.asientos[i].Count;
+                        }
+                    result.totalAsientos = conteoAsientos;
+                   
                     return View(result);
                 }
                 return View(null);

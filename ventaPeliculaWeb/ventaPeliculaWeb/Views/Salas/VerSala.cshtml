@@ -11,6 +11,7 @@ else
         <thead>
             <tr>
                 <th>nombre de la sala</th>
+                <th>Cine</th>
                 <th>pelicula titulo</th>
                 <th>cantidad asientos</th>
                 <th>costo por asieneto</th>
@@ -23,11 +24,13 @@ else
             
                 <tr>
                     <td>@Model.nombre</td>
+                <td>@Model.id_teatro.nombre</td>
                     <td>@Model.id_movie.titulo</td>
                 <td>
-                    @if (Model.asientos != null)
+                    @if (Model.totalAsientos != null)
                     {
-                        @Model.asientos.Count
+                        @Model.totalAsientos
+                        
                     }
                     else
                     {
