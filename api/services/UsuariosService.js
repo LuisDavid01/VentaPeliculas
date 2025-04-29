@@ -1,0 +1,47 @@
+import UsuariosModel from '../models/UsuariosModel.js'
+import mongoose from "mongoose";
+import dotenv from "dotenv"
+import bcrypt from "bcryptjs"
+class UsuariosService{
+
+    async createUsuarios(data) {
+      const usuario = new UsuariosModel(data);
+      usuario.password = await this.hashPassword(usuario.password); 
+      await usuario.save();
+      return usuario;
+    }
+
+    async getUsuario(id){
+        if(id != 0){
+            return await UsuariosModel.findById(id);
+        }
+        return await UsuariosModel.find();
+        
+    }
+
+    async updateUsuario(id, data){
+		let updatedUser = data;
+		if(updatedUser.password != null){
+			updatedUser.password = await this.hashPassword(updatedUser.password);
+			return await UsuariosModel.findByIdAndUpdate(id,data, {new: true});
+
+		}		
+    }
+
+    async deleteUsuario(id){
+        return await UsuariosModel.findByIdAndDelete(id);
+
+    }
+
+
+	async hashPassword(password){
+	dotenv.config();
+	const salt = await bcrypt.genSalt(parseInt(process.env.salt));
+	const hashedpassword = await bcrypt.hash(password, salt);
+	return hashedpassword;
+
+}
+
+}
+
+export default UsuariosService;

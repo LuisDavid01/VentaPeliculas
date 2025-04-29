@@ -11,6 +11,7 @@ import bodyParser from "body-parser";
 import movieRouter from "./routes/MoviesRoutes.js";
 import salasRouter from "./routes/SalasRoutes.js";
 import teatroRouter from "./routes/TeatroRoutes.js"
+import userRouter from "./routes/UsuariosRoutes.js";
 dotenv.config();
 const port = process.env.PORT ?? 8901;
 const app = express();
@@ -21,7 +22,7 @@ app.use(bodyParser.json());
 app.use(logger('dev'));
 app.use(cors({
     origin: "*", // Cors del servidor http
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
 
@@ -29,7 +30,7 @@ app.use(cors({
 //creamos el servidor de WebSocket
 const io = new Server(server,{
     cors: {
-        origin: "http://127.0.0.1:5500", // CORS para Socket.IO
+        origin: "*", // CORS para Socket.IO
         methods: ["GET", "POST"],
         credentials: true
     },
@@ -60,6 +61,7 @@ io.on('connection', async ( socket ) => {
 app.use('/api', movieRouter );
 app.use('/api', salasRouter );
 app.use('/api', teatroRouter );
+app.use('/api', userRouter );
 
 server.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
 
