@@ -12,6 +12,7 @@ import movieRouter from "./routes/MoviesRoutes.js";
 import salasRouter from "./routes/SalasRoutes.js";
 import teatroRouter from "./routes/TeatroRoutes.js"
 import userRouter from "./routes/UsuariosRoutes.js";
+import authRouter from "./routes/AuthRoutes.js";
 dotenv.config();
 const port = process.env.PORT ?? 8901;
 const app = express();
@@ -62,6 +63,7 @@ app.use('/api', movieRouter );
 app.use('/api', salasRouter );
 app.use('/api', teatroRouter );
 app.use('/api', userRouter );
+app.use('/api', authRouter);
 
 server.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
 

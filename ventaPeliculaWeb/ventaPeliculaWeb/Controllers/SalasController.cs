@@ -54,12 +54,8 @@ namespace ventaSalaWeb.Controllers
             var newAsientos = new List<List<AsientosModel>>();
                 for (int i = 0; i < 20; i++)
                 {
-
-                    newAsientos.Add(new List<AsientosModel>());
-
-                    
+                    newAsientos.Add(new List<AsientosModel>());                    
                     int numeroDeAsiento = 1; 
-
                     for (int j = 0; j < 20; j++)
                     {
                         newAsientos[i].Add(new AsientosModel
@@ -71,8 +67,6 @@ namespace ventaSalaWeb.Controllers
                     }
                     letraAscii = letraAscii++;
             }
-
-            
             model.asientos = newAsientos;
 
             if (!ModelState.IsValid)

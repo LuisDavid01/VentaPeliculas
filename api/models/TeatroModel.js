@@ -11,13 +11,7 @@ const TeatroSchema = new mongoose.Schema({
     {
         type: String,
         default: "Sin especificar",
-    },
-    id_salas: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "salas",
-        }
-    ]
+    }
     
 },{ collection: 'teatro' });
 

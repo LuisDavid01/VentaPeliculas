@@ -1,7 +1,9 @@
 ﻿using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
-
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Web;
 namespace ventaPeliculaWeb.Controllers
 {
     public class AuthController : Controller
@@ -32,7 +34,7 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Autenticacion/Login";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Auth/Login";
                 var response =  http.PostAsJsonAsync(url, model).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -41,9 +43,9 @@ namespace ventaPeliculaWeb.Controllers
 
                     if (result != null)
                     {
-                            
 
-                            HttpContext.Session.SetString("Token", result!.token!);
+                        
+                        HttpContext.Session.SetString("Token", result!.token!);
                             HttpContext.Session.SetString("UsuarioId", result._id!.ToString()!);
                             HttpContext.Session.SetString("Correo", result.email!.ToString()!);
                             HttpContext.Session.SetString("Nombre", result.nombre!.ToString());

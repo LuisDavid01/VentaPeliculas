@@ -19,11 +19,17 @@ class UsuariosService{
         
     }
 
+	async getUsuarioByUsername(user){
+        return await UsuariosModel.findOne({username: user});
+        
+    }
+
+
     async updateUsuario(id, data){
 		let updatedUser = data;
 		if(updatedUser.password != null){
 			updatedUser.password = await this.hashPassword(updatedUser.password);
-			return await UsuariosModel.findByIdAndUpdate(id,data, {new: true});
+			return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
 
 		}		
     }
