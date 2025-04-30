@@ -29,11 +29,11 @@ namespace ventaSalaWeb.Controllers
                   
                     var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
                     
-                    for (int i = 0; i < result.Count; i++)
+                    for (int i = 0; i < result!.Count; i++)
                     {
                         int conteoAsientos = 0;
-                        for (int j = 0; j < result[i].asientos.Count; j++) {
-                            conteoAsientos += result[i].asientos[j].Count;
+                        for (int j = 0; j < result[i].asientos!.Count; j++) {
+                            conteoAsientos += result[i].asientos![j].Count;
                         }
                         result[i].totalAsientos = conteoAsientos;
                     }
@@ -100,7 +100,7 @@ namespace ventaSalaWeb.Controllers
                 {
                     var result = response.Content.ReadFromJsonAsync<SalasModel>().Result;
                     int conteoAsientos = 0;
-                        for (int i = 0; i < result.asientos.Count; i++)
+                        for (int i = 0; i < result!.asientos!.Count; i++)
                         {
                             conteoAsientos += result.asientos[i].Count;
                         }
@@ -125,7 +125,9 @@ namespace ventaSalaWeb.Controllers
                     if (result != null ) {
                         var salasParsed = new SalasModelDto();
                         salasParsed.nombre = result.nombre;
-                        salasParsed.id_movie = result.id_movie._id;
+                        salasParsed.tipo_sala = result.tipo_sala!._id;
+                        salasParsed.id_teatro = result.id_teatro!._id;
+                        salasParsed.id_movie = result.id_movie!._id;
                         salasParsed.asientos = result.asientos;
                         salasParsed.precioAsiento = result.precioAsiento;
                         salasParsed._id = result._id;

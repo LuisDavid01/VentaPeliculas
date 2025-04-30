@@ -16,6 +16,11 @@ const SalasSchema = new mongoose.Schema({
 		ref: "teatro"
 	
 	},
+	tipo_sala:{
+		type: mongoose.Types.ObjectId,
+		required: true,
+		ref: "tipoSala"
+	},
    asientos: 
    [[{ 
     numAsiento: { type: String },

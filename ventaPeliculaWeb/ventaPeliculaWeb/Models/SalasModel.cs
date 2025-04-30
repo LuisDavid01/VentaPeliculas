@@ -8,6 +8,7 @@ namespace ventaPeliculaWeb.Models
         public string? nombre { get; set; }
         public MoviesModel? id_movie { get; set; }
         public TeatroModel? id_teatro { get; set; }
+        public TipoSalaModel? tipo_sala { get; set; }
         public List<List<AsientosModel>>? asientos { get; set; }
         public float? precioAsiento { get; set; }
         public int? totalAsientos { get; set; }

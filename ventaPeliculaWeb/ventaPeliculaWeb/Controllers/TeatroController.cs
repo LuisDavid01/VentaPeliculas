@@ -71,7 +71,7 @@ namespace ventaPeliculaWeb.Controllers
 
                     return View(result);
                 }
-                return View(null);
+                return View();
 
             }
         }
@@ -101,7 +101,7 @@ namespace ventaPeliculaWeb.Controllers
                 _id = model._id,
                 nombre = model.nombre,
                 ubicacion = model.ubicacion,
-                id_salas = model.id_salas?.Select(s => s?._id ?? "").ToList() ?? new List<string>()
+                
             };
             using (var http = _httpClient.CreateClient())
             {

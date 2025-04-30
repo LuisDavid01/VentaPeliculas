@@ -10,7 +10,6 @@ Router.get('/Teatro', teatroController.getTeatros);
 Router.get('/Teatro/:id', teatroController.getTeatro);
 Router.put('/Teatro/:id', teatroController.UpdateTeatro);
 Router.delete('/Teatro/:id', teatroController.DeleteTeatro);
-Router.put('/Teatro/addSala/:id', teatroController.addSala);
-Router.put('/Teatro/deleteSala/:id/:idSala', teatroController.deleteSala);
+
 
 export default Router;

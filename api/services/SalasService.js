@@ -5,7 +5,7 @@ class SalasService {
     Crea una nueva sala
     */
     async createSala(data) {
-      
+     console.log(data); 
       const Sala = new SalasModel(data);
        
       await Sala.save();
@@ -15,13 +15,13 @@ class SalasService {
     Para obtener una sala por id
     */
     async getSala(id){
-            return await SalasModel.findById(id).populate("id_movie");
+            return await SalasModel.findById(id).populate(["id_movie", "id_teatro","tipo_sala"]);
     }
     /*
     Para obtener todas las sala
     */
     async getSalas(){
-        return await SalasModel.find().populate("id_movie");
+        return await SalasModel.find().populate(["id_movie", "id_teatro","tipo_sala"]);
     }
     /*
     Para modificar salapor el id
@@ -46,10 +46,10 @@ class SalasService {
             {_id: id},
             {$set: { id_movie: idMovie }}
          );
-         if(modificarPeliSala.modifiedCount === 0){
-            return (undefined);
+         if(modificarPeliSala.modifiedCount != 0){
+			return("Se modifico la pelicula")
+        
          }
-         return("Se modifico la pelicula")
          
     }
     /*
@@ -69,6 +69,42 @@ class SalasService {
         
         return asientoModificado
     }
+
+	 /*
+    Para poder modificar el tipo de la sala
+    */
+    async ModificarTipoSala(id, idTipoSala){
+        
+         const modificarPeliSala = await SalasModel.updateOne
+         (
+            {_id: id},
+            {$set: { tipo_sala: idTipoSala }}
+         );
+         if(modificarPeliSala.modifiedCount != 0){
+			return("Se modifico la pelicula")
+        
+         }
+         
+    }
+
+	/*
+    Para poder modificar el cine al que pertenece la sala
+    */
+    async ModificarTeatroSala(id, idTeatro){
+        
+         const modificarPeliSala = await SalasModel.updateOne
+         (
+            {_id: id},
+            {$set: { id_teatro: idTeatro }}
+         );
+         if(modificarPeliSala.modifiedCount != 0){
+			return("Se modifico la pelicula")
+        
+         }
+         
+    }
+
+
 }
 
 export default SalasService;

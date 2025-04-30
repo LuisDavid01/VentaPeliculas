@@ -13,6 +13,7 @@ else
         <thead>
             <tr>
                 <th>nombre de la sala</th>
+                <th>Tipo de sala</th>
                 <th>Cine</th>
                 <th>pelicula titulo</th>
                 <th>cantidad asientos</th>
@@ -27,8 +28,9 @@ else
             {
                 <tr>
                     <td>@Salas.nombre</td>
-                    <td>@Salas.id_teatro.nombre</td>
-                    <td>@Salas.id_movie.titulo</td>
+                    <td>@Salas.tipo_sala!.nombre</td>
+                    <td>@Salas.id_teatro!.nombre</td>
+                    <td>@Salas.id_movie!.titulo</td>
                     
                     <td>
                         @if (Salas.totalAsientos != null)

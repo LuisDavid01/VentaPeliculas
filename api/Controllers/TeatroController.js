@@ -32,15 +32,7 @@ class TeatroController {
         }
     }
 
-    async getTeatros(req, res){
-        try{
-            const Teatro = await teatroService.getTeatros();
-            if(!Teatro) res.status(404).json({error: 'not found'});
-            res.status(201).json(Teatro);
-        }catch(err){
-            res.status(500).json({error: err.message});
-        }
-    }
+
 
     async UpdateTeatro(req, res){
         try{
@@ -62,25 +54,6 @@ class TeatroController {
         }
     }
 
-    async addSala(req, res) {
-        try {
-          const Teatro = await teatroService.addSala(req.params.id, req.body);
-          if(!Teatro) res.status(404).json({error: 'not found'});
-          res.status(201).json({ success: "Se agrego correctamente" });
-        } catch (err) {
-          res.status(500).json({ error: err.message });
-        }
-      }
-
-      async deleteSala(req, res){
-        try{
-            const Teatro = await teatroService.deleteSala(req.params.id,req.params.idSala);
-            if(!Teatro) res.status(404).json({error: 'not found'});
-            res.status(201).json(Teatro);
-        }catch(err){
-            res.status(500).json({error: err.message});
-        }
-    }
 }
 
 export default TeatroController;

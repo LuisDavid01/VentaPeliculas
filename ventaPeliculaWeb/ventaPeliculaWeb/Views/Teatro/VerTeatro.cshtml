@@ -11,7 +11,7 @@ else
         <thead>
             <tr>
                 
-                <th>Salas</th>
+                <th>nombre del cine</th>
                 <th>ubicacion</th>
                 <th></th>
 
@@ -22,26 +22,7 @@ else
 
             <tr>
                 <td>
-                    @if (Model.id_salas.Any())
-                    {
-                        @foreach (var sala in Model.id_salas)
-                        {
-                            <p>@sala.nombre</p>
-                            @if (sala.asientos != null)
-                            {
-                                @sala.asientos.Count
-                            }
-                            else
-                            {
-                                <p>No hay elementos</p>
-                            }
-                        }
-                    }
-                    else
-                    {
-                        <p>No hay salas todavia</p>
-                    }
-
+                    @Model.nombre
                 </td>
                 <td>
                     @Model.ubicacion
