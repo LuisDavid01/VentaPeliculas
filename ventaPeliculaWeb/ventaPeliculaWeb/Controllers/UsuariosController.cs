@@ -6,6 +6,7 @@ using ventaPeliculaWeb.Models;
 namespace ventaPeliculaWeb.Controllers
 {
     [FiltroSesion]
+    [FiltroAdmin]
     public class UsuariosController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -16,6 +17,7 @@ namespace ventaPeliculaWeb.Controllers
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        [FiltroAdmin]
         public IActionResult Index()
         {
                 using (var http = _httpClient.CreateClient())
@@ -73,6 +75,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+
         [HttpPost]
         public IActionResult EditarUsuario(UsuariosModel model)
         {
@@ -85,7 +88,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        
         public IActionResult EliminarUsuario(string id)
         {
 

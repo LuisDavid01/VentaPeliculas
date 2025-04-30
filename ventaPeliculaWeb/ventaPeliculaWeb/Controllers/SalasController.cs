@@ -7,6 +7,7 @@ using ventaPeliculaWeb.Models;
 namespace ventaSalaWeb.Controllers
 {
     [FiltroSesion]
+    [FiltroAdmin]
     public class SalasController : Controller
     {
         private readonly IHttpClientFactory _httpClient;

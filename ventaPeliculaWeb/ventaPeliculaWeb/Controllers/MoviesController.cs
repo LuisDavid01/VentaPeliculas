@@ -5,6 +5,7 @@ using ventaPeliculaWeb.Models;
 namespace ventaPeliculaWeb.Controllers
 {
     [FiltroSesion]
+    [FiltroAdmin]
     public class MoviesController : Controller
     {
         private readonly IHttpClientFactory _httpClient;

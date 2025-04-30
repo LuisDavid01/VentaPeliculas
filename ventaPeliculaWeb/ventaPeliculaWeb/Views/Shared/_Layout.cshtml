@@ -19,7 +19,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        @if (@Context.Request.Cookies["Rol"] != "Admin")
+                        @if (@Context.Request.Cookies["Rol"] == "Admin")
                         {
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="Index">peliculas</a>
@@ -33,8 +33,15 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Usuarios" asp-action="Index">Usuarios</a>
                             </li>
+                            
                         }
+                        else {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Movies" asp-action="verPeliculas">peliculas recientes</a>
+                            </li>
                         
+                        }
+                      
                         @if (@Context.Request.Cookies["Token"] != null)
                         {
                             

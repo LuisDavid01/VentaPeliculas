@@ -6,6 +6,7 @@ namespace ventaPeliculaWeb.Controllers
 {
 
     [FiltroSesion]
+    [FiltroAdmin]
     public class TeatroController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
