@@ -46,16 +46,6 @@ namespace ventaPeliculaWeb.Controllers
 
                     if (result != null)
                     {
-
-                        /*
-                            HttpContext.Session.SetString("Token", result!.token!);
-                            HttpContext.Session.SetString("UsuarioId", result._id!.ToString()!);
-                            HttpContext.Session.SetString("Correo", result.email!.ToString()!);
-                            HttpContext.Session.SetString("Nombre", result.nombre!.ToString());
-                            HttpContext.Session.SetString("Username", result.username!.ToString());
-                            HttpContext.Session.SetString("Rol", result.rol!.ToString()!);
-                            //HttpContext.Session.SetString("ImagenPerfil", result.Imagen!.ToString()!);
-                        */
                         var cookieOptions = new CookieOptions
                         {
                             HttpOnly = true, 

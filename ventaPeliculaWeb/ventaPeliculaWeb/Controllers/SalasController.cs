@@ -1,10 +1,12 @@
 ﻿using System.Reflection;
+using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 
 namespace ventaSalaWeb.Controllers
 {
+    [FiltroSesion]
     public class SalasController : Controller
     {
         private readonly IHttpClientFactory _httpClient;

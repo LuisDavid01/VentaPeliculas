@@ -10,13 +10,19 @@ builder.Services.AddHttpClient();
 builder.Services.AddHttpContextAccessor();
 //builder.Services.AddSession();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+/*builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Auth/Login"; 
         options.ExpireTimeSpan = TimeSpan.FromDays(7);
     });
-
+*/
+builder.Services.AddAuthentication(options => { 
+    options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+}).AddCookie(options => {
+    options.LoginPath = "/Auth/Login";
+    options.ExpireTimeSpan = TimeSpan.FromDays(1);
+});
 
 var app = builder.Build();
 

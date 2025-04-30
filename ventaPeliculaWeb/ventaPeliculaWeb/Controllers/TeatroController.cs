@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AgendaTuLookWeb.Models;
+using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 namespace ventaPeliculaWeb.Controllers
 {
+
+    [FiltroSesion]
     public class TeatroController : Controller
     {
         private readonly IHttpClientFactory _httpClient;

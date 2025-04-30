@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AgendaTuLookWeb.Models;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 namespace ventaPeliculaWeb.Controllers
 {
+    [FiltroSesion]
     public class MoviesController : Controller
     {
         private readonly IHttpClientFactory _httpClient;

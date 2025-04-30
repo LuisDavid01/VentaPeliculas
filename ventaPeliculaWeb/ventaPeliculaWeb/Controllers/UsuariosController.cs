@@ -1,10 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AgendaTuLookWeb.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 namespace ventaPeliculaWeb.Controllers
 {
-    
+    [FiltroSesion]
     public class UsuariosController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -17,7 +18,6 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult Index()
         {
-            if (Request.Cookies["Token"] != null) {
                 using (var http = _httpClient.CreateClient())
                 {
                     var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
@@ -32,8 +32,8 @@ namespace ventaPeliculaWeb.Controllers
                     return View();
                 }
                 
-            }
-            return RedirectToAction("Index", "Home");
+           
+            
 
         }
 
