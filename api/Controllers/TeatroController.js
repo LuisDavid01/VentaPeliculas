@@ -1,4 +1,6 @@
 import TeatroService from "../services/TeatroService.js";
+import SecurityService from "../services/SecurityService.js";
+const securityService = new SecurityService;
 const teatroService = new TeatroService;
 class TeatroController {
  

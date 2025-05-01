@@ -1,7 +1,7 @@
 import UsuariosService from "../services/UsuariosService.js";
 import SecurityService from "../services/SecurityService.js";
-const usuariosService = new UsuariosService;
 const securityService = new SecurityService;
+const usuariosService = new UsuariosService;
 class UsuariosController {
  
  

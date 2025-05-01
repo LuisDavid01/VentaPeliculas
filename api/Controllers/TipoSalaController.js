@@ -1,4 +1,6 @@
 import TipoSalaService from "../services/TipoSalaService.js";
+import SecurityService from "../services/SecurityService.js";
+const securityService = new SecurityService;
 const tipoSalaService = new TipoSalaService;
 class TipoSalaController {
  

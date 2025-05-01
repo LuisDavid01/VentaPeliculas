@@ -1,4 +1,6 @@
 import SesionService from "../services/SesionService.js";
+import SecurityService from "../services/SecurityService.js";
+const securityService = new SecurityService;
 const sesionService = new SesionService;
 class SesionController {
  

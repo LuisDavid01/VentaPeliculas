@@ -1,4 +1,6 @@
 import MoviesService from "../services/MoviesService.js";
+import SecurityService from "../services/SecurityService.js";
+const securityService = new SecurityService;
 const moviesService = new MoviesService;
 class MoviesController {
  

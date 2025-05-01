@@ -1,5 +1,7 @@
 
 import SalasService from "../services/SalasService.js";
+import SecurityService from "../services/SecurityService.js";
+const securityService = new SecurityService;
 const salasService = new SalasService
 class SalasController {
  
