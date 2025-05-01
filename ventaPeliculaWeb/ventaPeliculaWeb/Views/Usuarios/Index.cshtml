@@ -7,7 +7,6 @@
 else
 {
     <h2 class="text-center">Consulta de Usuarios</h2>
-    <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-action="CrearSala"> Crear sala nueva</a>
     <table class="table">
         <thead>
             <tr>
@@ -36,8 +35,8 @@ else
 
                     <td>
 
-                        <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Usuarios._id" asp-action="VerSala"> Editar sala</a>
-                        <form asp-controller="Usuarios" asp-action="EliminarSala" method="post" style="display:inline;">
+                        <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Usuarios._id" asp-action="VerUsuario"> Editar usuario</a>
+                        <form asp-controller="Usuarios" asp-action="EliminarUsuario" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@Usuarios._id" />
                             <button type="submit" class="btn btn-warning" >Eliminar sala</button>
                         </form>

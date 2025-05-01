@@ -1,0 +1,48 @@
+﻿@model UsuariosModel
+@if (Model == null)
+{
+    <p>No hay nada para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">@Model.nombre</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+
+                <th>Nombre</th>
+                <th>username</th>
+                <th>Rol</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>
+                    @Model.nombre
+                </td>
+                <td>
+                    @Model.username
+                </td>
+                <td>
+                    @Model.rol
+                </td>
+
+                <td>
+
+                    <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Model._id" asp-action="EditarUsuario"> Editar usuario</a>
+
+
+                </td>
+
+
+
+            </tr>
+
+        </tbody>
+    </table>
+}

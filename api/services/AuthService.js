@@ -25,9 +25,9 @@ class AuthService
 				process.env.JWT_SECRET,
 				{
 					expiresIn:'20m'
-				}); 
+				});
 			userLookUp.token = token;
-			await usuariosService.updateUsuario(userLookUp._id,userLookUp);
+			await usuariosService.updateLoggedUsuario(userLookUp._id,userLookUp);
 			return userLookUp;
 			
 		}

@@ -32,12 +32,24 @@ class UsuariosService{
 		if(data.token != null){
 			let updatedUser = data;
 			if(updatedUser.password != null) {
+				updatedUser.token = null;
 				return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
 
 			}		
 
 		}
     }
+async updateLoggedUsuario(id, data){
+		if(data.token != null){
+			let updatedUser = data;
+			if(updatedUser.password != null) {
+				return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
+
+			}		
+
+		}
+    }
+
 
     async deleteUsuario(id){
         return await UsuariosModel.findByIdAndDelete(id);

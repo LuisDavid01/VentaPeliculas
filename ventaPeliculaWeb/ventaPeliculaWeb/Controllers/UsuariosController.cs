@@ -38,7 +38,8 @@ namespace ventaPeliculaWeb.Controllers
             
 
         }
-
+        /*
+         * innecesario
         public IActionResult CrearUsuario()
         {
             return View();
@@ -58,8 +59,25 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        */
         public IActionResult VerUsuario(string id)
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<UsuariosModel>().Result;
+
+                    return View(result);
+                }
+                return View(null);
+
+            }
+        }
+
+        public IActionResult EditarUsuario(string id)
         {
             using (var http = _httpClient.CreateClient())
             {
