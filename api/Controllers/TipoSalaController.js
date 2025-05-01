@@ -3,8 +3,11 @@ const tipoSalaService = new TipoSalaService;
 class TipoSalaController {
  
  
-    async createSala(req, res) {
+    async createTipoSala(req, res) {
       try {
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
         const Sala = await tipoSalaService.createSala(req.body);
         res.status(201).json(Sala);
       } catch (err) {
@@ -12,7 +15,7 @@ class TipoSalaController {
       }
     }
 
-    async getSala(req, res){
+    async getTipoSala(req, res){
         try{
             const Sala = await tipoSalaService.getSala(req.params.id);
             if(!Sala) res.status(404).json({error: 'not found'});
@@ -24,7 +27,7 @@ class TipoSalaController {
 
 
 
-    async getSalas(req, res){
+    async getTiposSala(req, res){
         try{
             const Sala = await tipoSalaService.getSalas();
             if(!Sala) res.status(404).json({error: 'not found'});
@@ -34,8 +37,11 @@ class TipoSalaController {
         }
     }
 
-    async updateSala(req, res){
+    async updateTipoSala(req, res){
         try{
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Sala = await tipoSalaService.updateSala(req.params.id, req.body);
             if(!Sala) res.status(404).json({error: 'not found'});
             res.status(200).json(Sala);
@@ -44,8 +50,11 @@ class TipoSalaController {
         }
     }
 
-    async deleteSala(req, res){
+    async deleteTipoSala(req, res){
         try{
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Sala = await tipoSalaService.deleteSala(req.params.id);
             if(!Sala) res.status(404).json({error: 'not found'});
             res.status(200).json(Sala);

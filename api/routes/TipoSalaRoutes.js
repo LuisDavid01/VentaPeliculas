@@ -5,11 +5,11 @@ const tipoSalaController = new TipoSalaController;
 const Router = express.Router();
 
 
-Router.post('/TipoSala', tipoSalaController.createSala);
-Router.get('/TipoSala', tipoSalaController.getSalas);
-Router.get('/TipoSala/:id', tipoSalaController.getSala);
-Router.put('/TipoSala/:id', tipoSalaController.updateSala);
-Router.delete('/TipoSala/:id', tipoSalaController.deleteSala);
+Router.post('/TipoSala', tipoSalaController.createTipoSala);
+Router.get('/TipoSala', tipoSalaController.getTiposSala);
+Router.get('/TipoSala/:id', tipoSalaController.getTipoSala);
+Router.put('/TipoSala/:id', tipoSalaController.updateTipoSala);
+Router.delete('/TipoSala/:id', tipoSalaController.deleteTipoSala);
 
 
 export default Router;

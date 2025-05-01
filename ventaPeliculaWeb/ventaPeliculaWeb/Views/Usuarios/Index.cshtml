@@ -26,20 +26,25 @@ else
                     <td>@Usuarios.nombre</td>
                     <td>@Usuarios.username</td>
                     <td>
-                      @Usuarios.rol
+                        @Usuarios.rol
 
                     </td>
                     <td>
-                       @Usuarios.createdAt
+                        @Usuarios.createdAt
                     </td>
 
                     <td>
-
-                        <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Usuarios._id" asp-action="VerUsuario"> Editar usuario</a>
-                        <form asp-controller="Usuarios" asp-action="EliminarUsuario" method="post" style="display:inline;">
-                            <input type="hidden" name="id" value="@Usuarios._id" />
-                            <button type="submit" class="btn btn-warning" >Eliminar sala</button>
-                        </form>
+                        @if (Usuarios.rol != "Admin")
+                        {
+                            <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Usuarios._id" asp-action="VerUsuario"> Editar usuario</a>
+                        
+                            <form asp-controller="Usuarios" asp-action="EliminarUsuario" method="post" style="display:inline;">
+                                <input type="hidden" name="id" value="@Usuarios._id" />
+                                <button type="submit" class="btn btn-warning">Eliminar sala</button>
+                            </form>
+                        
+                        }
+                        
 
                     </td>
 

@@ -12,6 +12,7 @@ import movieRouter from "./routes/MoviesRoutes.js";
 import tipoSalaRouter from "./routes/TipoSalaRoutes.js"
 import salasRouter from "./routes/SalasRoutes.js";
 import teatroRouter from "./routes/TeatroRoutes.js";
+import sesionRouter from "./routes/SesionRoutes.js";
 import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 dotenv.config();
@@ -63,6 +64,7 @@ io.on('connection', async ( socket ) => {
 app.use('/api', movieRouter );
 app.use('/api', tipoSalaRouter);
 app.use('/api', salasRouter );
+app.use('/api', sesionRouter);
 app.use('/api', teatroRouter );
 app.use('/api', userRouter );
 app.use('/api', authRouter);

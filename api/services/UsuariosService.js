@@ -1,3 +1,4 @@
+
 import UsuariosModel from '../models/UsuariosModel.js';
 import SecurityService from './SecurityService.js';
 const securityService = new SecurityService;
@@ -15,7 +16,7 @@ class UsuariosService{
     }
 
     async getUsuario(id){
-        if(id != 0){
+		        if(id != 0){
             return await UsuariosModel.findById(id);
         }
         return await UsuariosModel.find();
@@ -23,13 +24,13 @@ class UsuariosService{
     }
 
 	async getUsuarioByUsername(user){
-        return await UsuariosModel.findOne({username: user});
+	        return await UsuariosModel.findOne({username: user});
         
     }
 
 
     async updateUsuario(id, data){
-		if(data.token != null){
+			
 			let updatedUser = data;
 			if(updatedUser.password != null) {
 				updatedUser.token = null;
@@ -37,22 +38,21 @@ class UsuariosService{
 
 			}		
 
-		}
+
     }
-async updateLoggedUsuario(id, data){
-		if(data.token != null){
-			let updatedUser = data;
+	async updateLoggedUsuario(id, data){
+					let updatedUser = data;
 			if(updatedUser.password != null) {
 				return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
 
 			}		
 
-		}
+		
     }
 
 
     async deleteUsuario(id){
-        return await UsuariosModel.findByIdAndDelete(id);
+		        return await UsuariosModel.findByIdAndDelete(id);
 
     }
 

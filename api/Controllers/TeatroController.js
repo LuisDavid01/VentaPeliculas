@@ -5,6 +5,9 @@ class TeatroController {
  
     async createTeatro(req, res) {
       try {
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
         const Teatro = await teatroService.createTeatro(req.body);
         res.status(201).json(Teatro);
       } catch (err) {
@@ -36,6 +39,9 @@ class TeatroController {
 
     async UpdateTeatro(req, res){
         try{
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Teatro = await teatroService.updateTeatro(req.params.id, req.body);
             if(!Teatro) res.status(404).json({error: 'not found'});
             res.status(201).json(Teatro);
@@ -46,6 +52,9 @@ class TeatroController {
 
     async DeleteTeatro(req, res){
         try{
+			const token = securityService.getTokenFromHeader(req);
+			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Teatro = await teatroService.deleteTeatro(req.params.id);
             if(!Teatro) res.status(404).json({error: 'not found'});
             res.status(201).json(Teatro);

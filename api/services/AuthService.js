@@ -10,18 +10,22 @@ class AuthService
 {
 
 	async Register (data){
+		if(data == null) throw new Error("No se cargaron datos");
 		const user = new UsuariosModel(data);
 		user.rol = 'user';
-		await usuariosService.createUsuarios(user);
+		return await usuariosService.createUsuarios(user);
 		
 	}
 
 	async Login(data){
+
+		if(data.username == null || data.password == null) throw new Error("Contraseña o usuario vacio");
+		
 		const userLookUp = await usuariosService.getUsuarioByUsername(data.username);
 		const password = data.password.toString();
 		const verifyPassword = await securityService.CheckPassword(password, userLookUp.password);
 		if( verifyPassword === true){
-			const token = jwt.sign({_id: userLookUp._id, username: userLookUp.username},
+			const token = jwt.sign({_id: userLookUp._id, rol: userLookUp.rol},
 				process.env.JWT_SECRET,
 				{
 					expiresIn:'20m'

@@ -1,4 +1,5 @@
-﻿using AgendaTuLookWeb.Models;
+﻿using System.Net.Http.Headers;
+using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
@@ -49,6 +50,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.PostAsJsonAsync(url, model).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -106,6 +108,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + teatroParsed._id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.PutAsJsonAsync(url, teatroParsed).Result;
 
                 return RedirectToAction("Index", "Teatro");
@@ -119,6 +122,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.DeleteAsync(url).Result;
 
                 return RedirectToAction("Index", "Teatro");

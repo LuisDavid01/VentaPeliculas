@@ -7,6 +7,7 @@ class SecurityService{
 
 	 verifyToken(token){
 		const data = jwt.verify(token, process.env.JWT_SECRET);
+		console.log(data);
 		if (data != null) return true;
 		return false;
 
@@ -23,6 +24,17 @@ class SecurityService{
 	async CheckPassword(userPassword, hashedPassword){
 		const password = userPassword.trim();
 		return await bcrypt.compare(password, hashedPassword);
+
+	}
+
+	getTokenFromHeader(req){
+		const tokenHeader = req.headers['authorization'];
+		if (!tokenHeader || !tokenHeader.startsWith('Bearer ')) {
+		return;
+		}
+		const token = tokenHeader.split(' ')[1];
+		return token;
+
 
 	}
 }

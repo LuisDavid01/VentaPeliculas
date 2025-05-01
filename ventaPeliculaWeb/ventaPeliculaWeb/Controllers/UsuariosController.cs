@@ -1,4 +1,5 @@
-﻿using AgendaTuLookWeb.Models;
+﻿using System.Net.Http.Headers;
+using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
@@ -23,6 +24,7 @@ namespace ventaPeliculaWeb.Controllers
                 using (var http = _httpClient.CreateClient())
                 {
                     var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
+                    http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                     var response = http.GetAsync(url).Result;
                     if (response.IsSuccessStatusCode)
                     {
@@ -65,6 +67,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -82,6 +85,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -100,6 +104,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + model._id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.PutAsJsonAsync(url, model).Result;
 
                 return RedirectToAction("Index", "Usuarios");
@@ -113,6 +118,7 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.DeleteAsync(url).Result;
 
                 return RedirectToAction("Index", "Usuarios");
