@@ -60,6 +60,7 @@ io.on('connection', async ( socket ) => {
         //to do: meter en cola al usuarios is hay sobrecarga en la pagina
     })
 });
+
 //rutas del api
 app.use('/api', movieRouter );
 app.use('/api', tipoSalaRouter);

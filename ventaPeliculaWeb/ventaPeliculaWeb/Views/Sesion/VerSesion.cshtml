@@ -1,0 +1,44 @@
+﻿@model SesionModel
+@if (Model == null)
+{
+    <p>No hay Sesion para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de sala</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>fecha de inicio</th>
+                <th>fecha de finalización</th>
+                <th>sala</th>
+                <th>pelicula titulo</th>
+                <th>costo por asieneto</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+            <tr>
+                <td>@Model.fechaInicio</td>
+                <td>@Model.fechaFinalizacion</td>
+                <td>@Model.id_sala</td>
+                
+
+                <td>
+
+                    <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-route-id="@Model._id" asp-action="EditarSesion"> Editar sesion</a>
+
+
+                </td>
+
+
+
+            </tr>
+
+        </tbody>
+    </table>
+}

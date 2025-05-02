@@ -21,11 +21,6 @@ const SalasSchema = new mongoose.Schema({
 		required: true,
 		ref: "tipoSala"
 	},
-   asientos: 
-   [[{ 
-    numAsiento: { type: String },
-    ocupado: { type: Boolean }
-    }]],
     precioAsiento: 
     { 
         type: Number
