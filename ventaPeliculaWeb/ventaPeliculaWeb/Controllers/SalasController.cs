@@ -31,14 +31,7 @@ namespace ventaSalaWeb.Controllers
                   
                     var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
                     
-                    for (int i = 0; i < result!.Count; i++)
-                    {
-                        int conteoAsientos = 0;
-                        for (int j = 0; j < result[i].asientos!.Count; j++) {
-                            conteoAsientos += result[i].asientos![j].Count;
-                        }
-                        result[i].totalAsientos = conteoAsientos;
-                    }
+                   
                     
                     return View(result);
                 }
@@ -55,24 +48,6 @@ namespace ventaSalaWeb.Controllers
         public IActionResult CrearSala(SalasModelDto model)
         {
 
-            int letraAscii = 65;
-            var newAsientos = new List<List<AsientosModel>>();
-                for (int i = 0; i < 20; i++)
-                {
-                    newAsientos.Add(new List<AsientosModel>());                    
-                    int numeroDeAsiento = 1; 
-                    for (int j = 0; j < 20; j++)
-                    {
-                        newAsientos[i].Add(new AsientosModel
-                        {
-                            numAsiento = $"{(char)letraAscii}{numeroDeAsiento++}", 
-                            ocupado = false,
-                            
-                        });
-                    }
-                    letraAscii = letraAscii++;
-            }
-            model.asientos = newAsientos;
 
             if (!ModelState.IsValid)
             {
@@ -102,12 +77,7 @@ namespace ventaSalaWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SalasModel>().Result;
-                    int conteoAsientos = 0;
-                        for (int i = 0; i < result!.asientos!.Count; i++)
-                        {
-                            conteoAsientos += result.asientos[i].Count;
-                        }
-                    result.totalAsientos = conteoAsientos;
+                    
                    
                     return View(result);
                 }
@@ -131,7 +101,7 @@ namespace ventaSalaWeb.Controllers
                         salasParsed.tipo_sala = result.tipo_sala!._id;
                         salasParsed.id_teatro = result.id_teatro!._id;
                         salasParsed.id_movie = result.id_movie!._id;
-                        salasParsed.asientos = result.asientos;
+                        
                         salasParsed.precioAsiento = result.precioAsiento;
                         salasParsed._id = result._id;
 

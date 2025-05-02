@@ -1,0 +1,48 @@
+﻿@model List<SesionModel>
+
+@if (Model == null || !Model.Any())
+{
+    <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-action="CrearSesion"> Crear Sesion nueva</a>
+    <p>No hay Sesions para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de Sesions de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-action="CrearSesion"> Crear Sesion nueva</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>fecha de inicio</th>
+                <th>fecha finalización</th>
+                <th>id de la sala</th>
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Sesions in Model)
+            {
+                <tr>
+                    <td>@Sesions.fechaInicio</td>
+                    <td>@Sesions.fechaFinalizacion</td>
+                    <td>@Sesions.id_sala</td>
+                    
+
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-route-id="@Sesions._id" asp-action="VerSesion"> Editar Sesion</a>
+                        <form asp-controller="Sesion" asp-action="EliminarSesion" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Sesions._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Sesion?');">Eliminar Sesion</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

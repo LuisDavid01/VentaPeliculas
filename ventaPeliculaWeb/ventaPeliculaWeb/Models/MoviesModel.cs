@@ -4,7 +4,7 @@ namespace ventaPeliculaWeb.Models
 {
     public class MoviesModel
     {
-        public string _id { get; set; }
+        public string? _id { get; set; }
         public string? titulo { get; set; }
         public string? sinopsis { get; set; }
         public float? duracion { get; set; }

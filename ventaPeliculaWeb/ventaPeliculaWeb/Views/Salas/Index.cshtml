@@ -16,7 +16,7 @@ else
                 <th>Tipo de sala</th>
                 <th>Cine</th>
                 <th>pelicula titulo</th>
-                <th>cantidad asientos</th>
+               
                 <th>costo por asieneto</th>
                 <th></th>
 
@@ -32,16 +32,7 @@ else
                     <td>@Salas.id_teatro!.nombre</td>
                     <td>@Salas.id_movie!.titulo</td>
                     
-                    <td>
-                        @if (Salas.totalAsientos != null)
-                        {
-                            @Salas.totalAsientos
-                            
-                        } else {
-                            <p>No hay elementos</p>
-                        }
-
-                    </td>
+                   
                     <td>
                         @Salas.precioAsiento
                     </td>

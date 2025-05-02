@@ -5,12 +5,13 @@ class SesionService {
     Crea un cine
     */
     async createSesion(data) {
-      
+     console.log(data); 
       const Sesion = new SesionModel(data);
        
+		console.log(Sesion);
       await Sesion.save();
       return Sesion;
-    }
+	}
     /*
     Obtiene una sesion por id
     */
