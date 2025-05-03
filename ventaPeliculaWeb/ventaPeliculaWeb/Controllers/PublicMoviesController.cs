@@ -1,25 +1,19 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 
 namespace ventaPeliculaWeb.Controllers
 {
-
-    public class HomeController : Controller
+    public class PublicMoviesController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<HomeController> _logger;
 
-        public HomeController(IConfiguration configuration, IHttpClientFactory httpClient, ILogger<HomeController> logger)
+        public PublicMoviesController(IConfiguration configuration, IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _logger = logger;
         }
-
-        public IActionResult Index()
+        public IActionResult VerPeliculas()
         {
             using (var http = _httpClient.CreateClient())
             {
@@ -34,17 +28,6 @@ namespace ventaPeliculaWeb.Controllers
                 return View();
 
             }
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

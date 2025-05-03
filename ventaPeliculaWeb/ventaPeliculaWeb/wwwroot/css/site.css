@@ -1,5 +1,22 @@
+
 html {
-  font-size: 14px;
+    
+    font-size: 14px;
+}
+body {
+    font-family: "Cal Sans", sans-serif;
+    display: flex; /* Usa flexbox */
+    flex-direction: column; /* Coloca los elementos en columna */
+    min-height: 100%; /* Asegura que el body ocupe al menos la altura de html */
+    margin: 0; /* Elimina márgenes predeterminados */
+}
+
+main {
+    flex: 1 0 auto; /* Hace que el main crezca para llenar el espacio disponible */
+}
+
+footer {
+    flex-shrink: 0; /* Evita que el footer se encoja */
 }
 
 @media (min-width: 768px) {
