@@ -29,5 +29,23 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+
+        public IActionResult VerPelicula()
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+
     }
 }
