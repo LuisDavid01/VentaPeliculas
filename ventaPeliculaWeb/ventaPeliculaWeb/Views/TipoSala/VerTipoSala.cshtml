@@ -1,0 +1,20 @@
+﻿
+@model TipoSalaModel
+
+<form asp-controller="TipoSala" asp-action="EditarTipoSala">
+    <div class="row">
+
+        <h2 class="text-center">crear nuevo tipo de sala</h2>
+
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="nombre" placeholder="Nombre">
+        </div>
+        <input type="hidden" asp-for="_id"/>
+        <div class="col-md-12">
+
+            <button type="submit" class="btn btn-primary btn-pill mb-4">Editar</button>
+
+
+        </div>
+    </div>
+</form>

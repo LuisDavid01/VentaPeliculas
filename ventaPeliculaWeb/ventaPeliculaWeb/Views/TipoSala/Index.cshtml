@@ -1,0 +1,42 @@
+﻿@model List<TipoSalaModel>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No hay TipoSala para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="TipoSala" asp-action="CrearTipoSala"> Crear pelicula</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>nombre</th>
+                
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var TipoSala in Model)
+            {
+                <tr>
+                    <td>@TipoSala.nombre</td>
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="TipoSala" asp-route-id="@TipoSala._id" asp-action="VerTipoSala"> Editar tipo de sala</a>
+                        <form asp-controller="TipoSala" asp-action="EliminarTipoSala" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@TipoSala._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar esta pelicula?');">Eliminar tipo de sala</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}

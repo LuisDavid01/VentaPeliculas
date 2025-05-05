@@ -1,4 +1,5 @@
-﻿using System.Net.Http.Headers;
+﻿using System.ComponentModel.Design;
+using System.Net.Http.Headers;
 using System.Reflection;
 using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -40,9 +41,34 @@ namespace ventaSalaWeb.Controllers
             }
         }
         [HttpGet]
-        public IActionResult CrearSala()
+        public IActionResult CrearSalaNueva()
         {
-            return View();
+            using (var http = _httpClient.CreateClient())
+            {
+                var url1 = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var url2 = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
+                var url3 = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala";
+
+                var response1 = http.GetAsync(url1).Result;
+                var response2 = http.GetAsync(url2).Result;
+                var response3 = http.GetAsync(url3).Result;
+                if (response1.IsSuccessStatusCode && response2.IsSuccessStatusCode && response3.IsSuccessStatusCode)
+                {
+                    var result1 = response1.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+                     var result2 = response2.Content.ReadFromJsonAsync<List<TeatroModel>>().Result;
+                    var result3 = response3.Content.ReadFromJsonAsync<List<TipoSalaModel>>().Result;
+
+                    var SelectsParsed = new SalasModelDto {
+                        ListaMovie = result1,
+                        ListaTeatro = result2,
+                        ListaTipo_sala = result3,
+                    };
+                    return View(SelectsParsed);
+                }
+                return View();
+
+            }
+            
         }
         [HttpPost]
         public IActionResult CrearSala(SalasModelDto model)

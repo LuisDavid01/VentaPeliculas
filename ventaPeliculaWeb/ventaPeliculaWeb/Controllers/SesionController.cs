@@ -23,7 +23,6 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion";
-                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -37,9 +36,25 @@ namespace ventaPeliculaWeb.Controllers
             }
         }
         [HttpGet]
-        public IActionResult CrearSesion()
+        public IActionResult CrearSesionNueva()
         {
-            return View();
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+
+                    var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+                    var selectSalas = new SesionModelDto
+                    {
+                        salas = result
+                    };
+                    return View(selectSalas);
+                }
+                return View();
+
+            }
         }
         [HttpPost]
         public IActionResult CrearSesion(SesionModelDto model)
@@ -107,23 +122,28 @@ namespace ventaPeliculaWeb.Controllers
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;
-                if (response.IsSuccessStatusCode)
+                var urlSalas = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
+                var responseSalas = http.GetAsync(urlSalas).Result;
+                if (response.IsSuccessStatusCode && responseSalas.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
+                    var resultSalas = responseSalas.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
                     if (result != null)
                     {
+                        /*
                         var SesionParsed = new SesionModelDto
                         {
                             fechaInicio = result.fechaInicio,
                             fechaFinalizacion = result.fechaFinalizacion,
                             asientos = result.asientos,
                             //id_sala = result!.id_sala!._id,
-                            id_sala= result.id_sala,
+                            id_sala= result.id_sala!.nombre,
                             _id = result._id,
+                            salas = resultSalas
                         };
-                        
-
-                        return View(SesionParsed);
+                        */
+                        result.salas = resultSalas;
+                        return View(result);
                     }
 
                 }
@@ -133,13 +153,22 @@ namespace ventaPeliculaWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult EditarSesion(SesionModelDto model)
+        public IActionResult EditarSesion(SesionModel model)
         {
+            
             using (var http = _httpClient.CreateClient())
             {
+                var sesionEditada = new SesionModelDto
+                {
+                    fechaInicio = model.fechaInicio,
+                    fechaFinalizacion = model.fechaFinalizacion,
+                    asientos = model.asientos,
+                    id_sala = model.IdSalaTemp,
+                    _id= model._id,
+                };
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
-                var response = http.PutAsJsonAsync(url, model).Result;
+                var response = http.PutAsJsonAsync(url, sesionEditada).Result;
 
                 return RedirectToAction("Index", "Sesion");
 

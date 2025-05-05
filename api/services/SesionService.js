@@ -16,14 +16,37 @@ class SesionService {
     Obtiene una sesion por id
     */
     async getSesion(id){
-            return await SesionModel.findById(id);
+            return await SesionModel.findById(id).populate({
+				path: "id_sala",
+				select: "nombre",
+				populate:[
+					{ path: "id_movie", select: "titulo" },
+					{path: "id_teatro", select: "nombre" }
+				]
+				
+
+			})
+		.lean()
+		.exec();
+
     }
     /*
     Obtiene todos los sesiones
     */
     async getSesiones(){
-        return await SesionModel.find();
-    }
+        return await SesionModel.find()
+		.populate({
+				path: "id_sala",
+				select: "nombre",
+				populate:[
+					{ path: "id_movie", select: "titulo" },
+					{path: "id_teatro", select: "nombre" }
+				]
+			})
+		.select("-asientos")
+		.lean()
+		.exec();
+	}
     /*
     Actualiza una sesion
     */

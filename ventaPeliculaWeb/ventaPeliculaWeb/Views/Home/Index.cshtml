@@ -1,14 +1,100 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
-    var rol = Context.Request.Cookies["Rol"] ?? "annonymus";
-    var isAdmin =  rol!.Equals("Admin");
+﻿@model List<MoviesModel>
+@{
+    ViewData["Title"] = "Pagina principal";
+}
+
+<div id="myCarousel" class="carousel slide pb-4" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner" style="height: 400px">
+        <div class="carousel-item active">
+            <img src="https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg" class="d-block w-100 object-fit-cover" style="height: 400px" alt="Slide 1" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>Consigue precios espectaculares 💵.</h1>
+                    <p>Precios competitivos y cartelera premier.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Ver cartelera</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg" class="d-block w-100 object-fit-cover" style="height: 400px" alt="Slide 2" />
+            <div class="container">
+                <div class="carousel-caption">
+                    <h1>Promociones unicas</h1>
+                    <p>Trabajamos con los mejores cines de todo el país.</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Conocenós</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="https://images.pexels.com/photos/109669/pexels-photo-109669.jpeg" class="d-block w-100 object-fit-cover" style="height: 400px" alt="Slide 3" />
+            <div class="container">
+                <div class="carousel-caption text-start">
+                    <h1>La mejor experiencia familiar</h1>
+                    <p>¡Ambiente apto para pasarla bien en familia!</p>
+                    <p><a class="btn btn-lg btn-primary" href="#">Ver peliculas</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+<div class="text-start pb-3">
+    <h2 class="display-6">Cartelera semanal</h2>
+</div>
+@if (Model.Any())
+{
+    <section>
+
+        <div class="album py-5 bg-light">
+            <div class="container">
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pb-5">
+                    @foreach (var movie in Model)
+                    {
+                        <div class="col ">
+                            <div class="card shadow-sm">
+                                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                                <div class="card-body">
+                                    <p class="card-title">
+                                        @movie.titulo
+                                    </p>
+                                    <p class="card-text">Duración: @movie.duracion (min)</p>
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">Ver horarios</button>
+                                        </div>
+                                        <small class="text-muted">9 mins</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+}else{
+<section>
+    <p class="display-2">No hay peliculas disponibles esta semana</p>
+</section>
 }
 
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>@Context.Request.Cookies["Username"]</p>
-    <p>@Context.Request.Cookies["Rol"]</p>
-    <p>@isAdmin</p>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
