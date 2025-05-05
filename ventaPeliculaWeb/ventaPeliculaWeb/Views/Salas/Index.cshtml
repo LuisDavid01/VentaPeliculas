@@ -2,13 +2,13 @@
 
 @if (Model == null || !Model.Any())
 {
-    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSala"> Crear sala nueva</a>
+    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSalaNueva"> Crear sala nueva</a>
     <p>No hay Salas para mostrar.</p>
 }
 else
 {
     <h2 class="text-center">Consulta de salas de peliculas</h2>
-    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSala"> Crear sala nueva</a>
+    <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSalaNueva"> Crear sala nueva</a>
     <table class="table">
         <thead>
             <tr>

@@ -1,4 +1,4 @@
-﻿@model SesionModelDto
+﻿@model SesionModel
 
 <form asp-controller="Sesion" asp-action="EditarSesion">
     <div class="row">
@@ -13,7 +13,14 @@
         </div>
         <div class="form-group col-md-12 mb-4">
 
-            <input type="text" class="form-control  input-lg" asp-for="id_sala" placeholder="idsala" />
+            <select asp-for="IdSalaTemp" required class="form-control input-lg">
+                <option value="@Model.id_sala._id" selected> @Model.id_sala!.nombre ( @Model.id_sala!.id_movie!.titulo , @Model.id_sala!.id_teatro!.nombre )</option>
+                @foreach (var sala in Model.salas!)
+                {
+                    <option value="@sala._id">@sala.nombre ( @sala.id_movie!.titulo , @sala.id_teatro!.nombre )</option>
+                }
+
+            </select>
 
         </div>
     </div>

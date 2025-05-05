@@ -14,13 +14,13 @@ class MoviesService {
     Para poder obtener pelicula por el id
     */
     async getMovie(id){
-            return await moviesModel.findById(id);
+            return await moviesModel.findById(id).lean();
     }
     /*
     Para poder obtener todas las peliculas
     */
     async getMovies(){
-        return await moviesModel.find();
+        return await moviesModel.find().lean();
     }
     /*
     Actualiza pelicula
