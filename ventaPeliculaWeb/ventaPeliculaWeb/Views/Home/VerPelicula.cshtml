@@ -1,0 +1,13 @@
+﻿@model List<SalasModel>
+<p>filtros</p>
+<p>Salas por teatro</p>
+@foreach (var Salas in Model)
+{
+  
+        @Salas.nombre
+        @Salas.tipo_sala!.nombre
+        @Salas.id_teatro!.nombre
+        @Salas.id_movie!.titulo
+        @Salas.precioAsiento
+        <a class="btn btn-success " asp-area="" asp-controller="Home" asp-route-id="@Salas._id" asp-action="Sesion">Agregar al carrito 🛒</a>
+}

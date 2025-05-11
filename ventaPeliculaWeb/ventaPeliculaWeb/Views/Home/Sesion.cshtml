@@ -1,0 +1,34 @@
+﻿@model ItemModel
+<form>
+    <input asp-for="NombrePelicula" type="hidden" />
+    <input asp-for="idTeatro" type="hidden" />
+    <input asp-for="idMovie" type="hidden" />
+    <input asp-for="idTipoSala" type="hidden" />
+    <input asp-for="FechaInicio" type="hidden" />
+    <input asp-for="PrecioUnitario" type="hidden" />
+    @if (Model.TotalAsientos != null)
+    {
+        @for(var i = 0; i < Model.TotalAsientos!.Count; i++)
+        {
+            for (var j = 0; j < Model.TotalAsientos[i].Count; j++) {
+                <div class="form-check asiento">
+                    <input type="checkbox"
+                           name="AsientosSeleccionados"
+                           value="@Model.TotalAsientos[i][j]"
+                           class="asiento-checkbox"
+                           @(Model.TotalAsientos[i][j].ocupado ? "disabled" : "")
+                           />
+                    <label class="form-check-label">@Model.TotalAsientos[i][j].numAsiento</label>
+                </div>
+            
+            }
+            
+        }
+    }
+    else
+    {
+        <p>No hay asientos disponibles.</p>
+    }
+
+    <button type="submit" class="btn btn-primary">Agregar al carrito</button>
+</form>

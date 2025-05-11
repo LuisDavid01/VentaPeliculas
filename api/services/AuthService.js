@@ -8,10 +8,10 @@ const usuariosService = new UsuariosService;
 const securityService = new SecurityService;
 class AuthService
 {
-
 	async Register (data){
 		if(data == null) throw new Error("No se cargaron datos");
 		const user = new UsuariosModel(data);
+		console.log(user.nombre);
 		user.rol = 'user';
 		return await usuariosService.createUsuarios(user);
 		

@@ -9,6 +9,6 @@ namespace ventaPeliculaWeb.Models
         public MoviesModel? id_movie { get; set; }
         public TeatroModel? id_teatro { get; set; }
         public TipoSalaModel? tipo_sala { get; set; }
-        public float? precioAsiento { get; set; }
+        public decimal? precioAsiento { get; set; }
     }
 }

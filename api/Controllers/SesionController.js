@@ -20,10 +20,10 @@ class SesionController {
     async getSesion(req, res){
         try{
             const Sesion = await sesionService.getSesion(req.params.id);
-            if(!Sesion) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sesion);
+            if(!Sesion) return res.status(404).json({error: 'not found'});
+            return res.status(200).json(Sesion);
         }catch(err){
-            res.status(500).json({error: err.message});
+            return res.status(500).json({error: err.message});
         }
     }
 

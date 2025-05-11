@@ -27,7 +27,8 @@ class SesionService {
 
 			})
 		.lean()
-		.exec();
+		.exec(); 
+
 
     }
     /*
