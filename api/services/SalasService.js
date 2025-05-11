@@ -1,5 +1,6 @@
 import SalasModel from "../models/SalasModel.js";
-import MoviesModel from "../models/moviesModel.js";
+//import MoviesModel from "../models/moviesModel.js";
+import mongoose from "mongoose";
 class SalasService {
     /*
     Crea una nueva sala
@@ -15,13 +16,98 @@ class SalasService {
     Para obtener una sala por id
     */
     async getSala(id){
-            return await SalasModel.findById(id).populate(["id_movie", "id_teatro","tipo_sala"]);
+            return await SalasModel.aggregate(
+[
+  {
+    '$match': {
+      '_id':  new mongoose.Types.ObjectId(id)}
+  }, {
+    '$lookup': {
+      'from': 'teatro', 
+      'localField': 'id_teatro', 
+      'foreignField': '_id', 
+      'as': 'id_teatro'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_teatro', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'id_movie', 
+      'foreignField': '_id', 
+      'as': 'id_movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_movie', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'tipoSala', 
+      'localField': 'tipo_sala', 
+      'foreignField': '_id', 
+      'as': 'tipo_sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$tipo_sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }
+]
+
+		);
     }
     /*
     Para obtener todas las sala
     */
     async getSalas(){
-        return await SalasModel.find().populate(["id_movie", "id_teatro","tipo_sala"]);
+        return await SalasModel.aggregate(
+[
+  {
+    '$lookup': {
+      'from': 'teatro', 
+      'localField': 'id_teatro', 
+      'foreignField': '_id', 
+      'as': 'id_teatro'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_teatro', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'id_movie', 
+      'foreignField': '_id', 
+      'as': 'id_movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_movie', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'tipoSala', 
+      'localField': 'tipo_sala', 
+      'foreignField': '_id', 
+      'as': 'tipo_sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$tipo_sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }
+]
+
+		);
     }
     /*
     Para modificar salapor el id

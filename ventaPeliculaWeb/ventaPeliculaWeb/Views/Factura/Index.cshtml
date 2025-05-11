@@ -1,5 +1,6 @@
-﻿<div>
-    <form action="index.php" method="POST" id="payment-form">
+﻿@model CompraModel
+<div>
+    <form asp-controller="compra" asp-action="RealizarCompra" method="POST" id="payment-form">
         <label for="card-element">tarjeta de credito:</label>
         <div id="card-element"></div>
         <button type="submit" id="submit-button">Pagar</button>
@@ -8,7 +9,7 @@
 </div>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    const privateKey = ""
+    const privateKey = "pk_test_51RBID8FQPb5J8Rcw67cp2188zor6lUTL5K2l89lznfTOBYcKwOtprmW5uhXKiCHSk228nI39MzSw6BLWTmb94tYF00Qkw5JiuL"
     var stripe = Stripe(privateKey);
     var elements = stripe.elements();
     var card = elements.create('card');
