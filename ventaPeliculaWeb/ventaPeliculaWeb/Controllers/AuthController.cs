@@ -38,11 +38,11 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Login";
-                var response =  http.PostAsJsonAsync(url, model).Result;
+                var response = await http.PostAsJsonAsync(url, model);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<UsuariosModel>().Result;
+                    var result = await response.Content.ReadFromJsonAsync<UsuariosModel>();
 
                     if (result != null)
                     {
@@ -81,13 +81,10 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Register";
-                var response = http.PostAsJsonAsync(url, model).Result;
+                var response = await http.PostAsJsonAsync(url, model);
 
                 if (response.IsSuccessStatusCode)
                 {
-                   
-
-                    
                     return RedirectToAction("Login", "Auth");
                 }
             }

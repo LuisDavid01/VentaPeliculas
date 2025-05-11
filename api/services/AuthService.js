@@ -19,7 +19,7 @@ class AuthService
 
 	async Login(data){
 
-		if(data.username == null || data.password == null) throw new Error("Contraseña o usuario vacio");
+		if(!data.username || !data.password) throw new Error("Contraseña o usuario vacio");
 		
 		const userLookUp = await usuariosService.getUsuarioByUsername(data.username);
 		const password = data.password.toString();
@@ -30,7 +30,7 @@ class AuthService
 				{
 					expiresIn:'20m'
 				});
-			userLookUp.token = token;
+			 userLookUp.token = token;
 			await usuariosService.updateLoggedUsuario(userLookUp._id,userLookUp);
 			return userLookUp;
 			
