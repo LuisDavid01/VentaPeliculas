@@ -5,11 +5,8 @@ class SesionService {
     /*
     Crea un cine
     */
-    async createSesion(data) {
-     console.log(data); 
+    async createSesion(data) { 
       const Sesion = new SesionModel(data);
-       
-		console.log(Sesion);
       await Sesion.save();
       return Sesion;
 	}
@@ -17,12 +14,11 @@ class SesionService {
     Obtiene una sesion por id
     */
     async getSesion(id){
-            return await SesionModel.aggregate(
+            const result = await SesionModel.aggregate(
 [
   {
     '$match': {
-      '_id': new mongoose.Types.ObjectId(id)
-    }
+      '_id':  mongoose.Types.ObjectId.createFromHexString(id)   }
   }, {
     '$lookup': {
       'from': 'salas', 
@@ -40,11 +36,11 @@ class SesionService {
       'from': 'movies', 
       'localField': 'sala.id_movie', 
       'foreignField': '_id', 
-      'as': 'sala.movie'
+      'as': 'sala.id_movie'
     }
   }, {
     '$unwind': {
-      'path': '$sala.movie', 
+      'path': '$sala.id_movie', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
@@ -52,11 +48,11 @@ class SesionService {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.teatro'
+      'as': 'sala.id_teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.teatro', 
+      'path': '$sala.id_teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
@@ -64,25 +60,23 @@ class SesionService {
       'from': 'tipoSala', 
       'localField': 'sala.tipo_sala', 
       'foreignField': '_id', 
-      'as': 'sala.tipoSala'
+      'as': 'sala.tipo_sala'
     }
   }, {
     '$unwind': {
-      'path': '$sala.tipoSala', 
+      'path': '$sala.tipo_sala', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$project': {
-      '_id': 1, 
-      'fechaInicio': 1, 
-      'fechaFinalizacion': 1, 
-      'sala': 1
-    }
+      'id_sala': 0, 
+         }
   }
 ]
 
-
 		);
+
+		return result[0] ?? null;
 
     }
     /*
@@ -109,11 +103,11 @@ class SesionService {
       'from': 'movies', 
       'localField': 'sala.id_movie', 
       'foreignField': '_id', 
-      'as': 'sala.movie'
+      'as': 'sala.id_movie'
     }
   }, {
     '$unwind': {
-      'path': '$sala.movie', 
+      'path': '$sala.id_movie', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
@@ -121,11 +115,11 @@ class SesionService {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.teatro'
+      'as': 'sala.id_teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.teatro', 
+      'path': '$sala.id_teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
@@ -133,27 +127,21 @@ class SesionService {
       'from': 'tipoSala', 
       'localField': 'sala.tipo_sala', 
       'foreignField': '_id', 
-      'as': 'sala.tipoSala'
+      'as': 'sala.tipo_sala'
     }
   }, {
     '$unwind': {
-      'path': '$sala.tipoSala', 
+      'path': '$sala.tipo_sala', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$project': {
-      '_id': 1, 
-      'fechaInicio': 1, 
-      'fechaFinalizacion': 1, 
-      'sala.nombre': 1, 
-      'sala.precioAsiento': 1, 
-      'sala.movie': 1, 
-      'sala.teatro': 1, 
-      'sala.tipoSala': 1
-    }
+      'asientos': 0, 
+      'id_sala': 0 
+         }
   }
 ]
-				);
+						);
   }
     /*
     Actualiza una sesion

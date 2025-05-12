@@ -16,11 +16,11 @@ class SalasService {
     Para obtener una sala por id
     */
     async getSala(id){
-            return await SalasModel.aggregate(
+            const result = await SalasModel.aggregate(
 [
   {
     '$match': {
-      '_id':  new mongoose.Types.ObjectId(id)}
+      '_id':  mongoose.Types.ObjectId.createFromHexString(id)}
   }, {
     '$lookup': {
       'from': 'teatro', 
@@ -59,8 +59,10 @@ class SalasService {
     }
   }
 ]
-
 		);
+		if(result.length > 0){
+			return result[0];
+		}
     }
     /*
     Para obtener todas las sala

@@ -81,15 +81,15 @@ namespace ventaPeliculaWeb.Controllers
                     var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
                     var Item = new ItemModel
                     {
-                        PrecioUnitario = result!.id_sala!.precioAsiento,
+                        PrecioUnitario = result!.sala!.precioAsiento,
                         AsientosSeleccionados = [],
                         FechaInicio = result!.fechaInicio,
                         Cantidad = 0,
-                        NombrePelicula = result!.id_sala!.id_movie!.titulo,
-                        TipoSala = result!.id_sala!.tipo_sala!.nombre,
-                        idMovie = result!.id_sala!.id_movie._id,
-                        idTeatro = result!.id_sala!.id_teatro!._id,
-                        idTipoSala = result!.id_sala!.tipo_sala!._id,
+                        NombrePelicula = result!.sala!.id_movie!.titulo,
+                        TipoSala = result!.sala!.tipo_sala!.nombre,
+                        idMovie = result!.sala!.id_movie._id,
+                        idTeatro = result!.sala!.id_teatro!._id,
+                        idTipoSala = result!.sala!.tipo_sala!._id,
                         TotalAsientos = result!.asientos
 
                     };

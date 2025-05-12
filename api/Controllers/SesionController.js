@@ -42,8 +42,11 @@ class SesionController {
     async updateSesion(req, res){
         try{
 			const token = securityService.getTokenFromHeader(req);
+
 			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
+
 			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
+
             const Sesion = await sesionService.updateSesion(req.params.id, req.body);
             if(!Sesion) res.status(404).json({error: 'not found'});
             res.status(200).json(Sesion);

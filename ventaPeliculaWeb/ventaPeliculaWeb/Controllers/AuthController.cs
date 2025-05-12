@@ -53,7 +53,6 @@ namespace ventaPeliculaWeb.Controllers
                             SameSite = SameSiteMode.Strict,
                             Expires = DateTime.UtcNow.AddDays(1) 
                         };
-
                         // Guardamos la informacion del usuario en cookies
                         Response.Cookies.Append("Token", result!.token!, cookieOptions);
                         Response.Cookies.Append("UsuarioId", result!._id!, cookieOptions);
@@ -66,7 +65,7 @@ namespace ventaPeliculaWeb.Controllers
                     }
 
                     TempData["Mensaje"] = "No ha iniciado sesion correctamente";
-                    return View(model);
+                    return View();
                 }
             }
 
