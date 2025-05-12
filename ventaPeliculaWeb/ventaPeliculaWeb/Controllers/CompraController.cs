@@ -18,25 +18,36 @@ namespace ventaPeliculaWeb.Controllers
             _httpClient = httpClient;
             _configuration = configuration;
         }
+        [HttpPost]
         public IActionResult RealizarCompra(CompraModel model)
         {
 
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return View();
             }
             using (var http = _httpClient.CreateClient())
             {
+                
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "realizarCompra";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
+                //var response = http.GetAsync(url).Result;
                 var response = http.PostAsJsonAsync(url, model).Result;
                 if (response.IsSuccessStatusCode)
                 {
+                    //todo hacer que redirija a la pagina de stripe
+                   // response.Content.ReadFromJsonAsync();
                     return RedirectToAction("Index", "Factura");
                 }
                 return RedirectToAction("Index", "Factura");
 
             }
+        }
+
+        public IActionResult Success()
+        {
+
+            return View();
         }
 
 

@@ -1,23 +1,32 @@
-import Stripe from "stripe";
+import Stripe from 'stripe';
 import dotenv from "dotenv";
-
 dotenv.config();
+const stripe = new Stripe(process.env.STRIPE_SECRET, {
+   });
 class CompraService{
 
 	async realizarCompra(data){
-		if(data.cargoTotal == null || typeof(data.cargoTotal) != "number") throw new Error("informacion de cargo no valido");
-		const stripe = new Stripe(process.env.STRIPE_SECRET, {
-			//REMOVER EN PRODUCCION!
-				httpClient: Stripe.createFetchHttpClient({ verify: () => true }), // Desactiva la verificación SSL 
-		});
-		const charge = await stripe.charges.create({
-			amount: data.cargoTotal * 100, // En centavos (equivalente a $20.00 USD)
-			currency: 'usd',
-			source: data.StripeToken, // Token enviado desde el formulario
-			description: 'Pago de prueba',
-		});
-		return charge.paid;
+		//console.log(data);
+		//if(data.stripeToken == null || data.cargoTotal == null ) throw new Error("informacion de cargo no valido");
+	 const session = await stripe.checkout.sessions.create({
+    line_items: [
+      {
+        price_data: {
+          currency: 'usd',
+          product_data: {
+            name: 'T-shirt',
+          },
+          unit_amount: 2000,
+        },
+        quantity: 1,
+      },
+    ],
+    mode: 'payment',
+    success_url: 'https://localhost:7294/compra/success',
+		cancel_url: 'http://localhost:7294/compra/cancel',
+  });
 
+ return session
 	}
 }
 

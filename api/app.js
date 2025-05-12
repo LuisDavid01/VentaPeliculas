@@ -52,10 +52,7 @@ io.on('connection', async ( socket ) => {
         console.log('a user has disconnected')
     })
 
-    socket.on('disconnect', () => {
-        console.log('a user has disconnected')
-    })
-
+   
     socket.on('comprar asiento', async (user) => {
         
         //to do: meter en cola al usuarios is hay sobrecarga en la pagina

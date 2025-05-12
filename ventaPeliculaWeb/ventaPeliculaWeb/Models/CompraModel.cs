@@ -2,7 +2,7 @@
 {
     public class CompraModel
     {
-        public string? stripeToken { get; set; }
+        public string? StripeToken { get; set; }
         public decimal? cargoTotal { get; set; }
 
     }
