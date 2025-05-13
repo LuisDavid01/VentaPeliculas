@@ -4,6 +4,7 @@ import SecurityService from './SecurityService.js';
 const securityService = new SecurityService;
 class UsuariosService{
 
+	// creamos un usuario
     async createUsuarios(data) {
 		
 			const usuario = new UsuariosModel(data);
@@ -14,7 +15,7 @@ class UsuariosService{
 			
 		
     }
-
+	// obtenemos los usuarios o usuario
     async getUsuario(id){
 		        if(id != 0){
             return await UsuariosModel.findById(id);
@@ -22,13 +23,13 @@ class UsuariosService{
         return await UsuariosModel.find();
         
     }
-
+	//busca usuario por id
 	async getUsuarioByUsername(user){
 	        return await UsuariosModel.findOne({username: user});
         
     }
 
-
+	// actualiza un usuario por id
     async updateUsuario(id, data){
 			
 			let updatedUser = data;
@@ -40,17 +41,19 @@ class UsuariosService{
 
 
     }
+//actualiza un usuario loggeado para actualizar el token
 	async updateLoggedUsuario(id, data){
-					let updatedUser = data;
-			if(updatedUser.password != null) {
-				return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
+		let updatedUser = data;
+		// esto se hace para no dejar a un usuario sin contraseña
+		if(updatedUser.password != null) {
+			return await UsuariosModel.findByIdAndUpdate(id,updatedUser, {new: true});
 
-			}		
+		}		
 
 		
     }
 
-
+// eliminar usuario por id
     async deleteUsuario(id){
 		        return await UsuariosModel.findByIdAndDelete(id);
 
