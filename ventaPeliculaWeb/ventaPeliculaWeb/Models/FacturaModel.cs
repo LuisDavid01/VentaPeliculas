@@ -7,7 +7,7 @@ namespace ventaPeliculaWeb.Models
         public string? _id { get; set; }
         public string? nombreCliente { get; set; }
         public decimal? precioTotal { get; set; }
-        public string? metodoDePago { get; set; }
+        public string? metodoPago { get; set; }
         public List<ItemModel>? Items { get; set; }
 
 

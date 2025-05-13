@@ -35,6 +35,74 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+        public IActionResult VerPeliculas()
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+
+        public IActionResult VerPelicula(string idMovie)
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + idMovie;
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+        [HttpGet]
+        public IActionResult Sesion(string id)
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
+                var response = http.GetAsync(url).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
+                    var Item = new ItemModel
+                    {
+                        PrecioUnitario = result!.sala!.precioAsiento,
+                        AsientosSeleccionados = [],
+                        FechaInicio = result!.fechaInicio,
+                        Cantidad = 0,
+                        NombrePelicula = result!.sala!.id_movie!.titulo,
+                        TipoSala = result!.sala!.tipo_sala!.nombre,
+                        idMovie = result!.sala!.id_movie._id,
+                        idTeatro = result!.sala!.id_teatro!._id,
+                        idTipoSala = result!.sala!.tipo_sala!._id,
+                        TotalAsientos = result!.asientos
+
+                    };
+                    
+
+                    return View(Item);
+                }
+                return View();
+
+            }
+        }
+
+        
 
         public IActionResult Privacy()
         {

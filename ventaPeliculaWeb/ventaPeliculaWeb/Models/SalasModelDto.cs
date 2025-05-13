@@ -7,7 +7,7 @@
         public string? tipo_sala { get; set; }
         public string? id_movie { get; set; }
         public string? id_teatro { get; set; }
-        public float? precioAsiento { get; set; }
+        public decimal? precioAsiento { get; set; }
 
         public List<TipoSalaModel>? ListaTipo_sala { get; set; }
         public List<MoviesModel>? ListaMovie { get; set; }

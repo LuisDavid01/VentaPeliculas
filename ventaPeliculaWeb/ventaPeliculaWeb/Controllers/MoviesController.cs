@@ -1,5 +1,4 @@
 ﻿using System.Net.Http.Headers;
-using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;

@@ -5,10 +5,10 @@ dotenv.config();
 class SecurityService{
 
 
-	 verifyToken(token){
+	  verifyToken(token){
 		const data = jwt.verify(token, process.env.JWT_SECRET);
 		console.log(data);
-		if (data != null) return true;
+		if ( data != null) return true;
 		return false;
 
 	}

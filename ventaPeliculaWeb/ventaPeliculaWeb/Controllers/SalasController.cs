@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.Design;
 using System.Net.Http.Headers;
 using System.Reflection;
-using AgendaTuLookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
 

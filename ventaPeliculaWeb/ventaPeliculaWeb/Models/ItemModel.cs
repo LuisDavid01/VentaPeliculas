@@ -1,19 +1,23 @@
 ﻿namespace ventaPeliculaWeb.Models
 {
-    public class ItemModel : MoviesModel
+    public class ItemModel
     {
-        public ItemModel(MoviesModel model) { 
-            this.titulo = model.titulo;
-            this.cartelera = model.cartelera;
-            this._id = model._id;
-            this.duracion = model.duracion;
-            this.sinopsis = model.sinopsis;
-        }
-        public new string? _id { get; set; }
-        public new string? titulo { get; set; }
-        public new string? sinopsis { get; set; }
-        public new float? duracion { get; set; }
-        public new string? productora { get; set; }
-        public new string? cartelera { get; set; }
+        public string? _id { get; set; }
+        public decimal? PrecioUnitario { get; set; }
+
+        public List<string>? AsientosSeleccionados { get; set; }
+        public DateTime? FechaInicio { get; set; }
+        public int? Cantidad { get; set; }
+
+        public string? NombrePelicula { get; set; }
+        public string? NombreCine { get; set; }
+        public string? TipoSala { get; set; }
+
+        public string? idTeatro { get; set; }
+        public string? idMovie { get; set; }
+        public string? idTipoSala { get; set; }
+
+        public List<List<AsientosModel>>? TotalAsientos { get; set; }
+
     }
 }

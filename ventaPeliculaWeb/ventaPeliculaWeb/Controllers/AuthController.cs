@@ -38,11 +38,11 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Login";
-                var response =  http.PostAsJsonAsync(url, model).Result;
+                var response = await http.PostAsJsonAsync(url, model);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<UsuariosModel>().Result;
+                    var result = await response.Content.ReadFromJsonAsync<UsuariosModel>();
 
                     if (result != null)
                     {
@@ -51,9 +51,8 @@ namespace ventaPeliculaWeb.Controllers
                             HttpOnly = true, 
                             Secure = true,   
                             SameSite = SameSiteMode.Strict,
-                            Expires = DateTime.UtcNow.AddDays(1) 
+                            Expires = DateTime.UtcNow.AddDays(4) 
                         };
-
                         // Guardamos la informacion del usuario en cookies
                         Response.Cookies.Append("Token", result!.token!, cookieOptions);
                         Response.Cookies.Append("UsuarioId", result!._id!, cookieOptions);
@@ -66,7 +65,7 @@ namespace ventaPeliculaWeb.Controllers
                     }
 
                     TempData["Mensaje"] = "No ha iniciado sesion correctamente";
-                    return View(model);
+                    return View();
                 }
             }
 
@@ -81,13 +80,10 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Register";
-                var response = http.PostAsJsonAsync(url, model).Result;
+                var response = await http.PostAsJsonAsync(url, model);
 
                 if (response.IsSuccessStatusCode)
                 {
-                   
-
-                    
                     return RedirectToAction("Login", "Auth");
                 }
             }

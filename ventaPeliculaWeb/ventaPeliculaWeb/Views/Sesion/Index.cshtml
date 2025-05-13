@@ -27,13 +27,13 @@ else
                 <tr>
                     <td>@Sesions.fechaInicio</td>
                     <td>@Sesions.fechaFinalizacion</td>
-                    <td>@Sesions.id_sala!.nombre</td>
-                    <td>@Sesions.id_sala!.id_movie!.titulo</td>
+                    <td>@Sesions.sala!.nombre</td>
+                    <td>@Sesions.sala!.id_movie!.titulo</td>
                     
 
                     <td>
 
-                        <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-route-id="@Sesions._id" asp-action="VerSesion"> Editar Sesion</a>
+                        <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-route-id="@Sesions._id" asp-action="EditarSesion"> Editar Sesion</a>
                         <form asp-controller="Sesion" asp-action="EliminarSesion" method="post" style="display:inline;">
                             <input type="hidden" name="id" value="@Sesions._id" />
                             <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Sesion?');">Eliminar Sesion</button>

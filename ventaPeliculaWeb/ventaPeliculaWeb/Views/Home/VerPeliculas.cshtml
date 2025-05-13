@@ -1,0 +1,38 @@
+﻿@model List<MoviesModel>
+<p>side menu</p>
+<p>searchbar</p>
+<p>filtros</p>
+<section>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 pb-5">
+                @foreach (var movie in Model)
+                {
+                    <div class="col ">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c" /><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                            <div class="card-body">
+                                <p class="card-title">
+                                    @movie.titulo
+                                </p>
+                                <p class="card-text">Duración: @movie.duracion (min)</p>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="btn-group">
+                                        <a class="btn btn-sm btn-outline-secondary" asp-area="" asp-controller="Home" asp-route-id="@movie._id" asp-action="verPelicula">Ver horarios</a>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+
+            </div>
+        </div>
+    </div>
+</section>

@@ -22,7 +22,7 @@ class SalasController {
         try{
             const Salas = await salasService.getSala(req.params.id);
             if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(201).json(Salas);
+            res.status(200).json(Salas);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -31,7 +31,7 @@ class SalasController {
         try{
             const Salas = await salasService.getSalas();
             if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(201).json(Salas);
+            res.status(200).json(Salas);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -44,7 +44,7 @@ class SalasController {
 			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Salas = await salasService.updateSala(req.params.id, req.body);
             if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(201).json(Salas);
+            res.status(200).json(Salas);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -57,7 +57,7 @@ class SalasController {
 			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
             const Salas = await salasService.deleteSala(req.params.id);
             if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(201).json(Salas);
+            res.status(200).json(Salas);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -67,7 +67,7 @@ class SalasController {
         try{
             const Salas = await salasService.ModificarPeliculaSala(req.params.id,req.params.idMovie);
             if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(201).json(Salas);
+            res.status(200).json(Salas);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -77,7 +77,7 @@ class SalasController {
         try{
             const Salas = await salasService.ModificarAsiento(req.params.id,req.body);
             if(Salas === undefined) res.status(404).json({error: 'not found'});
-            res.status(201).json({success: "Se modifico el asiento"});
+            res.status(200).json({success: "Se modifico el asiento"});
         }catch(err){
             res.status(500).json({error: err.message});
         }
