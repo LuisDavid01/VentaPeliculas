@@ -4,19 +4,23 @@ const securityService = new SecurityService;
 const teatroService = new TeatroService;
 class TeatroController {
  
- 
+ /*
+  * Crear un cine
+*/
     async createTeatro(req, res) {
       try {
-			const token = securityService.getTokenFromHeader(req);
-			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
-			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
-        const Teatro = await teatroService.createTeatro(req.body);
-        res.status(201).json(Teatro);
+			const token = securityService.verifyToken(req);
+			if(!token) return res.status(401).json({error: 'token not verify'})
+
+			const Teatro = await teatroService.createTeatro(req.body);
+			res.status(201).json(Teatro);
       } catch (err) {
-        res.status(500).json({ error: err.message });
+			res.status(500).json({ error: err.message });
       }
     }
-
+/*
+ * Obtener un cine por id
+*/
     async getTeatro(req, res){
         try{
             const Teatro = await teatroService.getTeatro(req.params.id);
@@ -26,7 +30,9 @@ class TeatroController {
             res.status(500).json({error: err.message});
         }
     }
-
+/*
+ * Obtener todos los cines
+*/
     async getTeatros(req, res){
         try{
             const Teatro = await teatroService.getTeatros();
@@ -38,12 +44,14 @@ class TeatroController {
     }
 
 
-
+/*
+ * Actualizar un cine por id
+*/
     async UpdateTeatro(req, res){
         try{
-			const token = securityService.getTokenFromHeader(req);
-			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
-			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
+			const token = securityService.verifyToken(req);
+			if(!token) return res.status(401).json({error: 'token not verify'})
+
             const Teatro = await teatroService.updateTeatro(req.params.id, req.body);
             if(!Teatro) res.status(404).json({error: 'not found'});
             res.status(201).json(Teatro);
@@ -51,12 +59,14 @@ class TeatroController {
             res.status(500).json({error: err.message});
         }
     }
-
+/*
+ * Eliminar un cine por id
+*/
     async DeleteTeatro(req, res){
         try{
-			const token = securityService.getTokenFromHeader(req);
-			if (token == null || token == undefined) return res.status(401).json({ error: 'Token no proporcionado' });
-			if(securityService.verifyToken(token) != true) return res.status(403).json({error: 'token no validado'});
+			const token = securityService.verifyToken(req);
+			if(!token) return res.status(401).json({error: 'token not verify'})
+
             const Teatro = await teatroService.deleteTeatro(req.params.id);
             if(!Teatro) res.status(404).json({error: 'not found'});
             res.status(201).json(Teatro);

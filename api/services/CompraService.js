@@ -4,6 +4,8 @@ dotenv.config();
 const stripe = new Stripe(process.env.STRIPE_SECRET, {
    });
 class CompraService{
+	// crea uan sesion de compra de stripe
+	// to do: crear sesion personalizada
 	async createCheckoutSession(){
 		const session = await stripe.checkout.sessions.create({
     line_items: [{

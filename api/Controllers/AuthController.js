@@ -2,7 +2,9 @@ import AuthService from "../services/AuthService.js";
 const authService = new AuthService;
 class AuthController {
  
- 
+ /*
+  * Registrar un usuario
+*/
     async Register(req, res) {
       try {
         const AuthResult = await authService.Register(req.body);
@@ -12,7 +14,9 @@ class AuthController {
       }
     }
 
-
+/*
+ * Inicio de sesion
+*/
     async Login(req, res){
         try{
             const AuthResult = await authService.Login(req.body);

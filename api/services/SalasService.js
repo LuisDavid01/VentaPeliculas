@@ -5,8 +5,7 @@ class SalasService {
     /*
     Crea una nueva sala
     */
-    async createSala(data) {
-     console.log(data); 
+    async createSala(data) { 
       const Sala = new SalasModel(data);
        
       await Sala.save();
@@ -16,6 +15,7 @@ class SalasService {
     Para obtener una sala por id
     */
     async getSala(id){
+		if(!mongoose.isValidObjectId(id)) return;
             const result = await SalasModel.aggregate(
 [
   {
