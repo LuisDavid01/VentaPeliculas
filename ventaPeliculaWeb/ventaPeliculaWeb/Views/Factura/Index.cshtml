@@ -1,43 +1,33 @@
-﻿@model CompraModel
+﻿
 <div>
-    <!--
-    <form asp-controller="compra" asp-action="RealizarCompra" method="POST" id="payment-form">
-        <input type="hidden" asp-for="cargoTotal" value="20" />
-        <label for="card-element">tarjeta de credito:</label>
-        <div id="card-element"></div>
-        <button type="submit" id="submit-button">Pagar</button>
-    </form>
-    -->
-    <form method="POST" asp-controller="compra" asp-action="RealizarCompra">
-        <input type="hidden" asp-for="cargoTotal" value="20" />
-        <button type="submit">Checkout</button>
-    </form>
+    <div id="checkout">
+        <!-- Checkout will insert the payment form here -->
+    </div>
     
 </div>
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-    /*
-    const privateKey = "pk_test_51RBID8FQPb5J8Rcw67cp2188zor6lUTL5K2l89lznfTOBYcKwOtprmW5uhXKiCHSk228nI39MzSw6BLWTmb94tYF00Qkw5JiuL"
-    var stripe = Stripe(privateKey);
-    var elements = stripe.elements();
-    var card = elements.create('card');
-    card.mount('#card-element');
-    var form = document.getElementById('payment-form');
-    form.addEventListener("submit", function(event) {
-        event.preventDefault();
-        stripe.createToken(card).then(function(result) {
-            if (result.error) {
-                // Inform the user if there was an error.
-                console.log(result.error.message);
-            } else {
-                var hiddenInput = document.createElement("input");
-                hiddenInput.setAttribute("type", "hidden");
-                hiddenInput.setAttribute("name", "StripeToken");
-                hiddenInput.setAttribute("value", result.token.id);
-                form.appendChild(hiddenInput);
-                form.submit();
-            }
+        // Initialize Stripe.js
+    const stripe = Stripe('pk_test_51RBID8FQPb5J8Rcw67cp2188zor6lUTL5K2l89lznfTOBYcKwOtprmW5uhXKiCHSk228nI39MzSw6BLWTmb94tYF00Qkw5JiuL');
+
+    initialize();
+
+    // Fetch Checkout Session and retrieve the client secret
+    async function initialize() {
+      const fetchClientSecret = async () => {
+        const response = await fetch("http://localhost:8901/api/createCheckoutSession", {
+          method: "POST",
         });
-    });
-    */
+        const { clientSecret } = await response.json();
+        return clientSecret;
+      };
+
+      // Initialize Checkout
+      const checkout = await stripe.initEmbeddedCheckout({
+        fetchClientSecret,
+      });
+
+      // Mount Checkout
+      checkout.mount('#checkout');
+    }
 </script>

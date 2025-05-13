@@ -51,7 +51,7 @@ namespace ventaPeliculaWeb.Controllers
                             HttpOnly = true, 
                             Secure = true,   
                             SameSite = SameSiteMode.Strict,
-                            Expires = DateTime.UtcNow.AddDays(1) 
+                            Expires = DateTime.UtcNow.AddDays(4) 
                         };
                         // Guardamos la informacion del usuario en cookies
                         Response.Cookies.Append("Token", result!.token!, cookieOptions);

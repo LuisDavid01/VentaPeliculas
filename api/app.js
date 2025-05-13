@@ -6,7 +6,7 @@ import connectDB from "./config/db.js";
 import cors from "cors";
 import logger from "morgan";
 import bodyParser from "body-parser";
-
+import compression from "compression";
 //imports router
 import movieRouter from "./routes/MoviesRoutes.js";
 import tipoSalaRouter from "./routes/TipoSalaRoutes.js"
@@ -16,7 +16,10 @@ import sesionRouter from "./routes/SesionRoutes.js";
 import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
+
+//configuramos las variables de entorno
 dotenv.config();
+
 const port = process.env.PORT ?? 8901;
 const app = express();
 const server = createServer(app);
@@ -29,9 +32,16 @@ app.use(cors({
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
 }));
-
+// comprime las respuestas del api
+app.use(compression({
+	level: 3,
+	threshold: 0
+}));
+// desactivamos el header x x-powered-by
+app.disable('x-powered-by');
 
 //creamos el servidor de WebSocket
+//quizas deba desactivarlo...
 const io = new Server(server,{
     cors: {
         origin: "*", // CORS para Socket.IO
@@ -68,6 +78,8 @@ app.use('/api', teatroRouter );
 app.use('/api', userRouter );
 app.use('/api', authRouter);
 app.use('/api', compraRouter);
+
+//iniciamos el servidor
 server.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
 
 
