@@ -17,7 +17,7 @@
         public string? idMovie { get; set; }
         public string? idTipoSala { get; set; }
 
-        public List<List<AsientosModel>>? TotalAsientos { get; set; }
+        public List<List<AsientosModel>>? asientos { get; set; }
 
     }
 }

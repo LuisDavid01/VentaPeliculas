@@ -73,7 +73,7 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesiones/sala/" + id;
                 var response = http.GetAsync(url).Result;
 
                 if (response.IsSuccessStatusCode)
@@ -90,7 +90,7 @@ namespace ventaPeliculaWeb.Controllers
                         idMovie = result!.sala!.id_movie._id,
                         idTeatro = result!.sala!.id_teatro!._id,
                         idTipoSala = result!.sala!.tipo_sala!._id,
-                        TotalAsientos = result!.asientos
+                        asientos = result.asientos
 
                     };
                     

@@ -6,19 +6,19 @@
     <input asp-for="idTipoSala" type="hidden" />
     <input asp-for="FechaInicio" type="hidden" />
     <input asp-for="PrecioUnitario" type="hidden" />
-    @if (Model.TotalAsientos != null)
+    @if (Model.asientos!.Any())
     {
-        @for(var i = 0; i < Model.TotalAsientos!.Count; i++)
+        @for(var i = 0; i < Model.asientos!.Count; i++)
         {
-            for (var j = 0; j < Model.TotalAsientos[i].Count; j++) {
+            for (var j = 0; j < Model.asientos[i].Count; j++) {
                 <div class="form-check asiento">
                     <input type="checkbox"
                            name="AsientosSeleccionados"
-                           value="@Model.TotalAsientos[i][j]"
+                           value="@Model.asientos[i][j]"
                            class="asiento-checkbox"
-                           @(Model.TotalAsientos[i][j].ocupado ? "disabled" : "")
+                           @(Model.asientos[i][j].ocupado ? "disabled" : "")
                            />
-                    <label class="form-check-label">@Model.TotalAsientos[i][j].numAsiento</label>
+                    <label class="form-check-label">@Model.asientos[i][j].numAsiento</label>
                 </div>
             
             }

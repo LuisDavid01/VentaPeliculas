@@ -75,6 +75,35 @@ class SesionController {
     }
 
 
+/*
+ * Obtener una sesion por id de la sala
+*/
+    async getSesionPorSala(req, res){
+        try{
+            const Sesion = await sesionService.getSesionPorSala(req.params.id);
+            if(!Sesion) return res.status(404).json({error: 'not found'});
+            return res.status(200).json(Sesion);
+        }catch(err){
+            return res.status(500).json({error: err.message});
+        }
+    }
+
+/*
+ * Obtener las sesiones agrupadas por salas
+*/ 
+	async  getAllSesionesPorSala(req, res){
+		try{
+			const sesiones = await sesionService.getAllSesionesPorSala();
+			if(!sesiones) return res.status(404).json({error: 'not found'});
+			return res.status(200).json(sesiones);
+		}catch(err){
+			return res.status(500).json({ error: err.message});
+
+
+		}
+
+
+	}
 
     
 }
