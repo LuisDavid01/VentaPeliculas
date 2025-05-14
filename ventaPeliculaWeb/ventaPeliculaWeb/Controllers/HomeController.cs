@@ -90,7 +90,7 @@ namespace ventaPeliculaWeb.Controllers
                         idMovie = result!.sala!.id_movie._id,
                         idTeatro = result!.sala!.id_teatro!._id,
                         idTipoSala = result!.sala!.tipo_sala!._id,
-                        TotalAsientos = result!.asientos
+                        asientos = result.asientos
 
                     };
                     
