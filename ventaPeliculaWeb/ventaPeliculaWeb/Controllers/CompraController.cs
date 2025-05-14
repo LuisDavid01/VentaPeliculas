@@ -4,6 +4,7 @@ using System.Reflection;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using ventaPeliculaWeb.Models;
+using System.Reflection.Metadata.Ecma335;
 
 namespace ventaPeliculaWeb.Controllers
 {
@@ -19,27 +20,26 @@ namespace ventaPeliculaWeb.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        public IActionResult RealizarCompra(CompraModel model)
+        public IActionResult RealizarCompra(ItemModel model)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
             using (var http = _httpClient.CreateClient())
             {
-                
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "realizarCompra";
+                var compra = new CompraModel
+                {
+                    id_sesion = model.id_sesion,
+                    asientosSeleccionados = model.AsientosSeleccionados
+                };
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "createCheckoutSession";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
-                //var response = http.GetAsync(url).Result;
-                var response = http.PostAsJsonAsync(url, model).Result;
+                var response = http.PostAsJsonAsync(url, compra).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     //todo hacer que redirija a la pagina de stripe
                    // response.Content.ReadFromJsonAsync();
-                    return RedirectToAction("Index", "Factura");
+                    return View();
                 }
-                return RedirectToAction("Index", "Factura");
+                return View();
 
             }
         }

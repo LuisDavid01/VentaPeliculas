@@ -12,10 +12,7 @@
         public string? NombrePelicula { get; set; }
         public string? NombreCine { get; set; }
         public string? TipoSala { get; set; }
-
-        public string? idTeatro { get; set; }
-        public string? idMovie { get; set; }
-        public string? idTipoSala { get; set; }
+        public string? id_sesion { get; set; }
 
         public List<List<AsientosModel>>? asientos { get; set; }
 

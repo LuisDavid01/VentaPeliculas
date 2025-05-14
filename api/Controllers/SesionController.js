@@ -104,8 +104,22 @@ class SesionController {
 
 
 	}
+/*
+ * Obtener todas las sesiones con las salas agruapdas por peliculas
+*/ 
+    async getSesionesPeliculas(req, res){
+		try{
+			const sesiones = await sesionService.getSesionesPeliculas();
+			if(!sesiones) return res.status(404).json({error: 'not found'});
+			return res.status(200).json(sesiones);
 
-    
+		}catch(err){
+			return res.status(500).json({error: err.message});
+		}
+
+
+
+	}
 }
 
 export default SesionController;
