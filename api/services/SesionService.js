@@ -302,7 +302,86 @@ class SesionService {
 
 
 
+		);}
+
+/*
+ * obtener las sesiones y salas agrupadas por pelicula
+*/ 
+	async getSesionesPeliculas(){
+		return SesionModel.aggregate(
+			[
+  {
+    '$lookup': {
+      'from': 'salas', 
+      'localField': 'id_sala', 
+      'foreignField': '_id', 
+      'as': 'sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'sala.id_movie', 
+      'foreignField': '_id', 
+      'as': 'sala.id_movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.id_movie', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'teatro', 
+      'localField': 'sala.id_teatro', 
+      'foreignField': '_id', 
+      'as': 'sala.id_teatro'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.id_teatro', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'tipoSala', 
+      'localField': 'sala.tipo_sala', 
+      'foreignField': '_id', 
+      'as': 'sala.tipo_sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.tipo_sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$group': {
+      '_id': '$sala.id_movie.titulo', 
+      'salas': {
+        '$addToSet': '$sala'
+      }, 
+      'sesiones': {
+        '$push': {
+          '_id': '$_id', 
+          'fechaInicio': '$fechaInicio'
+        }
+      }
+    }
+  }, {
+    '$project': {
+      '_id': 1, 
+      'salas': '$salas', 
+      'sesiones': 1
+    }
+  }
+]
+
 		);
+
 
 	}
 

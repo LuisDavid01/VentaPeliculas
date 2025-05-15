@@ -8,7 +8,7 @@ class CompraController {
 */
 	async createCheckoutSession(req, res){
 		try{
-			const session = await compraService.createCheckoutSession();
+			const session = await compraService.createCheckoutSession(req.body);
 			return res.status(200).json({clientSecret: session});
 
 		}catch(err){

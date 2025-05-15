@@ -61,13 +61,12 @@ namespace ventaPeliculaWeb.Controllers
 
             int letraAscii = 65;
             var newAsientos = new List<List<AsientosModel>>();
-            for (int i = 0; i < 20; i++)
+            for (int i = 0; i < 10; i++)
             {
-                newAsientos.Add(new List<AsientosModel>());
+                newAsientos.Add([]);
                 int numeroDeAsiento = 1;
                 for (int j = 0; j < 20; j++)
                 {
-                    Console.WriteLine(letraAscii);
                     newAsientos[i].Add(new AsientosModel
                     {
                         numAsiento = $"{(char)letraAscii}{numeroDeAsiento++}",

@@ -1,29 +1,32 @@
 ﻿@model ItemModel
-<form>
-    <input asp-for="NombrePelicula" type="hidden" />
-    <input asp-for="idTeatro" type="hidden" />
-    <input asp-for="idMovie" type="hidden" />
-    <input asp-for="idTipoSala" type="hidden" />
-    <input asp-for="FechaInicio" type="hidden" />
-    <input asp-for="PrecioUnitario" type="hidden" />
+<form asp-controller="Compra" asp-action="RealizarCompra">
+    <input asp-for="NombrePelicula" type="text" readonly />
+    <input asp-for="id_sesion" type="text" readonly />
+ 
+    <input asp-for="FechaInicio" type="text" readonly />
+    <input asp-for="PrecioUnitario" type="text" readonly />
     @if (Model.asientos!.Any())
     {
-        @for(var i = 0; i < Model.asientos!.Count; i++)
-        {
-            for (var j = 0; j < Model.asientos[i].Count; j++) {
-                <div class="form-check asiento">
-                    <input type="checkbox"
-                           name="AsientosSeleccionados"
-                           value="@Model.asientos[i][j]"
-                           class="asiento-checkbox"
-                           @(Model.asientos[i][j].ocupado ? "disabled" : "")
-                           />
-                    <label class="form-check-label">@Model.asientos[i][j].numAsiento</label>
-                </div>
-            
-            }
-            
-        }
+        <div class="container">
+            <div class="row g-1">
+                @for (var i = 0; i < Model.asientos!.Count; i++)
+                {
+                    for (var j = 0; j < Model.asientos[i].Count; j++)
+                    {
+                        <div class="col-1 mb-1">
+                            <div class="form-check asiento text-center ">
+                                <input type="checkbox"
+                                       name="AsientosSeleccionados"
+                                       value="@Model.asientos[i][j].numAsiento"
+                                       class="form-check-input asiento-checkbox"
+                                @(Model.asientos[i][j].ocupado ? "disabled" : "") />
+                                <label class="form-check-label">@Model.asientos[i][j].numAsiento</label>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     }
     else
     {
