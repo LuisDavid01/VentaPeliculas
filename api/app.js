@@ -7,6 +7,7 @@ import cors from "cors";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import compression from "compression";
+import rateLimit from "express-rate-limit";
 //imports router
 import movieRouter from "./routes/MoviesRoutes.js";
 import tipoSalaRouter from "./routes/TipoSalaRoutes.js"
@@ -23,7 +24,11 @@ dotenv.config();
 const port = process.env.PORT ?? 8901;
 const app = express();
 const server = createServer(app);
-
+//inicializamos el rate limit
+app.use(rateLimit({
+	windowMs: 15 * 60 * 1000,
+	limit: 200
+}));
 // Middleware del web
 app.use(bodyParser.json());
 app.use(logger('dev'));
