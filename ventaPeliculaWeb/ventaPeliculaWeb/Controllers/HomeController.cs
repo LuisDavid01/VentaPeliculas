@@ -87,7 +87,7 @@ namespace ventaPeliculaWeb.Controllers
                         Cantidad = 0,
                         NombrePelicula = result!.sala!.id_movie!.titulo,
                         TipoSala = result!.sala!.tipo_sala!.nombre,
-                        id_sesion = result!.sala!._id,
+                        id_sesion = result!._id,
                         asientos = result.asientos
 
                     };

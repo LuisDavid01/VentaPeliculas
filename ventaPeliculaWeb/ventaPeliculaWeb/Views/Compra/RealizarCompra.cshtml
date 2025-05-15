@@ -1,4 +1,7 @@
-﻿
+﻿@model CompraModel
+@{
+    var clientSecret = Model.clientSecret;
+}
 <div>
     <div id="checkout">
         <!-- Checkout will insert the payment form here -->
@@ -24,7 +27,7 @@
 
       // Initialize Checkout
       const checkout = await stripe.initEmbeddedCheckout({
-        fetchClientSecret,
+        clientSecret: '@clientSecret'
       });
 
       // Mount Checkout

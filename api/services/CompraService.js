@@ -9,15 +9,11 @@ class CompraService{
 	// crea uan sesion de compra de stripe
 	// to do: crear sesion personalizada
 	async createCheckoutSession(data){
-		//console.log(data);
+		console.log(data);
 		const item = await sesionService.getSesion(data.id_sesion);
-		console.log(item);
-		const name = item.sala.nombre;
 
+		const name = item.sala.nombre + " " +item.sala.id_movie.titulo;
 
-		
-	console.log(name)
-	console.log(typeof(data.asientosSeleccionados));
 		const session = await stripe.checkout.sessions.create({
     line_items: [{
       price_data: {
@@ -27,7 +23,7 @@ class CompraService{
         },
         unit_amount: item.sala.precioAsiento * 100,
       },
-      quantity: data.asientosSeleccionados.length(),
+      quantity: data.asientosSeleccionados.length,
     }],
     mode: 'payment',
     ui_mode: 'embedded',

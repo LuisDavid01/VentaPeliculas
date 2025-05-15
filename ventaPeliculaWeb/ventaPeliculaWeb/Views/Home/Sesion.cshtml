@@ -17,7 +17,7 @@
                             <div class="form-check asiento text-center ">
                                 <input type="checkbox"
                                        name="AsientosSeleccionados"
-                                       value="@Model.asientos[i][j]"
+                                       value="@Model.asientos[i][j].numAsiento"
                                        class="form-check-input asiento-checkbox"
                                 @(Model.asientos[i][j].ocupado ? "disabled" : "") />
                                 <label class="form-check-label">@Model.asientos[i][j].numAsiento</label>

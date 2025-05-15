@@ -7,6 +7,6 @@
         public string? id_sesion { get; set; }
 
         public List<string>? asientosSeleccionados { get; set; }
-
+        public string? clientSecret { get; set;}
     }
 }

@@ -36,8 +36,9 @@ namespace ventaPeliculaWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     //todo hacer que redirija a la pagina de stripe
-                   // response.Content.ReadFromJsonAsync();
-                    return View();
+                    var result = response.Content.ReadFromJsonAsync<CompraModel>().Result;
+
+                    return View(result);
                 }
                 return View();
 
