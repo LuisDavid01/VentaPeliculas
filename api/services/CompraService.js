@@ -10,6 +10,7 @@ class CompraService{
 	// to do: crear sesion personalizada
 	async createCheckoutSession(data){
 		console.log(data);
+		if(!data.asientosSeleccionados || data.asientosSeleccionados.length <= 0) return;
 		const item = await sesionService.getSesion(data.id_sesion);
 
 		const name = item.sala.nombre + " " +item.sala.id_movie.titulo;

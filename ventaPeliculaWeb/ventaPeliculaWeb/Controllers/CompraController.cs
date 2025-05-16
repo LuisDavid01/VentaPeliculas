@@ -22,6 +22,9 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult RealizarCompra(ItemModel model)
         {
+            if (model.AsientosSeleccionados == null || model.AsientosSeleccionados.Count <= 0) { 
+                return RedirectToAction("VerPeliculas", "Home");
+            }
 
             using (var http = _httpClient.CreateClient())
             {

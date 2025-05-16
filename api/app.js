@@ -1,7 +1,7 @@
 import express from "express";
-import { Server } from "socket.io";
+//import { Server } from "socket.io";
 import dotenv from "dotenv";
-import { createServer } from "node:http";
+//import { createServer } from "node:http";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import logger from "morgan";
@@ -22,7 +22,7 @@ dotenv.config();
 
 const port = process.env.PORT ?? 8901;
 const app = express();
-const server = createServer(app);
+//const server = createServer(app);
 
 // Middleware del web
 app.use(bodyParser.json());
@@ -42,6 +42,7 @@ app.disable('x-powered-by');
 
 //creamos el servidor de WebSocket
 //quizas deba desactivarlo...
+/*
 const io = new Server(server,{
     cors: {
         origin: "*", // CORS para Socket.IO
@@ -50,11 +51,11 @@ const io = new Server(server,{
     },
     connectionStateRecovery: {}
 });
-
+*/
 //conexion a la base de datos
 connectDB();
 
-
+/*
 //socket logica
 io.on('connection', async ( socket ) => {
     console.log('a user has connected')
@@ -68,7 +69,7 @@ io.on('connection', async ( socket ) => {
         //to do: meter en cola al usuarios is hay sobrecarga en la pagina
     })
 });
-
+*/
 //rutas del api
 app.use('/api', movieRouter );
 app.use('/api', tipoSalaRouter);
@@ -80,7 +81,7 @@ app.use('/api', authRouter);
 app.use('/api', compraRouter);
 
 //iniciamos el servidor
-server.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
+app.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
 
 
 
