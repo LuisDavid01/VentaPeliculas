@@ -25,7 +25,7 @@ const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
-app.use("trust-proxy", 1);
+app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
 	windowMs: 3000,
