@@ -25,10 +25,10 @@ const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
-
+app.use("trust-proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
-	windowMs: 15 * 60 * 1000,
+	windowMs: 3000,
 	limit: 200
 }));
 

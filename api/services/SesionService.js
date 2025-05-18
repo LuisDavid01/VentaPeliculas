@@ -385,6 +385,92 @@ class SesionService {
 
 	}
 
+	async searchSessionByMovieTitle(title){
+		if(!title) return;
+		if(typeof(title) != 'string') throw new Error("El titulo debe ser string");
+		title = title.trim();	
+		return SesionModel.aggregate(
+			[
+  {
+    '$lookup': {
+      'from': 'salas', 
+      'localField': 'id_sala', 
+      'foreignField': '_id', 
+      'as': 'sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'sala.id_movie', 
+      'foreignField': '_id', 
+      'as': 'sala.id_movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.id_movie', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$match': {
+      'sala.id_movie.titulo': {
+        '$regex': `.*${title}.*`, 
+        '$options': 'i'
+      }
+    }
+  }, {
+    '$lookup': {
+      'from': 'teatro', 
+      'localField': 'sala.id_teatro', 
+      'foreignField': '_id', 
+      'as': 'sala.id_teatro'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.id_teatro', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$lookup': {
+      'from': 'tipoSala', 
+      'localField': 'sala.tipo_sala', 
+      'foreignField': '_id', 
+      'as': 'sala.tipo_sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$sala.tipo_sala', 
+      'preserveNullAndEmptyArrays': true
+    }
+  }, {
+    '$group': {
+      '_id': '$sala.id_movie.titulo', 
+      'salas': {
+        '$addToSet': '$sala'
+      }, 
+      'sesiones': {
+        '$addToSet': {
+          '_id': '$_id', 
+          'fechaInicio': '$fechaInicio', 
+          'sala': '$sala'
+        }
+      }
+    }
+  }, {
+    '$project': {
+      '_id': 1, 
+      'sesiones': 1
+    }
+  }
+]
+		);	
+
+	}
+
 }
 
 export default SesionService;

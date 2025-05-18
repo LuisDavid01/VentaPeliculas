@@ -120,6 +120,21 @@ class SesionController {
 
 
 	}
+
+	/*
+	 * Buscar sesiones por titulo de la pelicula
+	*/
+	async getSesionesByMovieTitle(req, res){
+		try{
+			const sesiones = await sesionService.searchSessionByMovieTitle(req.body.titulo);
+			if(!sesiones) return res.status(401).json({error: 'not found'});
+			return res.status(200).json(sesiones);
+
+		}catch(err){
+			return res.status(500).json({error: err.message});
+		}
+	}
 }
+
 
 export default SesionController;
