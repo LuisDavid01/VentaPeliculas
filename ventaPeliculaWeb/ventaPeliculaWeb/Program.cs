@@ -1,6 +1,7 @@
 
 
 using Microsoft.AspNetCore.Authentication.Cookies;
+using ventaPeliculaWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,9 +15,9 @@ builder.Services.AddAuthentication(options => {
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie(options => {
     options.LoginPath = "/Auth/Login";
-    options.ExpireTimeSpan = TimeSpan.FromDays(3);
+    options.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
-
+builder.Services.AddSingleton<ITrieService, TrieService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

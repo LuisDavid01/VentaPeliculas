@@ -10,6 +10,7 @@ namespace ventaPeliculaWeb.Models
         public float? duracion { get; set; }
         public string? productora { get; set; } 
         public string? cartelera { get; set; }
+        public IFormFile? imgFile { get; set; }
 
     }
 }
