@@ -1,6 +1,6 @@
 import express from "express";
 //import { Server } from "socket.io";
-import dotenv from "dotenv";
+
 //import { createServer } from "node:http";
 import connectDB from "./config/db.js";
 import cors from "cors";
@@ -18,13 +18,14 @@ import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
 
-//configuramos las variables de entorno
-dotenv.config();
+
+
 
 const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
+app.use(express.json({ limit: "10mb" }));
 app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({

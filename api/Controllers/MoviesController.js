@@ -11,10 +11,15 @@ class MoviesController {
       try {
 		const token = securityService.verifyToken(req);
 		if(!token) return res.status(401).json({error: 'token not verify'})
-        const Movie = await moviesService.createMovie(req.body);
+			const movieData = {
+				...req.body,
+				file : req.file
+			}
+        const Movie = await moviesService.createMovie(movieData);
 
         res.status(201).json(Movie);
       } catch (err) {
+
         res.status(500).json({ error: err.message });
       }
     }
@@ -49,13 +54,20 @@ class MoviesController {
 */
     async UpdateMovie(req, res){
         try{
+		
 			const token = securityService.verifyToken(req);
 			if(!token) return res.status(401).json({error: 'token not verify'})
-		    const Movies = await moviesService.updateMovie(req.params.id, req.body);
-            if(!Movies) res.status(404).json({error: 'not found'});
+			const movieData = {
+				...req.body,
+				file : req.file
+			}
 
-            res.status(201).json(Movies);
+		    const Movies = await moviesService.updateMovie(req.params.id, movieData);
+            if(!Movies) return res.status(404).json({error: 'not found'});
+
+            return res.status(201).json(Movies);
         }catch(err){
+
             res.status(500).json({error: err.message});
         }
     }

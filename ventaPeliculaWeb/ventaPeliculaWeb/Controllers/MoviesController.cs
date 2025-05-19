@@ -40,19 +40,32 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult CrearPelicula(MoviesModel model)
         {
+
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
-                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
-                var response = http.PostAsJsonAsync(url, model).Result;
-                if (response.IsSuccessStatusCode)
+                var formData = new MultipartFormDataContent();
+                formData.Add(new StringContent(content: model.titulo!), "titulo");
+                formData.Add(new StringContent(content: model!.duracion!.ToString()!), "duracion");
+                formData.Add(new StringContent(content: model.productora!), "productora");
+                formData.Add(new StringContent(content: model.sinopsis!), "sinopsis");
+                if (model.imgFile != null && model.imgFile.Length > 0)
                 {
-                    return RedirectToAction("Index", "Movies");
+                    var streamContent = new StreamContent(model.imgFile.OpenReadStream());
+                    streamContent.Headers.ContentType = new MediaTypeHeaderValue(model.imgFile.ContentType);
+                    formData.Add(streamContent, "imgFile", model.imgFile.FileName);
                 }
+                Console.WriteLine("modelo de la imagen: " + model.imgFile);
+            var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+            http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
+            var response = http.PostAsync(url, formData).Result;
+            if (response.IsSuccessStatusCode)
+            {
                 return RedirectToAction("Index", "Movies");
-
             }
+            return RedirectToAction("Index", "Movies");
+            };
         }
+        
 
         public IActionResult VerPelicula(string id)
         {
@@ -75,9 +88,24 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
+                var formData = new MultipartFormDataContent();
+                formData.Add(new StringContent(content: model.titulo!), "titulo");
+                formData.Add(new StringContent(content: model!.duracion!.ToString()!), "duracion");
+                formData.Add(new StringContent(content: model.productora!), "productora");
+                formData.Add(new StringContent(content: model.sinopsis!), "sinopsis");
+                formData.Add(new StringContent(content: model.cartelera!), "cartelera");
+                
+                if (model.imgFile != null && model.imgFile.Length > 0)
+                {
+                    Console.WriteLine(" largo de la imagen: " + model.imgFile.Length);
+                    var streamContent = new StreamContent(model.imgFile.OpenReadStream());
+                    streamContent.Headers.ContentType = new MediaTypeHeaderValue(model.imgFile.ContentType);
+                    formData.Add(streamContent, "imgFile", model.imgFile.FileName);
+                }
+
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
-                var response = http.PutAsJsonAsync(url, model).Result;
+                var response = http.PutAsync(url, formData).Result;
 
                 return RedirectToAction("Index", "Movies");
 

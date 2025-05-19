@@ -1,10 +1,11 @@
 ﻿@model MoviesModel
-<form asp-controller="Movies" asp-action="EditarPelicula">
+<form asp-controller="Movies" asp-action="EditarPelicula" method="post" enctype="multipart/form-data">
     <div class="row">
 
         <h2 class="text-center">Ver pelicula</h2>
         <div class="form-group col-md-12 mb-4">
             <label for="cartelera">Cartelera</label>
+            <input type="hidden" asp-for="cartelera"/>
             <img src="@Model.cartelera" alt="Cartelera de la película" class="img-fluid" />
         </div>
         <div class="form-group col-md-12 mb-4">
@@ -23,7 +24,8 @@
         </div>
 
         <div class="form-group col-md-12 mb-4">
-            <input type="text" required class="form-control input-lg" asp-for="cartelera" placeholder="cartelera">
+            <label for="imgFile">Imagen</label>
+            <input type="file"  class="form-control input-lg" asp-for="imgFile" placeholder="FotoPelicula">
         </div>
         <input type="hidden" asp-for="_id" />
 
