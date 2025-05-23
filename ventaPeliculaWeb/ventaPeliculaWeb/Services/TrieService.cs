@@ -1,6 +1,6 @@
-﻿using System.Xml.Linq;
+﻿
 using ventaPeliculaWeb.Models;
-using static System.Net.Mime.MediaTypeNames;
+
 
 namespace ventaPeliculaWeb.Services
 {
@@ -9,10 +9,13 @@ namespace ventaPeliculaWeb.Services
         private readonly TrieModel _trieModel;
         public TrieService() { 
             _trieModel = new TrieModel();
+            InsertTrie("prueba");
+            InsertTrie("prueba2");
+            InsertTrie("prueba3");
         }
         public bool InsertTrie(string word)
         {
-
+            if(word == null) return false;
             var tempNode = _trieModel.Root;
             foreach (var c in word)
             {
@@ -37,6 +40,10 @@ namespace ventaPeliculaWeb.Services
 
         public List<string> StartWith( string prefix)
         {
+            if(prefix == null)
+            {
+                return [];
+            }
             var result = new List<string>();
             var curr = _trieModel.Root;
             foreach (var c in prefix)

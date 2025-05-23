@@ -1,6 +1,8 @@
-﻿@model List<MoviesModel>
+﻿
+@model List<MoviesModel>
 @{
     ViewData["Title"] = "Pagina principal";
+    
 }
 
 <div id="myCarousel" class="carousel slide pb-4" data-bs-ride="carousel">
@@ -50,6 +52,18 @@
         <span class="visually-hidden">Next</span>
     </button>
 </div>
+<div class="py-4">
+    
+    <form asp-controller="Home" asp-action="BuscarPeliculaPorTitulo" method="get">
+        <label for="buscador">Buscar pelicula por titulo</label>
+        <input type="text" id="titulo" name="titulo"  placeholder="buscar"/>
+        <ul id="resultados">
+           
+        </ul>
+        <button type="submit" class="btn btn-secondary"></button>
+    </form>
+
+</div>
 <div class="text-start pb-3">
     <h2 class="display-6">Cartelera semanal</h2>
 </div>
@@ -96,5 +110,23 @@
 </section>
 }
 
+<script>
+        
+        document.getElementById("titulo").addEventListener("input", function () {
+            const valor = this.value;
 
+                fetch(`/Autocompletado/Buscar?prefix=${encodeURIComponent(valor)}`)
+                .then(response => response.json())
+                .then(data => {
+                    const lista = document.getElementById("resultados");
+                    lista.innerHTML = "";
+                    data.forEach(item => {
+                        const li = document.createElement("li");
+                        li.textContent = item;
+                        lista.appendChild(li);
+                    });
+                });
+        });
+
+</script>
 

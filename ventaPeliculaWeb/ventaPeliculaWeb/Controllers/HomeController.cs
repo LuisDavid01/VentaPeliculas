@@ -2,6 +2,7 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ventaPeliculaWeb.Models;
+using ventaPeliculaWeb.Services;
 
 namespace ventaPeliculaWeb.Controllers
 {
@@ -11,12 +12,13 @@ namespace ventaPeliculaWeb.Controllers
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(IConfiguration configuration, IHttpClientFactory httpClient, ILogger<HomeController> logger)
+        private readonly ITrieService _trieService;
+        public HomeController(IConfiguration configuration, IHttpClientFactory httpClient, ILogger<HomeController> logger, ITrieService trie)
         {
             _httpClient = httpClient;
             _configuration = configuration;
             _logger = logger;
+            _trieService = trie;
         }
 
         public IActionResult Index()
@@ -68,6 +70,24 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+        [HttpGet]
+        public IActionResult BuscarPeliculaPorTitulo(string titulo)
+        {
+            using (var http = _httpClient.CreateClient())
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesiones/Pelicula/" + titulo;
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<List<SesionModel>>().Result;
+                    _trieService.InsertTrie(titulo);
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+
         [HttpGet]
         public IActionResult Sesion(string id)
         {

@@ -11,7 +11,7 @@ Router.get('/Sesion/:id', sesionController.getSesion);
 Router.get('/Sesion/sala/:id', sesionController.getSesionPorSala);
 Router.get('/Sesiones/Sala', sesionController.getAllSesionesPorSala);
 Router.get('/Sesiones/Peliculas', sesionController.getSesionesPeliculas);
-Router.get('/Sesiones/Pelicula', sesionController.getSesionesByMovieTitle);
+Router.get('/Sesiones/Pelicula/:title', sesionController.getSesionesByMovieTitle);
 Router.put('/Sesion/:id', sesionController.updateSesion);
 Router.delete('/Sesion/:id', sesionController.deleteSesion);
 

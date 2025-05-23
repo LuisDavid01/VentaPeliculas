@@ -17,7 +17,7 @@ builder.Services.AddAuthentication(options => {
     options.LoginPath = "/Auth/Login";
     options.ExpireTimeSpan = TimeSpan.FromDays(7);
 });
-builder.Services.AddSingleton<ITrieService, TrieService>();
+builder.Services.AddScoped<ITrieService, TrieService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

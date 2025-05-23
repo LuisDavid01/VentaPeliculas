@@ -126,8 +126,9 @@ class SesionController {
 	*/
 	async getSesionesByMovieTitle(req, res){
 		try{
-			const sesiones = await sesionService.searchSessionByMovieTitle(req.body.titulo);
-			if(!sesiones) return res.status(401).json({error: 'not found'});
+			const sesiones = await sesionService.searchSessionByMovieTitle(req.params.title);
+			if(!sesiones || sesiones.length <= 0) return res.status(401).json({error: 'not found'});
+			console.log("numero de sesione: " + sesiones.length);
 			return res.status(200).json(sesiones);
 
 		}catch(err){
