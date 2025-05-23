@@ -17,7 +17,7 @@ import sesionRouter from "./routes/SesionRoutes.js";
 import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
-
+import webhookRouter from "./routes/WebhookRoutes.js";
 
 
 
@@ -34,8 +34,7 @@ app.use(rateLimit({
 }));
 
 // Middleware del web
-app.use(bodyParser.json());
-app.use(logger('dev'));
+
 app.use(cors({
     origin: "*", // Cors del servidor http
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -80,6 +79,10 @@ io.on('connection', async ( socket ) => {
 });
 */
 //rutas del api
+app.use(webhookRouter);
+app.use(bodyParser.json());
+app.use(logger('dev'));
+
 app.use('/api', movieRouter );
 app.use('/api', tipoSalaRouter);
 app.use('/api', salasRouter );
