@@ -6,11 +6,12 @@ class WebhookController {
  /*
   * Recoge el webhook de stripe
 */
-     registerEvent(req, res) {
+     async registerEvent(req, res) {
       try {
-        const response =  webhookService.registerEvent(req);
+		const response = await webhookService.registerEvent(req);
         return res.status(200).json({status: 'ok'});
       } catch (err) {
+			console.log(err.message);
         res.status(500).json({ error: err.message });
       }
     }

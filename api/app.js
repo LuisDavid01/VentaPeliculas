@@ -25,7 +25,11 @@ const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
-app.use(express.json({ limit: "10mb" }));
+
+//endpoint del webhook
+app.use(webhookRouter, bodyParser.raw({type: 'application/json'}));
+app.use(bodyParser.json({ limit: "5mb" }));
+
 app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
@@ -79,8 +83,7 @@ io.on('connection', async ( socket ) => {
 });
 */
 //rutas del api
-app.use(webhookRouter);
-app.use(bodyParser.json());
+
 app.use(logger('dev'));
 
 app.use('/api', movieRouter );

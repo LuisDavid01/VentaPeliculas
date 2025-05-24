@@ -8,7 +8,8 @@ class CompraController {
 */
 	async createCheckoutSession(req, res){
 		try{
-			const session = await compraService.createCheckoutSession(req.body);
+			//porque req.body es un buffer??????????
+			const session = await compraService.createCheckoutSession(JSON.parse(req.body));
 			return res.status(200).json({clientSecret: session});
 
 		}catch(err){
