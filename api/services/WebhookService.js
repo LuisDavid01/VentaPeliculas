@@ -7,53 +7,36 @@ const endpointSecret = config.WEBHOOK_SECRET;
 class WebhookService{
 
 	async registerEvent(req){
-		let buildEvent = req.body;
+		let event = req.body;
 		if(endpointSecret){
 			const signature = req.headers['stripe-signature'] || req.headers['Stripe-Signature'];
 
 
 		
-			buildEvent = stripe.webhooks.constructEvent(
+			event = stripe.webhooks.constructEvent(
 			req.body.toString(),
 			signature,
 			endpointSecret
 		);
 		}
-		//console.log(buildEvent);
+		//console.log(event);
 
 		//Manejamos el evento
-		switch(buildEvent.type){
+		switch(event.type){
 			case 'payment_intent.succeeded':
-				const paymentIntent = buildEvent.data.object;
+				const paymentIntent = event.data.object;
 				console.log('payment_intent recived' + paymentIntent.amount);
-				break;
+			break;
 			case 'checkout.session.completed':
-				//console.log(buildEvent);
-				const session = buildEvent.data.object;
-				//console.log(session)
+				const checkout = event.data.object;
 				const lineItems = await stripe.checkout.sessions.listLineItems(
-					session.id
+					checkout.id
 				);
-				console.log(JSON.stringify(lineItems))
-				/*
-				const sessionWithDetails = stripe.checkout.sessions.retrieve(
-      session.id,
-      {
-        expand: ['line_items'],
-      }
-    );
-	
-    // Iterar sobre los line_items para obtener el nombre del producto
-    sessionWithDetails.line_items.data.forEach((item) => {
-      const productName = item.description || item.price.product.name;
-      const quantity = item.quantity;
-      const amount = item.amount_total / 100; // Convertir a la moneda base (de centavos a unidades)
-
-      console.log(`Producto: ${productName}, Cantidad: ${quantity}, Monto: ${amount}`);
-    });i*/
+				
+				console.log(lineItems.data)
 			break;
 			default:
-				console.log('unhandle event type' + buildEvent.type);
+				console.log('unhandle event type' + event.type);
 				break;
 
 		}

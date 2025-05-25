@@ -467,7 +467,13 @@ class SesionService {
     }
   }
 ]
-		);	
+		);
+	}
+
+	async updateAsientos(id, items){
+		const asientos = SesionModel.updateOne({_id: id});
+
+
 
 	}
 
