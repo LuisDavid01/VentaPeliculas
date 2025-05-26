@@ -27,7 +27,7 @@ const app = express();
 //const server = createServer(app);
 
 //endpoint del webhook
-app.use(webhookRouter, bodyParser.raw({type: 'application/json'}));
+app.use(webhookRouter);
 app.use(bodyParser.json({ limit: "5mb" }));
 
 app.set("trust proxy", 1);

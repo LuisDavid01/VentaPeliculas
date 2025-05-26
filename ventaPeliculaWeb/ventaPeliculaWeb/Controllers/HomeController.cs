@@ -79,10 +79,10 @@ namespace ventaPeliculaWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
-                    var Item = new ItemModel
+                    var Item = new 
                     {
                         PrecioUnitario = result!.sala!.precioAsiento,
-                        AsientosSeleccionados = [],
+                        AsientosSeleccionados = new List<string>(),
                         FechaInicio = result!.fechaInicio,
                         Cantidad = 0,
                         NombrePelicula = result!.sala!.id_movie!.titulo,

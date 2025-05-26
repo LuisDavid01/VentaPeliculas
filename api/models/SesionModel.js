@@ -13,11 +13,17 @@ const SesionSchema = new mongoose.Schema({
         required: true
 
     },
+	id_movie:{
+		type: mongoose.Types.ObjectId,
+		required: true,
+		ref: "movies"
+
+	},
 	asientos: 
-	[[{ 
+	[{ 
 		numAsiento: { type: String },
 		ocupado: { type: Boolean }
-	}]],
+	}],
     id_sala: 
     { 
         type: mongoose.Types.ObjectId,
