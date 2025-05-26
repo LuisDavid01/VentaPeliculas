@@ -19,7 +19,7 @@ class CompraService{
         currency: 'crc',
         product_data: {
           name: `${asiento}`,
-          description: `Asiento para la sala ${item.sala.nombre} pelicula ${item.sala.id_movie.titulo}`,
+          description: `Asiento para la sala ${item.sala.nombre} pelicula ${item.id_movie.titulo}`,
         },
         unit_amount: item.sala.precioAsiento * 100,
       },

@@ -1,4 +1,4 @@
-﻿@model List<SalasPeliculasModel>
+﻿@model List<SesionesPorPelicula>
 <p>side menu</p>
 <p>searchbar</p>
 <p>filtros</p>
@@ -7,22 +7,26 @@
     <div class="album py-5 bg-light">
         <div class="container">
 
-           
-                @foreach (var SalaPelicula in Model)
-                {
-                    <div class="container"> 
-                    <h1>Pelicula: @SalaPelicula._id</h1>
-                    @foreach (var sala in SalaPelicula.salas!) {
-                        <p>@sala.teatro!.nombre</p>
-                        <p>@sala.teatro!.ubicacion</p>
-                        <p>@sala.nombre</p>
-                        <p>@sala.precioAsiento</p>
-                        foreach (var sesion in SalaPelicula.sesiones!) {
-                            <a class="btn btn-success " asp-area="" asp-controller="Home" asp-route-id="@sesion._id" asp-action="Sesion">Agregar al carrito 🛒</a>
-                        
+
+            @foreach (var SalaPelicula in Model)
+            {
+                <div class="container"> 
+                    <h1>Cine: @SalaPelicula.teatro</h1>
+
+                    @foreach (var pelicula in SalaPelicula.Peliculas!) {
+                        <H2>Pelicula: @pelicula.nombre</H2>
+
+                        @foreach (var sala in pelicula!.salas!) { 
+                            <h3>Sala: @sala.nombre</h3>
+
+                            @foreach (var sesion in sala.sesiones!) { 
+                                <p>@sesion.fechaInicio</p>
+                                <p>@sesion.fechaFinalizacion</p>
+                                <a class="btn btn-success" asp-area="" asp-controller="Home" asp-route-id="@sesion._id" asp-action="Sesion">Reservar espacio</a>
+                            }
                         }
                     }
-                    </div>
+                </div>
 
                 }
 

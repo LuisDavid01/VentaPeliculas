@@ -59,7 +59,7 @@ class SesionService {
   }, {
     '$lookup': {
       'from': 'tipoSala', 
-      'localField': 'sala.tipo_sala', 
+      'localField': 'sala.tipoSala', 
       'foreignField': '_id', 
       'as': 'sala.tipoSala'
     }
