@@ -46,9 +46,13 @@ class SalasService {
       'path': '$tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
-  }
-]
-		);
+  },
+	{
+		'$project':{
+						'id_teatro': 0
+					}
+	}
+]);
 		if(result.length > 0){
 			return result[0];
 		}
@@ -83,7 +87,13 @@ class SalasService {
       'path': '$tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
-  }
+  },
+	{
+		'$project':{
+				'id_teatro': 0
+		}
+	}
+
 ]
 
 		);

@@ -98,9 +98,11 @@ namespace ventaSalaWeb.Controllers
             using (var http = _httpClient.CreateClient())
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + id;
+                
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
+
                     var result = response.Content.ReadFromJsonAsync<SalasModel>().Result;
                     
                    
@@ -117,17 +119,32 @@ namespace ventaSalaWeb.Controllers
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + id;
                 var response = http.GetAsync(url).Result;
+                var url1 = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+                var url2 = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
+                var url3 = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala";
+
+                var response1 = http.GetAsync(url1).Result;
+                var response2 = http.GetAsync(url2).Result;
+                var response3 = http.GetAsync(url3).Result;
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SalasModel>().Result;
                     if (result != null ) {
-                        var salasParsed = new SalasModelDto();
-                        salasParsed.nombre = result.nombre;
-                        salasParsed.tipoSala = result.tipoSala!._id;
-                        salasParsed.id_teatro = result.teatro!._id;
-                        
-                        salasParsed.precioAsiento = result.precioAsiento;
-                        salasParsed._id = result._id;
+                        var result1 = response1.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+                        var result2 = response2.Content.ReadFromJsonAsync<List<TeatroModel>>().Result;
+                        var result3 = response3.Content.ReadFromJsonAsync<List<TipoSalaModel>>().Result;
+                        var salasParsed = new SalasModelDto
+                        {
+                            nombre = result.nombre,
+                            tipoSala = result.tipoSala!._id,
+                            id_teatro = result.teatro!._id,
+
+                            precioAsiento = result.precioAsiento,
+                            _id = result._id,
+                            ListaMovie = result1,
+                            ListaTeatro = result2,
+                            ListaTipo_sala = result3,
+                        };
 
                         return View(salasParsed);
                     }
