@@ -4,11 +4,6 @@ const SalasSchema = new mongoose.Schema({
     { 
         type: String
     },
-   id_movie: {
-    type: mongoose.Types.ObjectId,
-    required: true,
-    ref: "movies",
-   },
 	id_teatro:
 	{
 		type: mongoose.Types.ObjectId,
@@ -16,7 +11,7 @@ const SalasSchema = new mongoose.Schema({
 		ref: "teatro"
 	
 	},
-	tipo_sala:{
+	tipoSala:{
 		type: mongoose.Types.ObjectId,
 		required: true,
 		ref: "tipoSala"

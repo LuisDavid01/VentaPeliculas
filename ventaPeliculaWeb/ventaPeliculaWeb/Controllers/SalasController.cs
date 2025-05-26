@@ -123,9 +123,8 @@ namespace ventaSalaWeb.Controllers
                     if (result != null ) {
                         var salasParsed = new SalasModelDto();
                         salasParsed.nombre = result.nombre;
-                        salasParsed.tipo_sala = result.tipo_sala!._id;
-                        salasParsed.id_teatro = result.id_teatro!._id;
-                        salasParsed.id_movie = result.id_movie!._id;
+                        salasParsed.tipoSala = result.tipoSala!._id;
+                        salasParsed.id_teatro = result.teatro!._id;
                         
                         salasParsed.precioAsiento = result.precioAsiento;
                         salasParsed._id = result._id;

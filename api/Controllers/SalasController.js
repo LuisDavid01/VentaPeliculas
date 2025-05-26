@@ -15,6 +15,7 @@ class SalasController {
 			const Sala = await salasService.createSala(req.body);
 			res.status(201).json(Sala);
       } catch (err) {
+			console.log(err.message)
 			res.status(500).json({ error: err.message });
       }
     }

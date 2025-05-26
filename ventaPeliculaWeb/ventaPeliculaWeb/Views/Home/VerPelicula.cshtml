@@ -5,9 +5,8 @@
 {
   
         @Salas.nombre
-        @Salas.tipo_sala!.nombre
-        @Salas.id_teatro!.nombre
-        @Salas.id_movie!.titulo
+        @Salas.tipoSala!.nombre
+        @Salas.teatro!.nombre
         @Salas.precioAsiento
         <a class="btn btn-success " asp-area="" asp-controller="Home" asp-route-id="@Salas._id" asp-action="Sesion">Agregar al carrito 🛒</a>
 }

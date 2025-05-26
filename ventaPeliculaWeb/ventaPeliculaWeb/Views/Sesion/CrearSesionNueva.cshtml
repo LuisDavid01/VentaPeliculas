@@ -27,7 +27,7 @@
             <select asp-for="id_sala" required class="form-control input-lg">
                 @foreach (var sala in Model.salas!)
                 {
-                    <option value="@sala._id"  >@sala.nombre ( @sala.id_teatro!.nombre )</option>
+                    <option value="@sala._id"  >@sala.nombre ( @sala.teatro!.nombre )</option>
                 }
 
             </select>

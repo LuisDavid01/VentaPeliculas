@@ -13,8 +13,8 @@
                     <div class="container"> 
                     <h1>Pelicula: @SalaPelicula._id</h1>
                     @foreach (var sala in SalaPelicula.salas!) {
-                        <p>@sala.id_teatro!.nombre</p>
-                        <p>@sala.id_teatro!.ubicacion</p>
+                        <p>@sala.teatro!.nombre</p>
+                        <p>@sala.teatro!.ubicacion</p>
                         <p>@sala.nombre</p>
                         <p>@sala.precioAsiento</p>
                         foreach (var sesion in SalaPelicula.sesiones!) {

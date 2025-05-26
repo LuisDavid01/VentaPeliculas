@@ -129,11 +129,14 @@ namespace ventaPeliculaWeb.Controllers
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;
                 var urlSalas = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
+                var urlPeliculas = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
                 var responseSalas = http.GetAsync(urlSalas).Result;
+                var responsePeliculas = http.GetAsync(urlPeliculas).Result;
                 if (response.IsSuccessStatusCode && responseSalas.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
                     var resultSalas = responseSalas.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+                    var resultPeliculas = responsePeliculas.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
                     if (result != null)
                     {
                         /*
@@ -149,6 +152,7 @@ namespace ventaPeliculaWeb.Controllers
                         };
                         */
                         result.salas = resultSalas;
+                        result.peliculas = resultPeliculas;
                         return View(result);
                     }
 
@@ -169,7 +173,8 @@ namespace ventaPeliculaWeb.Controllers
                     model.fechaInicio,
                     model.fechaFinalizacion,
                     model.asientos,
-                    model.IdSalaTemp,
+                    id_sala = model.IdSalaTemp,
+                    id_movie = model.id_movie!._id,
                     model._id
                 }; ;
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + model._id;

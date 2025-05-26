@@ -17,44 +17,33 @@ class SalasService {
     async getSala(id){
 		if(!mongoose.isValidObjectId(id)) return;
             const result = await SalasModel.aggregate(
-[
+			[
   {
     '$match': {
-      '_id':  mongoose.Types.ObjectId.createFromHexString(id)}
+      '_id': mongoose.Types.ObjectId.createFromHexString(id)
+    }
   }, {
     '$lookup': {
       'from': 'teatro', 
       'localField': 'id_teatro', 
       'foreignField': '_id', 
-      'as': 'id_teatro'
+      'as': 'teatro'
     }
   }, {
     '$unwind': {
-      'path': '$id_teatro', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'movies', 
-      'localField': 'id_movie', 
-      'foreignField': '_id', 
-      'as': 'id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$id_movie', 
+      'path': '$teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$lookup': {
       'from': 'tipoSala', 
-      'localField': 'tipo_sala', 
+      'localField': 'tipoSala', 
       'foreignField': '_id', 
-      'as': 'tipo_sala'
+      'as': 'tipoSala'
     }
   }, {
     '$unwind': {
-      'path': '$tipo_sala', 
+      'path': '$tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
   }
@@ -69,41 +58,29 @@ class SalasService {
     */
     async getSalas(){
         return await SalasModel.aggregate(
-[
+			[
   {
     '$lookup': {
       'from': 'teatro', 
       'localField': 'id_teatro', 
       'foreignField': '_id', 
-      'as': 'id_teatro'
+      'as': 'teatro'
     }
   }, {
     '$unwind': {
-      'path': '$id_teatro', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'movies', 
-      'localField': 'id_movie', 
-      'foreignField': '_id', 
-      'as': 'id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$id_movie', 
+      'path': '$teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$lookup': {
       'from': 'tipoSala', 
-      'localField': 'tipo_sala', 
+      'localField': 'tipoSala', 
       'foreignField': '_id', 
-      'as': 'tipo_sala'
+      'as': 'tipoSala'
     }
   }, {
     '$unwind': {
-      'path': '$tipo_sala', 
+      'path': '$tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
   }
