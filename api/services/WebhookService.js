@@ -1,5 +1,7 @@
 import Stripe from 'stripe';
 import { config } from '../config/config.js';
+import SesionService from './SesionService.js';
+const sesionService = new SesionService;
 const stripe = new Stripe(config.STRIPE_SECRET, {
    });
 const endpointSecret = config.WEBHOOK_SECRET;
@@ -17,7 +19,7 @@ class WebhookService{
 			req.body.toString(),
 			signature,
 			endpointSecret
-		);
+		); 
 		}
 		//console.log(event);
 
@@ -32,8 +34,10 @@ class WebhookService{
 				const lineItems = await stripe.checkout.sessions.listLineItems(
 					checkout.id
 				);
-				
+				const sesionid = checkout.metadata.sesionId		
 				console.log(lineItems.data)
+				sesionService.updateAsientos(sesionid, lineItems.data)
+
 			break;
 			default:
 				console.log('unhandle event type' + event.type);

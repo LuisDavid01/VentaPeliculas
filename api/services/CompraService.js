@@ -27,7 +27,10 @@ class CompraService{
     })), 
     mode: 'payment',
     ui_mode: 'embedded',
-    return_url: 'https://localhost:7294/compra/success'  
+    return_url: 'https://localhost:7294/compra/success',
+	 metadata: {
+    sesionId: data.id_sesion
+  }
 		});
 	return session.client_secret;
 }

@@ -495,17 +495,26 @@ class SesionService {
 	}
 
 	async updateAsientos(id, items){
-		const result = await SesionModel.updateOne(
-		{ _id: mongoose.Types.ObjectId.createFromHexString(id)
-			, "asientos.items": items },
-		{ $set: { "asientos.$.ocupado": true } }
-	);
+	//const numAsiento = items.description;
+	const numAsiento = items.map(item => item.description);
+	console.log(numAsiento)
+    const result = await SesionModel.updateOne(
+        { _id: mongoose.Types.ObjectId.createFromHexString(id) },
+        {
+            $set: {
+                "asientos.$[elem].ocupado": true
+            }
+        },
+        {
+            arrayFilters: [
+                { "elem.numAsiento": {$in: numAsiento} }
+            ]
+        }
+    );
 
-	console.log(result);
-	return result;
-
+    console.log(result);
+    return result;	
 	}
-
 }
 
 export default SesionService;

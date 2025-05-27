@@ -14,6 +14,6 @@ Router.get('/Sesiones/Peliculas', sesionController.getSesionesPeliculas);
 Router.get('/Sesiones/Pelicula/:title', sesionController.getSesionesByMovieTitle);
 Router.put('/Sesion/:id', sesionController.updateSesion);
 Router.delete('/Sesion/:id', sesionController.deleteSesion);
-
+//Router.put('/Sesion/reservar/:id', sesionController.updateAsientos)
 
 export default Router;
