@@ -1,6 +1,7 @@
 import Stripe from 'stripe';
 import { config } from '../config/config.js';
 import SesionService from './SesionService.js';
+import EmailService from './EmailService.js';
 const sesionService = new SesionService;
 const stripe = new Stripe(config.STRIPE_SECRET, {
    });
@@ -13,8 +14,6 @@ class WebhookService{
 		if(endpointSecret){
 			const signature = req.headers['stripe-signature'] || req.headers['Stripe-Signature'];
 
-
-		
 			event = stripe.webhooks.constructEvent(
 			req.body.toString(),
 			signature,
@@ -29,14 +28,28 @@ class WebhookService{
 				const paymentIntent = event.data.object;
 				console.log('payment_intent recived' + paymentIntent.amount);
 			break;
+
 			case 'checkout.session.completed':
 				const checkout = event.data.object;
-				const lineItems = await stripe.checkout.sessions.listLineItems(
-					checkout.id
-				);
+				console.log(checkout.customer_details)
+				const lineItems = await stripe.checkout.sessions.listLineItems(checkout.id);
+
 				const sesionid = checkout.metadata.sesionId		
-				console.log(lineItems.data)
-				sesionService.updateAsientos(sesionid, lineItems.data)
+				console.log("items de la sesion: " + JSON.stringify(lineItems))
+				const numAsientos = lineItems.data.map(item => item.description);
+				const reservarAsientos = sesionService.updateAsientos(sesionid, numAsientos);
+				if(reservarAsientos){
+					const emailService = new EmailService;
+
+					const content = {
+						asientos : numAsientos,
+						precioAsiento: lineItems.data[0].price.unit_amount / 100,
+						email: checkout.customer_details.email,
+						nombre: checkout.customer_details.name
+					}
+					console.log(JSON.stringify(content))
+					//emailService.sendTickets(content)
+				}
 
 			break;
 			default:

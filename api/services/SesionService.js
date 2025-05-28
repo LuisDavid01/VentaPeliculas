@@ -494,9 +494,9 @@ class SesionService {
 					);
 	}
 
-	async updateAsientos(id, items){
+	async updateAsientos(id, numAsiento){
 	//const numAsiento = items.description;
-	const numAsiento = items.map(item => item.description);
+	//const numAsiento = items.map(item => item.description);
 	console.log(numAsiento)
     const result = await SesionModel.updateOne(
         { _id: mongoose.Types.ObjectId.createFromHexString(id) },
