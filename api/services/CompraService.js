@@ -12,7 +12,8 @@ class CompraService{
 		//console.log(data);
 		if(!data.asientosSeleccionados || data.asientosSeleccionados.length <= 0) return;
 		const item = await sesionService.getSesion(data.id_sesion);
-
+		//console.log(JSON.stringify(item))
+		const fecha = item.fechaInicio
 		const session = await stripe.checkout.sessions.create({
     line_items: data.asientosSeleccionados.map((asiento, index) => ({
       price_data: {
@@ -29,7 +30,10 @@ class CompraService{
     ui_mode: 'embedded',
     return_url: 'https://localhost:7294/compra/success',
 	 metadata: {
-    sesionId: data.id_sesion
+    sesionId: data.id_sesion,
+	movieTitle: item.id_movie.titulo,
+	fecha: fecha.toLocaleDateString(),
+	horarioInicio: fecha.toLocaleTimeString()
   }
 		});
 	return session.client_secret;

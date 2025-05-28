@@ -9,22 +9,23 @@ class EmailService {
 		to: content.email,
 		subject: 'Confirmacion de compra',
 		 html: `
-        <h2>¡Gracias por tu compra en Cineflex!</h2>
+        <h2>¡Gracias por tu compra en Cineflex, ${content.nombre}!</h2>
         <p>Tu compra ha sido procesada correctamente.</p>
+		<p>Fecha de pago: ${content.dateNow}</p>
         <p><strong>Detalles:</strong></p>
         <ul>
-          <li>Película: ${content.movie}</li>
-          <li>Fecha: ${content.date}</li>
-          <li>Horario: ${content.time}</li>
-          <li>Asientos: ${content.seats.join(', ')}</li>
+          <li>Película: ${content.movieTitle}</li>
+          <li>Fecha: ${content.fecha}</li>
+          <li>Horario: ${content.horarioInicio}</li>
+          <li>Asientos: ${content.asientos.join(', ')}</li>
+		  <li>Precio por asiento: ${content.precioAsiento} </li>
+		  <li>cobro total: ${content.precioAsiento * content.asientos.length} </li>
         </ul>
       `});
 		if(err) return;
 		return data;
 
 	}
-
-
 }
 
 export default EmailService;

@@ -26,16 +26,16 @@ class WebhookService{
 		switch(event.type){
 			case 'payment_intent.succeeded':
 				const paymentIntent = event.data.object;
-				console.log('payment_intent recived' + paymentIntent.amount);
+				console.log('payment_intent recived ' + paymentIntent.amount);
 			break;
 
 			case 'checkout.session.completed':
 				const checkout = event.data.object;
-				console.log(checkout.customer_details)
+				//console.log(checkout.customer_details)
 				const lineItems = await stripe.checkout.sessions.listLineItems(checkout.id);
 
 				const sesionid = checkout.metadata.sesionId		
-				console.log("items de la sesion: " + JSON.stringify(lineItems))
+				//console.log("items de la sesion: " + JSON.stringify(lineItems))
 				const numAsientos = lineItems.data.map(item => item.description);
 				const reservarAsientos = sesionService.updateAsientos(sesionid, numAsientos);
 				if(reservarAsientos){
@@ -45,10 +45,15 @@ class WebhookService{
 						asientos : numAsientos,
 						precioAsiento: lineItems.data[0].price.unit_amount / 100,
 						email: checkout.customer_details.email,
-						nombre: checkout.customer_details.name
+						nombre: checkout.customer_details.name,
+						movieTitle: checkout.metadata.movieTitle,
+						fecha: checkout.metadata.fecha,
+						horarioInicio: checkout.metadata.horarioInicio,
+						dateNow: new Date().toLocaleString()
 					}
 					console.log(JSON.stringify(content))
-					//emailService.sendTickets(content)
+					const email = emailService.sendTickets(content)
+					if(email) console.log("se envio correctamente")
 				}
 
 			break;
