@@ -2,7 +2,11 @@ import Stripe from 'stripe';
 import { config } from '../config/config.js';
 import SesionService from './SesionService.js';
 import EmailService from './EmailService.js';
+import FacturaService from './FacturaService.js';
+import FirebaseService from './FirebaseService.js';
 const sesionService = new SesionService;
+const facturaService = new FacturaService;
+const firebaseService = new FirebaseService;
 const stripe = new Stripe(config.STRIPE_SECRET, {
    });
 const endpointSecret = config.WEBHOOK_SECRET;
@@ -49,9 +53,24 @@ class WebhookService{
 						movieTitle: checkout.metadata.movieTitle,
 						fecha: checkout.metadata.fecha,
 						horarioInicio: checkout.metadata.horarioInicio,
-						dateNow: new Date().toLocaleString()
+						dateNow: new Date().toLocaleString(),
+						invoiceUrl: 'porfavor comunicarse con cineFlex para obtener su factura'
+
 					}
 					console.log(JSON.stringify(content))
+
+					const pdfStream = facturaService.createInvoice(content);
+
+					const invoiceData = {
+						name: checkout.customer_details.name,
+						mimetype: 'application/pdf'
+
+					}
+					const invoiceDownloadUrl = await firebaseService.UploadInvoice(invoiceData, pdfStream);
+					console.log(invoiceDownloadUrl)
+					content.invoiceUrl = invoiceDownloadUrl
+
+
 					const email = emailService.sendTickets(content)
 					if(email) console.log("se envio correctamente")
 				}

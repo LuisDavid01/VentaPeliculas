@@ -21,6 +21,7 @@ class EmailService {
 		  <li>Precio por asiento: ${content.precioAsiento} </li>
 		  <li>cobro total: ${content.precioAsiento * content.asientos.length} </li>
         </ul>
+		<a href='${content.invoiceUrl}'>Descarga tu factura!</a>
       `});
 		if(err) return;
 		return data;
