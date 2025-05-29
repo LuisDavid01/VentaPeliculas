@@ -6,9 +6,8 @@ namespace ventaPeliculaWeb.Models
     {
         public string? _id { get; set; }
         public string? nombre { get; set; }
-        public MoviesModel? id_movie { get; set; }
-        public TeatroModel? id_teatro { get; set; }
-        public TipoSalaModel? tipo_sala { get; set; }
+        public TeatroModel? teatro { get; set; }
+        public TipoSalaModel? tipoSala { get; set; }
         public decimal? precioAsiento { get; set; }
     }
 }

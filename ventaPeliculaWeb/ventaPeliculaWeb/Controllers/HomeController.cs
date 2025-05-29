@@ -43,7 +43,7 @@ namespace ventaPeliculaWeb.Controllers
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<List<SalasPeliculasModel>>().Result;
+                    var result = response.Content.ReadFromJsonAsync<List<SesionesPorPelicula>>().Result;
 
                     return View(result);
                 }
@@ -82,11 +82,11 @@ namespace ventaPeliculaWeb.Controllers
                     var Item = new ItemModel
                     {
                         PrecioUnitario = result!.sala!.precioAsiento,
-                        AsientosSeleccionados = [],
+                        AsientosSeleccionados = new List<string>(),
                         FechaInicio = result!.fechaInicio,
                         Cantidad = 0,
-                        NombrePelicula = result!.sala!.id_movie!.titulo,
-                        TipoSala = result!.sala!.tipo_sala!.nombre,
+                        NombrePelicula = result!.id_movie!.titulo,
+                        TipoSala = result!.sala!.tipoSala!.nombre,
                         id_sesion = result!._id,
                         asientos = result.asientos
 

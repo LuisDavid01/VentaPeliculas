@@ -3,13 +3,13 @@
 <form asp-controller="Salas" asp-action="CrearSala">
     <div class="row">
 
-        <h2 class="text-center">crear Pelicula</h2>
+        <h2 class="text-center">crear Sala</h2>
 
         <div class="form-group col-md-12 mb-4">
             <input type="text" required class="form-control input-lg" asp-for="nombre" placeholder="nombre">
         </div>
         <div class="form-group col-md-12 mb-4">
-            <select asp-for="tipo_sala" required class="form-control input-lg">
+            <select asp-for="tipoSala" required class="form-control input-lg">
                 @foreach (var tipoSala in Model.ListaTipo_sala!) { 
                     <option value="@tipoSala._id">@tipoSala.nombre</option>
                 }
@@ -28,17 +28,7 @@
             </select>
 
         </div>
-        <div class="form-group col-md-12 mb-4">
-
-            <select asp-for="id_movie" required class="form-control input-lg">
-                @foreach (var movie in Model.ListaMovie!)
-                {
-                    <option value="@movie._id">@movie.titulo</option>
-                }
-
-            </select>
-            
-        </div>
+        
         <div class="form-group col-md-12 mb-4">
             <input type="number" required class="form-control input-lg" asp-for="precioAsiento" placeholder="precioAsiento">
         </div>

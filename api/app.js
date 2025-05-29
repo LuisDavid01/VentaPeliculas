@@ -17,7 +17,7 @@ import sesionRouter from "./routes/SesionRoutes.js";
 import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
-
+import webhookRouter from "./routes/WebhookRoutes.js";
 
 
 
@@ -25,7 +25,11 @@ const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
-app.use(express.json({ limit: "10mb" }));
+
+//endpoint del webhook
+app.use(webhookRouter);
+app.use(bodyParser.json({ limit: "5mb" }));
+
 app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
@@ -34,8 +38,7 @@ app.use(rateLimit({
 }));
 
 // Middleware del web
-app.use(bodyParser.json());
-app.use(logger('dev'));
+
 app.use(cors({
     origin: "*", // Cors del servidor http
     methods: ["GET", "POST", "PUT", "DELETE"],
@@ -80,6 +83,9 @@ io.on('connection', async ( socket ) => {
 });
 */
 //rutas del api
+
+app.use(logger('dev'));
+
 app.use('/api', movieRouter );
 app.use('/api', tipoSalaRouter);
 app.use('/api', salasRouter );

@@ -4,8 +4,7 @@
     {
         public string? _id { get; set; }
         public string? nombre { get; set; }
-        public string? tipo_sala { get; set; }
-        public string? id_movie { get; set; }
+        public string? tipoSala { get; set; }
         public string? id_teatro { get; set; }
         public decimal? precioAsiento { get; set; }
 

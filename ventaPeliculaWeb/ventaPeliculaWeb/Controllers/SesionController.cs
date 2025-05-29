@@ -39,15 +39,21 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient())
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
-                var response = http.GetAsync(url).Result;
-                if (response.IsSuccessStatusCode)
-                {
+                var urlSalas = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
+                var urlPeliculas = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
+               
+                var responseSalas = http.GetAsync(urlSalas).Result;
+                var responsePeliculas = http.GetAsync(urlPeliculas).Result;
 
-                    var result = response.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+                if (responseSalas.IsSuccessStatusCode && responsePeliculas.IsSuccessStatusCode)
+                {
+                    var resultSalas = responseSalas.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+                    var resultPeliculas = responsePeliculas.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
+
                     var selectSalas = new SesionModelDto
                     {
-                        salas = result
+                        peliculas = resultPeliculas,
+                        salas = resultSalas
                     };
                     return View(selectSalas);
                 }
@@ -60,21 +66,23 @@ namespace ventaPeliculaWeb.Controllers
         {
 
             int letraAscii = 65;
-            var newAsientos = new List<List<AsientosModel>>();
-            for (int i = 0; i < 10; i++)
+            int numeroDeAsiento = 0;
+            var newAsientos = new List<AsientosModel>();
+            for (int i = 0; i < 200; i++)
             {
-                newAsientos.Add([]);
-                int numeroDeAsiento = 1;
-                for (int j = 0; j < 20; j++)
+                if (numeroDeAsiento > 20)
                 {
-                    newAsientos[i].Add(new AsientosModel
+                    numeroDeAsiento = 1;
+                    letraAscii++;
+                }
+                    newAsientos.Add(new AsientosModel
                     {
                         numAsiento = $"{(char)letraAscii}{numeroDeAsiento++}",
                         ocupado = false,
 
                     });
-                }
-                letraAscii++;
+                
+                
             }
             model.asientos = newAsientos;
 
@@ -121,11 +129,14 @@ namespace ventaPeliculaWeb.Controllers
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;
                 var urlSalas = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
+                var urlPeliculas = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
                 var responseSalas = http.GetAsync(urlSalas).Result;
+                var responsePeliculas = http.GetAsync(urlPeliculas).Result;
                 if (response.IsSuccessStatusCode && responseSalas.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<SesionModel>().Result;
                     var resultSalas = responseSalas.Content.ReadFromJsonAsync<List<SalasModel>>().Result;
+                    var resultPeliculas = responsePeliculas.Content.ReadFromJsonAsync<List<MoviesModel>>().Result;
                     if (result != null)
                     {
                         /*
@@ -141,6 +152,7 @@ namespace ventaPeliculaWeb.Controllers
                         };
                         */
                         result.salas = resultSalas;
+                        result.peliculas = resultPeliculas;
                         return View(result);
                     }
 
@@ -156,14 +168,15 @@ namespace ventaPeliculaWeb.Controllers
             
             using (var http = _httpClient.CreateClient())
             {
-                var sesionEditada = new SesionModelDto
+                var sesionEditada = new
                 {
-                    fechaInicio = model.fechaInicio,
-                    fechaFinalizacion = model.fechaFinalizacion,
-                    asientos = model.asientos,
+                    model.fechaInicio,
+                    model.fechaFinalizacion,
+                    model.asientos,
                     id_sala = model.IdSalaTemp,
-                    _id= model._id,
-                };
+                    id_movie = model.id_movie!._id,
+                    model._id
+                }; ;
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.PutAsJsonAsync(url, sesionEditada).Result;

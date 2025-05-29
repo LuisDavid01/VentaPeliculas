@@ -10,19 +10,28 @@
         </div>
 
         <div class="form-group col-md-12 mb-4">
-            <input type="text" required class="form-control input-lg" asp-for="tipo_sala" placeholder="idTipoSala">
+            <select asp-for="tipoSala" required class="form-control input-lg">
+                @foreach (var tipoSala in Model.ListaTipo_sala!)
+                {
+                    <option value="@tipoSala._id">@tipoSala.nombre</option>
+                }
+
+            </select>
+
         </div>
 
         <div class="form-group col-md-12 mb-4">
 
-            <input type="text" class="form-control  input-lg" asp-for="id_teatro" placeholder="idTeatro" />
+            <select asp-for="id_teatro" required class="form-control input-lg">
+                @foreach (var teatro in Model.ListaTeatro!)
+                {
+                    <option value="@teatro._id">@teatro.nombre</option>
+                }
+
+            </select>
 
         </div>
-        <div class="form-group col-md-12 mb-4">
 
-            <input type="text" class="form-control  input-lg" asp-for="id_movie" placeholder="idMovie" />
-
-        </div>
         <div class="form-group col-md-12 mb-4">
             <input type="number" required class="form-control input-lg" asp-for="precioAsiento" placeholder="precioAsiento">
         </div>

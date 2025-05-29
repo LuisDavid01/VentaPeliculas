@@ -126,15 +126,32 @@ class SesionController {
 	*/
 	async getSesionesByMovieTitle(req, res){
 		try{
-			const sesiones = await sesionService.searchSessionByMovieTitle(req.body.titulo);
-			if(!sesiones) return res.status(401).json({error: 'not found'});
+			const sesiones = await sesionService.searchSessionByMovieTitle(req.params.title);
+			if(!sesiones) return res.status(404).json({error: 'not found'});
 			return res.status(200).json(sesiones);
 
 		}catch(err){
 			return res.status(500).json({error: err.message});
 		}
 	}
+
+async updateAsientos(req, res){
+		try{
+			const sesiones = await sesionService.updateAsientos(req.params.id, req.body);
+			if(!sesiones) return res.status(404).json({error: 'not found'});
+			return res.status(200).json(sesiones);
+
+		}catch(err){
+			return res.status(500).json({error: err.message});
+		}
+	}
+
+
+
+
 }
+
+	
 
 
 export default SesionController;

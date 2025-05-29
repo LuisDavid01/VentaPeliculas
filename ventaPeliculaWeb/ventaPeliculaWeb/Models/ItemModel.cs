@@ -14,7 +14,7 @@
         public string? TipoSala { get; set; }
         public string? id_sesion { get; set; }
 
-        public List<List<AsientosModel>>? asientos { get; set; }
+        public List<AsientosModel>? asientos { get; set; }
 
     }
 }

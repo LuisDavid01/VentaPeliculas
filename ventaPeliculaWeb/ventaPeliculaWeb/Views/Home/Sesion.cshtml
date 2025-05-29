@@ -11,19 +11,18 @@
             <div class="row g-1">
                 @for (var i = 0; i < Model.asientos!.Count; i++)
                 {
-                    for (var j = 0; j < Model.asientos[i].Count; j++)
-                    {
+                   
                         <div class="col-1 mb-1">
                             <div class="form-check asiento text-center ">
                                 <input type="checkbox"
                                        name="AsientosSeleccionados"
-                                       value="@Model.asientos[i][j].numAsiento"
+                                       value="@Model.asientos[i].numAsiento"
                                        class="form-check-input asiento-checkbox"
-                                @(Model.asientos[i][j].ocupado ? "disabled" : "") />
-                                <label class="form-check-label">@Model.asientos[i][j].numAsiento</label>
+                                @(Model.asientos[i].ocupado ? "disabled" : "") />
+                                <label class="form-check-label">@Model.asientos[i].numAsiento</label>
                             </div>
                         </div>
-                    }
+                    
                 }
             </div>
         </div>

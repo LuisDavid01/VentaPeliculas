@@ -15,10 +15,23 @@ class SesionService {
     */
     async getSesion(id){
             const result = await SesionModel.aggregate(
-[
+			[
   {
     '$match': {
-      '_id':  mongoose.Types.ObjectId.createFromHexString(id)   }
+      '_id': mongoose.Types.ObjectId.createFromHexString(id)
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'id_movie', 
+      'foreignField': '_id', 
+      'as': 'id_movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_movie', 
+      'preserveNullAndEmptyArrays': true
+    }
   }, {
     '$lookup': {
       'from': 'salas', 
@@ -33,44 +46,34 @@ class SesionService {
     }
   }, {
     '$lookup': {
-      'from': 'movies', 
-      'localField': 'sala.id_movie', 
-      'foreignField': '_id', 
-      'as': 'sala.id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.id_movie', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.id_teatro'
+      'as': 'sala.teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.id_teatro', 
+      'path': '$sala.teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$lookup': {
       'from': 'tipoSala', 
-      'localField': 'sala.tipo_sala', 
+      'localField': 'sala.tipoSala', 
       'foreignField': '_id', 
-      'as': 'sala.tipo_sala'
+      'as': 'sala.tipoSala'
     }
   }, {
     '$unwind': {
-      'path': '$sala.tipo_sala', 
+      'path': '$sala.tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$project': {
       'id_sala': 0, 
-         }
+      'sala.id_teatro': 0, 
+      'sala.tipo_sala': 0
+    }
   }
 ]
 
@@ -88,10 +91,22 @@ class SesionService {
 			[
   {
     '$lookup': {
+      'from': 'movies', 
+      'localField': 'id_movie', 
+      'foreignField': '_id', 
+      'as': 'id_movie'
+    }
+  }, {
+    '$lookup': {
       'from': 'salas', 
       'localField': 'id_sala', 
       'foreignField': '_id', 
       'as': 'sala'
+    }
+  }, {
+    '$unwind': {
+      'path': '$id_movie', 
+      'preserveNullAndEmptyArrays': true
     }
   }, {
     '$unwind': {
@@ -100,26 +115,14 @@ class SesionService {
     }
   }, {
     '$lookup': {
-      'from': 'movies', 
-      'localField': 'sala.id_movie', 
-      'foreignField': '_id', 
-      'as': 'sala.id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.id_movie', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.id_teatro'
+      'as': 'sala.teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.id_teatro', 
+      'path': '$sala.teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
@@ -127,21 +130,23 @@ class SesionService {
       'from': 'tipoSala', 
       'localField': 'sala.tipo_sala', 
       'foreignField': '_id', 
-      'as': 'sala.tipo_sala'
+      'as': 'sala.tipoSala'
     }
   }, {
     '$unwind': {
-      'path': '$sala.tipo_sala', 
+      'path': '$sala.tipoSala', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$project': {
       'asientos': 0, 
-      'id_sala': 0 
-         }
+      'id_sala': 0, 
+      'sala.id_movie': 0, 
+      'sala.id_teatro': 0, 
+      'sala.tipo_sala': 0
+    }
   }
-]
-						);
+]);
   }
     /*
     Actualiza una sesion
@@ -229,11 +234,15 @@ class SesionService {
 		return result;
 
     }
-//agrupa todas las sesiones por su respectiva sala
+//agrupa todas las sesiones por su respectiva sala 
 	async getAllSesionesPorSala(){
 	return await SesionModel.aggregate(
-			[
+		[
   {
+    '$project': {
+      'asientos': 0
+    }
+  }, {
     '$lookup': {
       'from': 'salas', 
       'localField': 'id_sala', 
@@ -241,67 +250,67 @@ class SesionService {
       'as': 'sala'
     }
   }, {
-    '$unwind': {
-      'path': '$sala', 
-      'preserveNullAndEmptyArrays': true
-    }
+    '$unwind': '$sala'
   }, {
     '$lookup': {
       'from': 'movies', 
-      'localField': 'sala.id_movie', 
+      'localField': 'id_movie', 
       'foreignField': '_id', 
-      'as': 'sala.id_movie'
+      'as': 'movie'
     }
   }, {
     '$unwind': {
-      'path': '$sala.id_movie', 
-      'preserveNullAndEmptyArrays': true
+      'path': '$movie'
     }
   }, {
     '$lookup': {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.id_teatro'
+      'as': 'teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.id_teatro', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'tipoSala', 
-      'localField': 'sala.tipo_sala', 
-      'foreignField': '_id', 
-      'as': 'sala.tipo_sala'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.tipo_sala', 
+      'path': '$teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$group': {
-      '_id': '$sala', 
+      '_id': {
+        'teatro': '$teatro.nombre', 
+        'sala': '$sala.nombre'
+      }, 
       'sesiones': {
         '$push': {
           '_id': '$_id', 
-          'fechaInicio': '$fechaInicio'
+          'fechaInicio': '$fechaInicio', 
+          'fechaFinalizacion': '$fechaFinalizacion', 
+          'movie': '$movie'
         }
       }
     }
   }, {
+    '$group': {
+      '_id': '$_id.teatro', 
+      'salas': {
+        '$push': {
+          'nombre': '$_id.sala', 
+          'sesiones': '$sesiones'
+        }
+      }
+    }
+  }, {
+    '$sort': {
+      '_id': 1
+    }
+  }, {
     '$project': {
-      'sala': '$_id', 
-      'sesiones': 1, 
-      '_id': 0
+      '_id': 0,
+	  'teatro': "$_id", 
+      'salas': 1
     }
   }
-]
-
-
-
+]	
 		);}
 
 /*
@@ -311,6 +320,10 @@ class SesionService {
 		return SesionModel.aggregate(
 			[
   {
+    '$project': {
+      'asientos': 0
+    }
+  }, {
     '$lookup': {
       'from': 'salas', 
       'localField': 'id_sala', 
@@ -318,69 +331,76 @@ class SesionService {
       'as': 'sala'
     }
   }, {
-    '$unwind': {
-      'path': '$sala', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'movies', 
-      'localField': 'sala.id_movie', 
-      'foreignField': '_id', 
-      'as': 'sala.id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.id_movie', 
-      'preserveNullAndEmptyArrays': true
-    }
+    '$unwind': '$sala'
   }, {
     '$lookup': {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.id_teatro'
+      'as': 'teatro'
     }
   }, {
-    '$unwind': {
-      'path': '$sala.id_teatro', 
-      'preserveNullAndEmptyArrays': true
-    }
+    '$unwind': '$teatro'
   }, {
     '$lookup': {
-      'from': 'tipoSala', 
-      'localField': 'sala.tipo_sala', 
+      'from': 'movies', 
+      'localField': 'id_movie', 
       'foreignField': '_id', 
-      'as': 'sala.tipo_sala'
+      'as': 'pelicula'
     }
   }, {
-    '$unwind': {
-      'path': '$sala.tipo_sala', 
-      'preserveNullAndEmptyArrays': true
-    }
+    '$unwind': '$pelicula'
   }, {
     '$group': {
-      '_id': '$sala.id_movie.titulo', 
-      'salas': {
-        '$addToSet': '$sala'
+      '_id': {
+        'teatro': '$teatro.nombre', 
+        'pelicula': '$pelicula.titulo', 
+        'sala': '$sala.nombre'
       }, 
       'sesiones': {
         '$push': {
           '_id': '$_id', 
-          'fechaInicio': '$fechaInicio'
+          'fechaInicio': '$fechaInicio', 
+          'fechaFinalizacion': '$fechaFinalizacion'
         }
       }
     }
   }, {
+    '$group': {
+      '_id': {
+        'teatro': '$_id.teatro', 
+        'pelicula': '$_id.pelicula'
+      }, 
+      'salas': {
+        '$push': {
+          'nombre': '$_id.sala', 
+          'sesiones': '$sesiones'
+        }
+      }
+    }
+  }, {
+    '$group': {
+      '_id': '$_id.teatro', 
+      'peliculas': {
+        '$push': {
+          'nombre': '$_id.pelicula', 
+          'salas': '$salas'
+        }
+      }
+    }
+  }, {
+    '$sort': {
+      '_id': 1
+    }
+  }, {
     '$project': {
-      '_id': 1, 
-      'salas': '$salas', 
-      'sesiones': 1
+      '_id': 0, 
+      'teatro': '$_id', 
+      'peliculas': 1
     }
   }
 ]
-
-		);
+					);
 
 
 	}
@@ -392,6 +412,28 @@ class SesionService {
 		return SesionModel.aggregate(
 			[
   {
+    '$project': {
+      'asientos': 0
+    }
+  }, {
+    '$lookup': {
+      'from': 'movies', 
+      'localField': 'id_movie', 
+      'foreignField': '_id', 
+      'as': 'movie'
+    }
+  }, {
+    '$unwind': {
+      'path': '$movie'
+    }
+  }, {
+    '$match': {
+      'movie.titulo': {
+        '$regex': `.*${title}.*`, 
+        '$options': 'i'
+      }
+    }
+  }, {
     '$lookup': {
       'from': 'salas', 
       'localField': 'id_sala', 
@@ -399,78 +441,80 @@ class SesionService {
       'as': 'sala'
     }
   }, {
-    '$unwind': {
-      'path': '$sala', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'movies', 
-      'localField': 'sala.id_movie', 
-      'foreignField': '_id', 
-      'as': 'sala.id_movie'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.id_movie', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$match': {
-      'sala.id_movie.titulo': {
-        '$regex': `.*${title}.*`, 
-        '$options': 'i'
-      }
-    }
+    '$unwind': '$sala'
   }, {
     '$lookup': {
       'from': 'teatro', 
       'localField': 'sala.id_teatro', 
       'foreignField': '_id', 
-      'as': 'sala.id_teatro'
+      'as': 'teatro'
     }
   }, {
     '$unwind': {
-      'path': '$sala.id_teatro', 
-      'preserveNullAndEmptyArrays': true
-    }
-  }, {
-    '$lookup': {
-      'from': 'tipoSala', 
-      'localField': 'sala.tipo_sala', 
-      'foreignField': '_id', 
-      'as': 'sala.tipo_sala'
-    }
-  }, {
-    '$unwind': {
-      'path': '$sala.tipo_sala', 
+      'path': '$teatro', 
       'preserveNullAndEmptyArrays': true
     }
   }, {
     '$group': {
-      '_id': '$sala.id_movie.titulo', 
-      'salas': {
-        '$addToSet': '$sala'
+      '_id': {
+        'teatro': '$teatro.nombre', 
+        'sala': '$sala.nombre'
       }, 
       'sesiones': {
-        '$addToSet': {
+        '$push': {
           '_id': '$_id', 
           'fechaInicio': '$fechaInicio', 
-          'sala': '$sala'
+          'fechaFinalizacion': '$fechaFinalizacion', 
+          'movie': '$movie'
         }
       }
     }
   }, {
+    '$group': {
+      '_id': '$_id.teatro', 
+      'salas': {
+        '$push': {
+          'nombre': '$_id.sala', 
+          'sesiones': '$sesiones'
+        }
+      }
+    }
+  }, {
+    '$sort': {
+      '_id': 1
+    }
+  }, {
     '$project': {
-      '_id': 1, 
-      'sesiones': 1
+      '_id': 0, 
+      'teatro': '$_id', 
+      'salas': 1
     }
   }
 ]
-		);	
-
+					);
 	}
 
+	async updateAsientos(id, numAsiento){
+	//const numAsiento = items.description;
+	//const numAsiento = items.map(item => item.description);
+	console.log(numAsiento)
+    const result = await SesionModel.updateOne(
+        { _id: mongoose.Types.ObjectId.createFromHexString(id) },
+        {
+            $set: {
+                "asientos.$[elem].ocupado": true
+            }
+        },
+        {
+            arrayFilters: [
+                { "elem.numAsiento": {$in: numAsiento} }
+            ]
+        }
+    );
+
+    console.log(result);
+    return result;	
+	}
 }
 
 export default SesionService;
