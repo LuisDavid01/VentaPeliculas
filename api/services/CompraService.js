@@ -33,7 +33,7 @@ class CompraService{
     sesionId: data.id_sesion,
 	movieTitle: item.id_movie.titulo,
 	fecha: fecha.toLocaleDateString(),
-	horarioInicio: fecha.toLocaleTimeString()
+	horarioInicio: fecha.toLocaleDateString()
   }
 		});
 	return session.client_secret;

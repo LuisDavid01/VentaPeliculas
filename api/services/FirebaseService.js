@@ -12,24 +12,27 @@ initializeApp({
 
 class FirebaseService{
 	//sube una imagen
-	async UploadImage(invoiceData){
+	async UploadImage(img){
 	    const bucket = getStorage().bucket();
-		const fileName = `movies/${invoiceData.originalname}`
-		const loadInvoice = bucket.file(fileName);
+		const fileName = `movies/${img.originalname}`
+		const loadImg = bucket.file(fileName);
 		//si la imagen existe lanzamos un error
-		const [exists] = await loadInvoice.exists();
+		const [exists] = await loadImg.exists();
 		if(exists) throw new Error('El archivo ya existe o tiene el mismo nombre');
-		await loadInvoice.save(invoiceData.buffer, {
+		await loadInvoice.save(img.buffer, {
 			metadata:{
-				contentType: invoiceData.mimetype,
+				contentType: img.mimetype,
 			},
 
 		});
-		await loadInvoice.makePublic();
+		const [signedUrl] = await loadImg.getSignedUrl({
+			action: 'read',
+			expires: Date.now() + 30 * 24 * 60 * 60 * 1000, // un mes
+		});
 
-		const invoiceUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
 
-		return invoiceUrl;
+
+		return signedUrl;
 
 	}
 	//Elimina una imagen
