@@ -2,7 +2,12 @@
 
 <form asp-controller="Auth" asp-action="login">
     <div class="row">
-
+        @if (TempData["Mensaje"] != null)
+        {
+            <div class="alert alert-warning text-center">
+                @TempData["Mensaje"]
+            </div>
+        }
         <h2 class="text-center">Iniciar sesion</h2>
 
 
@@ -12,6 +17,8 @@
         <div class="form-group col-md-12 mb-4">
             <input type="text" required class="form-control input-lg" asp-for="password" placeholder="password" autocomplete="on">
         </div>
+        <div class="h-captcha" data-sitekey="10000000-ffff-ffff-ffff-000000000001" data-callback="onHCaptchaSubmit"></div>
+        <input type="hidden" id="HCaptchaToken" name="HCaptchaToken" asp-for="HCaptchaToken" />
 
 
 
@@ -23,3 +30,10 @@
         </div>
     </div>
 </form>
+<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+<<script>
+     // Callback function for hCaptcha
+     function onHCaptchaSubmit(token) {
+         document.getElementById("HCaptchaToken").value = token;
+     }
+</script>
