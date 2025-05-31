@@ -12,5 +12,6 @@
         public string? refreshtoken { get; set; }
         public DateTime? createdAt { get; set; }
         public DateTime? updatedAt { get; set; }
+        public string? HCaptchaToken { get; set; }
     }
 }

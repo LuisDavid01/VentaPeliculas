@@ -1,6 +1,8 @@
 import UsuariosService from "../services/UsuariosService.js";
 import UsuariosModel from "../models/UsuariosModel.js";
 import SecurityService from "./SecurityService.js";
+import { verify } from "hcaptcha";
+import { config } from "../config/config.js";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 dotenv.config();
@@ -40,6 +42,13 @@ class AuthService
 			
 		}
 
+	}
+
+	async verifyHCaptcha(token){
+		const secret = config.HCAPTCHA_SECRET;
+		const data = await verify(secret, token);
+		if(data.success != true) return;
+		return data;
 	}
 }
 

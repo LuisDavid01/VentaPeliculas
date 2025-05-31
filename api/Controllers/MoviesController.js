@@ -67,7 +67,7 @@ class MoviesController {
 
             return res.status(201).json(Movies);
         }catch(err){
-
+			console.log(err.message)
             res.status(500).json({error: err.message});
         }
     }

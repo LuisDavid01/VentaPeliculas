@@ -22,7 +22,8 @@ export const config = {
 	},
 	STORAGE_BUCKET: process.env.STORAGE_BUCKET,
 	WEBHOOK_SECRET: process.env.WEBHOOK_SECRET,
-	EMAIL_TOKEN: process.env.EMAIL_TOKEN
+	EMAIL_TOKEN: process.env.EMAIL_TOKEN,
+	HCAPTCHA_SECRET: process.env.HCAPTCHA_SECRET
 
 
 
