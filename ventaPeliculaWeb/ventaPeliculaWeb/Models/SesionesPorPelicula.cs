@@ -4,6 +4,7 @@
         public string? _id { get; set; }
         public DateTime? fechaInicio { get; set; }
         public DateTime? fechaFinalizacion { get; set; }
+        public MoviesModel? peliculaSesion { get; set; }
     }
     public class Sala { 
         public string? nombre {  get; set; }
