@@ -92,6 +92,7 @@ namespace ventaPeliculaWeb.Controllers
                         };
                         // Guardamos la informacion del usuario en cookies
                         Response.Cookies.Append("Token", result!.token!, cookieOptions);
+                        Response.Cookies.Append("RefreshToken", result!.refreshtoken!, cookieOptions);
                         Response.Cookies.Append("UsuarioId", result!._id!, cookieOptions);
                         Response.Cookies.Append("Correo", result!.email!, cookieOptions);
                         Response.Cookies.Append("Nombre", result!.nombre!, cookieOptions);

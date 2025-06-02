@@ -14,7 +14,6 @@ class AuthService
 	async Register (data){
 		if(data == null) throw new Error("No se cargaron datos");
 		const user = new UsuariosModel(data);
-		console.log(user.nombre);
 		user.rol = 'user';
 		return await usuariosService.createUsuarios(user);
 		
@@ -33,7 +32,7 @@ class AuthService
 			const token = jwt.sign({_id: userLookUp._id, rol: userLookUp.rol},
 			process.env.JWT_SECRET,
 			{
-				expiresIn:'7d'
+				expiresIn:'15m'
 			});
 		//actualizamos el token del usuario
 	userLookUp.token = token;
@@ -49,6 +48,11 @@ class AuthService
 		const data = await verify(secret, token);
 		if(data.success != true) return;
 		return data;
+	}
+
+	generateToken(req){
+		//todo generar un token en base al refreshtoken
+
 	}
 }
 
