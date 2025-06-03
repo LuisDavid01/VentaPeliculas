@@ -18,7 +18,7 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
                 var response = http.GetAsync(url).Result;
@@ -41,7 +41,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult CrearPelicula(MoviesModel model)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent(content: model.titulo!), "titulo");
@@ -69,7 +69,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult VerPelicula(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + id;
                 var response = http.GetAsync(url).Result;
@@ -86,7 +86,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult EditarPelicula(MoviesModel model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var formData = new MultipartFormDataContent();
                 formData.Add(new StringContent(content: model.titulo!), "titulo");
@@ -115,7 +115,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EliminarPelicula(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

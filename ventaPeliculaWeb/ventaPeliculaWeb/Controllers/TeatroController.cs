@@ -19,7 +19,7 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
                 var response = http.GetAsync(url).Result;
@@ -46,7 +46,7 @@ namespace ventaPeliculaWeb.Controllers
             {
                 return View(model);
             }
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -62,7 +62,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult VerTeatro(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + id;
                 var response = http.GetAsync(url).Result;
@@ -79,7 +79,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult EditarTeatro(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + id;
                 var response = http.GetAsync(url).Result;
@@ -104,7 +104,7 @@ namespace ventaPeliculaWeb.Controllers
                 ubicacion = model.ubicacion,
                 
             };
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + teatroParsed._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -118,7 +118,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EliminarTeatro(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

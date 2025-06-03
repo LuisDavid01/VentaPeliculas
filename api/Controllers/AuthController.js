@@ -33,15 +33,25 @@ class AuthController {
 	async verifyHCaptcha(req, res){
 		try{
 			const authResult = await authService.verifyHCaptcha(req.body.token);
-			if(!authResult) return res.status(403).json({error: 'failed HCaptcha'});
+			if(!authResult) return res.status(401).json({error: 'failed HCaptcha'});
 			return res.status(200).json(authResult);
 
 		}catch(err){
 			return res.status(500).json({error: err.message})
 		
 		}
-
+	}
 	
+	generateToken(req,res){
+		try{
+			const newAccessToken = authService.generateToken(req);
+			if(!newAccessToken) return res.status(400).json({error: "bad request"});
+			return res.status(200).json({token: newAccessToken});
+		}catch(err){
+			console.log(err.message)
+			return res.status(500).json({error: err.message})
+		}
+
 	}
    
 }

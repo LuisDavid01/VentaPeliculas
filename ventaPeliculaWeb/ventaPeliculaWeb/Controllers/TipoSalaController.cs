@@ -18,7 +18,7 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala";
                 var response = http.GetAsync(url).Result;
@@ -43,7 +43,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult CrearTipoSala(TipoSalaModel model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -59,7 +59,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult VerTipoSala(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala/" + id;
                 var response = http.GetAsync(url).Result;
@@ -76,7 +76,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult EditarTipoSala(TipoSalaModel model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -90,7 +90,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EliminarTipoSala(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "TipoSala/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

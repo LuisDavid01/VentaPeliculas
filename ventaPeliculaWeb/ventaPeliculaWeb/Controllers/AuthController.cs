@@ -41,7 +41,7 @@ namespace ventaPeliculaWeb.Controllers
                 return View();
             }
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
 
                 var catpchaUrl = _configuration.GetSection("Variables:urlWebApi").Value + "verifyHCaptcha";
@@ -88,7 +88,7 @@ namespace ventaPeliculaWeb.Controllers
                             HttpOnly = true, 
                             Secure = true,   
                             SameSite = SameSiteMode.Strict,
-                            Expires = DateTime.UtcNow.AddDays(4) 
+                            Expires = DateTime.UtcNow.AddDays(7) 
                         };
                         // Guardamos la informacion del usuario en cookies
                         Response.Cookies.Append("Token", result!.token!, cookieOptions);
@@ -119,7 +119,7 @@ namespace ventaPeliculaWeb.Controllers
                 TempData["Mensaje"] = "complete el captcha para continuar";
                 return View();
             }
-                using (var http = _httpClient.CreateClient())
+                using (var http = _httpClient.CreateClient("DefaultClient"))
                 {
                     var catpchaUrl = _configuration.GetSection("Variables:urlWebApi").Value + "verifyHCaptcha";
                     var verifyHCaptcha = await http.PostAsJsonAsync(catpchaUrl, new { token = model.HCaptchaToken });
