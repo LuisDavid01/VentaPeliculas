@@ -4,6 +4,7 @@ export const config = {
 	DATABASE_URL:process.env.DATABASE_URL,
 	salt: process.env.salt,
 	JWT_SECRET: process.env.JWT_SECRET,
+	JWT_REFRESH_SECRET: process.env.JWT_REFRESH_SECRET,
 	STRIPE_SECRET: process.env.STRIPE_SECRET,
 	firebaseConfig: {
 		type: process.env.type,

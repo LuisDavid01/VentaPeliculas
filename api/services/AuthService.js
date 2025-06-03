@@ -3,9 +3,8 @@ import UsuariosModel from "../models/UsuariosModel.js";
 import SecurityService from "./SecurityService.js";
 import { verify } from "hcaptcha";
 import { config } from "../config/config.js";
-import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-dotenv.config();
+
 const usuariosService = new UsuariosService;
 const securityService = new SecurityService;
 class AuthService
@@ -14,7 +13,6 @@ class AuthService
 	async Register (data){
 		if(data == null) throw new Error("No se cargaron datos");
 		const user = new UsuariosModel(data);
-		console.log(user.nombre);
 		user.rol = 'user';
 		return await usuariosService.createUsuarios(user);
 		
@@ -25,20 +23,31 @@ class AuthService
 	if(!data.username || !data.password) throw new Error("Contraseña o usuario vacio");
 	// buscamos el usuarios por el username en la base de datos
 	const userLookUp = await usuariosService.getUsuarioByUsername(data.username);
+	if(!userLookUp) throw new Error("Usuario no encontrado")
 	const password = data.password.toString();
 
 	const verifyPassword = await securityService.CheckPassword(password, userLookUp.password);
 	if( verifyPassword === true){
 			//creamos el jwt 
 			const token = jwt.sign({_id: userLookUp._id, rol: userLookUp.rol},
-			process.env.JWT_SECRET,
+			config.JWT_SECRET,
+			{
+				expiresIn:'15m'
+			});
+			const refreshToken = jwt.sign({_id: userLookUp._id, rol: userLookUp.rol},
+			config.JWT_REFRESH_SECRET,
 			{
 				expiresIn:'7d'
 			});
+
 		//actualizamos el token del usuario
-	userLookUp.token = token;
-	await usuariosService.updateLoggedUsuario(userLookUp._id,userLookUp);
-	return userLookUp;
+	const loggedUser = {
+			...userLookUp._doc,
+			token,
+			refreshToken 
+			}
+	
+	return loggedUser;
 			
 		}
 
@@ -49,6 +58,25 @@ class AuthService
 		const data = await verify(secret, token);
 		if(data.success != true) return;
 		return data;
+	}
+
+	generateToken(req){
+		//todo generar un token en base al refreshtoken
+		const tokenHeader = req.headers['x-refresh-token'] || req.headers['X-Refresh-Token'];	
+		if(!tokenHeader) throw new Error("Token no presente");
+		const tokenPayload = jwt.verify(tokenHeader, config.JWT_REFRESH_SECRET);
+		//generamos el nuevo token de acceso
+		const accessToken = jwt.sign({_id: tokenPayload._id, rol: tokenPayload.rol},
+			config.JWT_SECRET,
+			{
+				expiresIn:'15m'
+			});
+
+		return accessToken;
+
+
+
+
 	}
 }
 

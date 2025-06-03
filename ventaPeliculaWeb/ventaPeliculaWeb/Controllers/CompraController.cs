@@ -13,7 +13,6 @@ namespace ventaPeliculaWeb.Controllers
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-
         public CompraController(IConfiguration configuration, IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
@@ -26,7 +25,7 @@ namespace ventaPeliculaWeb.Controllers
                 return RedirectToAction("VerPeliculas", "Home");
             }
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var compra = new CompraModel
                 {

@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ventaPeliculaWeb.Models;
+using ventaPeliculaWeb.Services;
 
 namespace ventaPeliculaWeb.Controllers
 {
@@ -11,16 +12,18 @@ namespace ventaPeliculaWeb.Controllers
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
+        private readonly ITokenService _TokenService;
 
-        public UsuariosController(IConfiguration configuration, IHttpClientFactory httpClient)
+        public UsuariosController(IConfiguration configuration, IHttpClientFactory httpClient, ITokenService tokenService)
         {
             _httpClient = httpClient;
             _configuration = configuration;
+            _TokenService = tokenService;
         }
         [FiltroAdmin]
         public IActionResult Index()
         {
-                using (var http = _httpClient.CreateClient())
+                using (var http = _httpClient.CreateClient("DefaultClient"))
                 {
                     var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/0";
                     http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -31,6 +34,8 @@ namespace ventaPeliculaWeb.Controllers
 
                         return View(result);
                     }
+
+                
 
                     return View();
                 }
@@ -48,7 +53,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult CrearUsuario(UsuariosModel model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios";
                 var response = http.PostAsJsonAsync(url, model).Result;
@@ -63,7 +68,7 @@ namespace ventaPeliculaWeb.Controllers
         */
         public IActionResult VerUsuario(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -81,7 +86,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult EditarUsuario(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -100,7 +105,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpPost]
         public IActionResult EditarUsuario(UsuariosModel model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -114,7 +119,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EliminarUsuario(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Usuarios/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

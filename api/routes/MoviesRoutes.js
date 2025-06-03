@@ -1,5 +1,6 @@
 import express from "express"; 
 import multer from 'multer';
+import { verifyToken, validateRol } from "../Middlewares/AuthMiddleware.js";
 import MoviesController from "../Controllers/MoviesController.js";
 const moviesController = new MoviesController;
 const storage = multer.memoryStorage();
@@ -18,10 +19,10 @@ const upload = multer({
 	}
 });
 const Router = express.Router();
-Router.post('/movies',upload.single('imgFile') ,moviesController.createMovie);
+Router.post('/movies',verifyToken, validateRol('Admin') ,upload.single('imgFile') ,moviesController.createMovie);
 Router.get('/movies', moviesController.getMovies);
 Router.get('/movies/:id', moviesController.getMovie);
-Router.put('/movies/:id',upload.single('imgFile'),moviesController.UpdateMovie);
+Router.put('/movies/:id',verifyToken, validateRol('Admin') ,upload.single('imgFile'),moviesController.UpdateMovie);
 //Router.post('/moviesActualizar/:id',upload.single('imgFile') ,moviesController.UpdateMovie);
-Router.delete('/movies/:id', moviesController.DeleteMovie);
+Router.delete('/movies/:id',verifyToken, validateRol('Admin') ,moviesController.DeleteMovie);
 export default Router; 

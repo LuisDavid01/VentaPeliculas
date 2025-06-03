@@ -9,7 +9,7 @@ class CompraService{
 	// crea uan sesion de compra de stripe
 	// to do: crear sesion personalizada
 	async createCheckoutSession(data){
-		//console.log(data);
+		console.log(data);
 		if(!data.asientosSeleccionados || data.asientosSeleccionados.length <= 0) return;
 		const item = await sesionService.getSesion(data.id_sesion);
 		//console.log(JSON.stringify(item))

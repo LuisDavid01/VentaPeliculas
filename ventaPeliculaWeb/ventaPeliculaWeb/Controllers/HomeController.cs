@@ -21,7 +21,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
                 var response = http.GetAsync(url).Result;
@@ -37,7 +37,7 @@ namespace ventaPeliculaWeb.Controllers
         }
         public IActionResult VerPeliculas()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesiones/Peliculas";
                 var response = http.GetAsync(url).Result;
@@ -54,7 +54,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult VerPelicula(string idMovie)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + idMovie;
                 var response = http.GetAsync(url).Result;
@@ -71,7 +71,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpGet]
         public IActionResult Sesion(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;

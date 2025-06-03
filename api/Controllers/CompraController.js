@@ -1,4 +1,5 @@
 import CompraService from "../services/CompraService.js";
+
 const compraService = new CompraService;
 class CompraController {
 
@@ -8,7 +9,7 @@ class CompraController {
 */
 	async createCheckoutSession(req, res){
 		try{
-			//porque req.body es un buffer??????????
+
 			const session = await compraService.createCheckoutSession(req.body);
 			return res.status(200).json({clientSecret: session});
 
