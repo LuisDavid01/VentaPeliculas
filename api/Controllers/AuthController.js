@@ -10,6 +10,7 @@ class AuthController {
         const authResult = await authService.Register(req.body);
         return res.status(200).json(authResult);
       } catch (err) {
+			console.log(err.message);
         res.status(500).json({ error: err.message });
       }
     }

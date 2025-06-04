@@ -1,7 +1,7 @@
 
 
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.DependencyInjection; // Necesario para AddPolicyHandler
+using Microsoft.Extensions.DependencyInjection; 
 using ventaPeliculaWeb.Handlers;
 using ventaPeliculaWeb.Services;
 using Polly;

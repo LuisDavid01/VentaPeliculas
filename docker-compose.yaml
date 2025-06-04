@@ -1,0 +1,28 @@
+services:
+  app-test:
+    build:
+      context: ./api
+      args:
+        - PORT=42069
+        - DATABASE_URL=${DATABASE_URL}
+        - salt=11
+        - JWT_SECRET=${JWT_SECRET}
+        - JWT_REFRESH_SECRET=${JWT_REFRESH_SECRET}
+        - STRIPE_SECRET=${STRIPE_SECRET}
+        - type=${type}
+        - project_id=${project_id}
+        - private_key_id=${private_key_id}
+        - private_key=${private_key}
+        - client_email=${client_email}
+        - client_id=${client_id}
+        - auth_uri=${auth_uri}
+        - token_uri=${token_uri}
+        - auth_provider_x509_cert_url=${auth_provider_x509_cert_url}
+        - client_x509_cert_url=${client_x509_cert_url}
+        - universe_domain=${universe_domain}
+        - STORAGE_BUCKET=${STORAGE_BUCKET}
+        - WEBHOOK_SECRET=${WEBHOOK_SECRET}
+        - EMAIL_TOKEN=${EMAIL_TOKEN}
+        - HCAPTCHA_SECRET=${HCAPTCHA_SECRET}
+    ports:
+      - "42069:42069"
