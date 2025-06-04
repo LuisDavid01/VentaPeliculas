@@ -1,4 +1,16 @@
 services:
+  dotnet-test:
+    build:
+      context: ./ventaPeliculaWeb
+      args:
+        - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERTIFICATE_PASSWORD}
+    ports:
+      - "7294:7294"
+    depends_on:
+      - app-test  # Asegura que app-test se inicie antes
+    networks:
+      - app-network
+
   app-test:
     build:
       context: ./api
@@ -26,3 +38,9 @@ services:
         - HCAPTCHA_SECRET=${HCAPTCHA_SECRET}
     ports:
       - "42069:42069"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
