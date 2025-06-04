@@ -16,7 +16,7 @@
 
 3. Clona el repositorio:
 ```bash
-git https://github.com/LuisDavid01/VentaPeliculas
+git clone https://github.com/LuisDavid01/VentaPeliculas
 ```
 4. Revisar el archivo .env.example para ver como configurar las variables de entorno para correr el api
 
