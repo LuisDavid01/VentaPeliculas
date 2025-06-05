@@ -1,7 +1,7 @@
 
 
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.Extensions.DependencyInjection; // Necesario para AddPolicyHandler
+using Microsoft.Extensions.DependencyInjection; 
 using ventaPeliculaWeb.Handlers;
 using ventaPeliculaWeb.Services;
 using Polly;
@@ -53,7 +53,7 @@ app.UseSession();
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
-
+//recordar poner esto en el appjson en prod o cuando arregle el docker http://app-test:42069/api/
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
