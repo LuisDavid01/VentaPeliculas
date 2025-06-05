@@ -9,6 +9,7 @@
 ![Express](https://img.icons8.com/ios/50/000000/express-js.png)
 ![.NET Core](https://img.icons8.com/color/48/000000/net-framework.png)
 ![NodeJs](https://img.icons8.com/color/48/000000/nodejs.png)
+![Docker](https://img.icons8.com/color/48/000000/docker.png)
 ### Instalacion general
 1. Se requiere de tener Node v22.13 instalado en su equipo Puede descargarlo desde [la pagina oficial](https://nodejs.org/en) o bien desde cualquier [Node Version Manager](https://github.com/nvm-sh/nvm) que prefiera.
 
@@ -36,3 +37,5 @@ stripe listen -f http://localhost:8901/webhook
 ```
  
   listo! 😁👌
+### Instalacion del docker
+TBD
