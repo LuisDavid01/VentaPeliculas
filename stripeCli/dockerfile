@@ -1,0 +1,17 @@
+# Instalamos la imagen de stripe-cli
+FROM stripe/stripe-cli:v1.27.0
+
+
+#Definimos el directorio
+WORKDIR /app
+#Exponemos el puerto
+EXPOSE 3000
+#definimos la variable de entorno
+ARG STRIPE_API_KEY
+ENV STRIPE_API_KEY=$STRIPE_API_KEY
+#corremos el comando para escuchar el api
+#CMD ["/usr/local/bin/stripe", "listen", "-f", "http://app-test:42069/webhook", "--api-key", "${STRIPE_API_KEY}", "--port", "3000"]
+CMD  ["listen", "--api-key", "${STRIPE_API_KEY}", "--forward-to", "http://app-test:42069/webhook"]
+
+
+

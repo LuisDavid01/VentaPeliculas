@@ -167,12 +167,12 @@ namespace ventaPeliculaWeb.Controllers
 
         
         public async Task<IActionResult> Logout() {
-            var cookiesEliminar = new [] { "Token", "UsuarioId", "Correo", "Nombre", "Username", "Rol" };
+            var cookiesEliminar = new [] { "Token", "UsuarioId", "Correo", "Nombre", "Username", "Rol", "RefreshToken" };
             foreach (var Cookie in cookiesEliminar) {
                 Response.Cookies.Delete(Cookie);
             }
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login", "Auth");
+            return RedirectToAction("Index", "Home");
         }
 
 

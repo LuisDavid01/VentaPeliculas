@@ -17,7 +17,7 @@ class CompraService{
 		const session = await stripe.checkout.sessions.create({
     line_items: data.asientosSeleccionados.map((asiento, index) => ({
       price_data: {
-        currency: 'crc',
+        currency: 'usd',
         product_data: {
           name: `${asiento}`,
           description: `Asiento para la sala ${item.sala.nombre} pelicula ${item.id_movie.titulo}`,
