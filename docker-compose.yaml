@@ -1,4 +1,15 @@
 services:
+  stripe-cli-webhook:
+    build:
+      context: ./stripeCli
+      args:
+        STRIPE_API_KEY: ${STRIPE_API_KEY}
+    ports:
+      - "3000:3000"
+    depends_on:
+      - app-test
+    networks:
+      - app-network
   dotnet-test:
     build:
       context: ./ventaPeliculaWeb
