@@ -2,6 +2,7 @@
 >[!NOTE]
 >Actualmente esta bajo activo desarrollo!
 ***
+
 ## Introduccion
 ![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png)
 ![Firebase](https://img.icons8.com/color/48/000000/firebase.png)
@@ -10,6 +11,17 @@
 ![.NET Core](https://img.icons8.com/color/48/000000/net-framework.png)
 ![NodeJs](https://img.icons8.com/color/48/000000/nodejs.png)
 ![Docker](https://img.icons8.com/color/48/000000/docker.png)
+# Instalacion
+### Docker (Instalacion recomendada)
+1. Dentro de la raiz del proyecto se necesita el archivo .env con todas las variables de entorno para los contenedores.
+   Los contenedores ya tienen todas las configuraciones para correr el proyecto unicamente se necesitan las diferentes variables de entorno que necesitan
+   las diferentes dependencias,
+   se necesita un certificado ssl dentro de la carpeta ventaPeliculaWeb con el nombre "certificate.pfx"
+2. Correr todos los contenedores
+   ```bash
+   docker compose up
+   ```
+3. listo! 😁👌
 ### Instalacion general
 1. Se requiere de tener Node v22.13 instalado en su equipo Puede descargarlo desde [la pagina oficial](https://nodejs.org/en) o bien desde cualquier [Node Version Manager](https://github.com/nvm-sh/nvm) que prefiera.
 
@@ -35,7 +47,5 @@ git clone https://github.com/LuisDavid01/VentaPeliculas
 stripe login
 stripe listen -f http://localhost:8901/webhook
 ```
- 
-  listo! 😁👌
-### Instalacion del docker
-TBD
+# Colaboradores
+- Luis David Miranda Villalta (main developer)
