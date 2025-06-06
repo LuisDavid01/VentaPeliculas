@@ -17,14 +17,14 @@ namespace ventaPeliculaWeb.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public async Task<bool> GenerateToken()
+        public async Task<string?> GenerateToken()
         {
             using (var http = _httpClient.CreateClient("RenewTokenClient"))
             {
                 var refreshToken = _httpContextAccessor.HttpContext?.Request.Cookies["refreshtoken"];
                 if (string.IsNullOrEmpty(refreshToken))
                 {
-                    return false;
+                    return null;
                 }
                 http.DefaultRequestHeaders.Add("X-Refresh-Token", refreshToken);
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "auth/token";
@@ -32,17 +32,11 @@ namespace ventaPeliculaWeb.Services
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<Dictionary<string, string>>().Result;
-                    var cookieOptions = new CookieOptions
-                    {
-                        HttpOnly = true,
-                        Secure = true,
-                        SameSite = SameSiteMode.Strict,
-                        Expires = DateTime.UtcNow.AddDays(7)
-                    };
-                    _httpContextAccessor.HttpContext?.Response.Cookies.Append("Token", result!["token"], cookieOptions);
-                    return true;
+                   
+                   
+                    return result!["token"];
                 }
-                return false;
+                return null;
             }
                
         }

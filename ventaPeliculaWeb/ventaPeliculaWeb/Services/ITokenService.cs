@@ -2,6 +2,6 @@
 {
     public interface ITokenService
     {
-        public Task<bool> GenerateToken();
+        public Task<String?> GenerateToken();
     }
 }

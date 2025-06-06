@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using Microsoft.AspNetCore.Http;
 using ventaPeliculaWeb.Services;
 
 namespace ventaPeliculaWeb.Handlers
@@ -31,19 +32,28 @@ namespace ventaPeliculaWeb.Handlers
                     {
                         var tokenGenerated = await _tokenService.GenerateToken();
 
-                        if (tokenGenerated)
+                        if (tokenGenerated != null)
                         {
-                            // Obtener el nuevo token desde la cookie
-                            var newToken = _httpContextAccessor.HttpContext?.Request.Cookies["Token"];
-                            if (!string.IsNullOrEmpty(newToken))
+                            // Obtener colocamos el nuevo token
+                            var cookieOptions = new CookieOptions
                             {
-                                // Actualizar la solicitud con el nuevo token
-                                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", newToken);
-                                // Reintentar la solicitud
-                                response = await base.SendAsync(request, cancellationToken);
-                            }
+                                HttpOnly = true,
+                                Secure = true,
+                                SameSite = SameSiteMode.Strict,
+                                Expires = DateTime.UtcNow.AddDays(7)
+                            };
+                            _httpContextAccessor.HttpContext?.Response.Cookies.Append("Token", tokenGenerated, cookieOptions);
+
+                            // Actualizar la solicitud con el nuevo token
+                            request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", tokenGenerated);
+                            // Reintentar la solicitud
+                            response = await base.SendAsync(request, cancellationToken);
+
                         }
                     }
+
+
+
                     finally
                     {
                         lock (this)
