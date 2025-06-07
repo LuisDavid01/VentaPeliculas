@@ -23,8 +23,9 @@ const MoviesSchema = new mongoose.Schema({
      },
     cartelera: 
     { 
-        type: String
-    }
-},{ collection: 'movies' });
+        type: String,
+    },
+
+},	{ collection: 'movies' });
 
 export default mongoose.model('movies', MoviesSchema)

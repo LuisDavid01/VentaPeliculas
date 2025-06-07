@@ -14,13 +14,17 @@ var retryPolicy = HttpPolicyExtensions
     .WaitAndRetryAsync(3, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // Retraso exponencial: 2s, 4s, 8s
         onRetry: (outcome, timespan, retryAttempt, context) =>
         {
-            Console.WriteLine($"Intento {retryAttempt} falló. Reintentando en {timespan.TotalSeconds} segundos...");
+            Console.WriteLine($"Intento {retryAttempt} fallÃ³. Reintentando en {timespan.TotalSeconds} segundos...");
         });
 // Add services to the container.
 builder.Services.AddTransient<TokenHandler>();
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<ITrieService, TrieService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
+//Determinamos el Token hanlder para todas las request de este cliente http
+//Determinamos igual la politica de reintentos 
+
 builder.Services.AddHttpClient("DefaultClient")
     .AddHttpMessageHandler<TokenHandler>()
     .AddPolicyHandler(retryPolicy);
@@ -28,7 +32,7 @@ builder.Services.AddHttpClient("RenewTokenClient")
     .AddHttpMessageHandler<TokenHandler>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession();
-
+//Agregamos cookies
 builder.Services.AddAuthentication(options => { 
     options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 }).AddCookie(options => {
