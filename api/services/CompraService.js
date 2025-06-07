@@ -9,7 +9,7 @@ class CompraService{
 	// crea uan sesion de compra de stripe
 	// to do: crear sesion personalizada
 	async createCheckoutSession(data){
-		//console.log(data);
+		console.log(data);
 		if(!data.asientosSeleccionados || data.asientosSeleccionados.length <= 0) return;
 		const item = await sesionService.getSesion(data.id_sesion);
 		//console.log(JSON.stringify(item))
@@ -17,7 +17,7 @@ class CompraService{
 		const session = await stripe.checkout.sessions.create({
     line_items: data.asientosSeleccionados.map((asiento, index) => ({
       price_data: {
-        currency: 'crc',
+        currency: 'usd',
         product_data: {
           name: `${asiento}`,
           description: `Asiento para la sala ${item.sala.nombre} pelicula ${item.id_movie.titulo}`,
@@ -33,7 +33,7 @@ class CompraService{
     sesionId: data.id_sesion,
 	movieTitle: item.id_movie.titulo,
 	fecha: fecha.toLocaleDateString(),
-	horarioInicio: fecha.toLocaleDateString()
+	horarioInicio: fecha.toTimeString()
   }
 		});
 	return session.client_secret;

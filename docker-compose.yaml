@@ -54,6 +54,7 @@ services:
       - CERTIFICATE_PASSWORD=${CERTIFICATE_PASSWORD}
 
 
+
 networks:
   app-network:
     driver: bridge

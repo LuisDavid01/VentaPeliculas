@@ -21,7 +21,7 @@ namespace ventaSalaWeb.Controllers
         }
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -42,7 +42,7 @@ namespace ventaSalaWeb.Controllers
         [HttpGet]
         public IActionResult CrearSalaNueva()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url1 = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
                 var url2 = _configuration.GetSection("Variables:urlWebApi").Value + "Teatro";
@@ -78,7 +78,7 @@ namespace ventaSalaWeb.Controllers
             {
                 return View(model);
             }
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -95,7 +95,7 @@ namespace ventaSalaWeb.Controllers
 
         public IActionResult VerSala(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + id;
                 
@@ -115,7 +115,7 @@ namespace ventaSalaWeb.Controllers
 
         public IActionResult EditarSala(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + id;
                 var response = http.GetAsync(url).Result;
@@ -158,7 +158,7 @@ namespace ventaSalaWeb.Controllers
         [HttpPost]
         public IActionResult EditarSala(SalasModelDto model)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + model._id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -172,7 +172,7 @@ namespace ventaSalaWeb.Controllers
         public IActionResult EliminarSala(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Salas/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

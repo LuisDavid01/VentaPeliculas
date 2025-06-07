@@ -1,10 +1,11 @@
 import express from "express"; 
+import { verifyToken, validateRol } from "../Middlewares/AuthMiddleware.js";
 import UsuariosController from "../Controllers/UsuariosController.js";
 const usuariosController = new UsuariosController;
 const Router = express.Router();
 Router.post('/Usuarios', usuariosController.createUsuario);
-Router.get('/Usuarios/:id', usuariosController.getUsuario);
-Router.get('/Usuario/:username', usuariosController.getUsuarioByUsername);
-Router.put('/Usuarios/:id', usuariosController.UpdateUsuario);
-Router.delete('/Usuarios/:id', usuariosController.DeleteUsuario);
+Router.get('/Usuarios/:id', verifyToken, validateRol('Admin') ,usuariosController.getUsuario);
+Router.get('/Usuario/:username',verifyToken, validateRol('Admin'), usuariosController.getUsuarioByUsername);
+Router.put('/Usuarios/:id',verifyToken, validateRol('Admin'), usuariosController.UpdateUsuario);
+Router.delete('/Usuarios/:id',verifyToken, validateRol('Admin'), usuariosController.DeleteUsuario);
 export default Router;

@@ -1,6 +1,5 @@
 import MoviesService from "../services/MoviesService.js";
-import SecurityService from "../services/SecurityService.js";
-const securityService = new SecurityService;
+
 const moviesService = new MoviesService;
 class MoviesController {
  
@@ -9,8 +8,7 @@ class MoviesController {
 */
     async createMovie(req, res) {
       try {
-		const token = securityService.verifyToken(req);
-		if(!token) return res.status(401).json({error: 'token not verify'})
+
 			const movieData = {
 				...req.body,
 				file : req.file
@@ -55,8 +53,7 @@ class MoviesController {
     async UpdateMovie(req, res){
         try{
 		
-			const token = securityService.verifyToken(req);
-			if(!token) return res.status(401).json({error: 'token not verify'})
+
 			const movieData = {
 				...req.body,
 				file : req.file
@@ -67,7 +64,7 @@ class MoviesController {
 
             return res.status(201).json(Movies);
         }catch(err){
-
+			console.log(err.message)
             res.status(500).json({error: err.message});
         }
     }
@@ -76,8 +73,7 @@ class MoviesController {
 */
     async DeleteMovie(req, res){
         try{
-			const token = securityService.verifyToken(req);
-			if(!token) return res.status(401).json({error: 'token not verify'})
+
 		    const Movies = await moviesService.deleteMovie(req.params.id);
             if(!Movies) res.status(404).json({error: 'not found'});
 

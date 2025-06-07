@@ -19,7 +19,7 @@ class FirebaseService{
 		//si la imagen existe lanzamos un error
 		const [exists] = await loadImg.exists();
 		if(exists) throw new Error('El archivo ya existe o tiene el mismo nombre');
-		await loadInvoice.save(img.buffer, {
+		await loadImg.save(img.buffer, {
 			metadata:{
 				contentType: img.mimetype,
 			},

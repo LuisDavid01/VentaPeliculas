@@ -1,7 +1,6 @@
 
 import SalasService from "../services/SalasService.js";
-import SecurityService from "../services/SecurityService.js";
-const securityService = new SecurityService;
+
 const salasService = new SalasService
 class SalasController {
  
@@ -10,8 +9,7 @@ class SalasController {
 */
     async createSala(req, res) {
       try {
-			const token = securityService.verifyToken(req);
-			if(!token) return res.status(401).json({error: 'token not verify'})
+
 			const Sala = await salasService.createSala(req.body);
 			res.status(201).json(Sala);
       } catch (err) {
@@ -48,8 +46,7 @@ class SalasController {
 */
     async UpdateSala(req, res){
         try{
-			const token = securityService.verifyToken(req);
-			if(!token) return res.status(401).json({error: 'token not verify'})
+
             const Salas = await salasService.updateSala(req.params.id, req.body);
             if(!Salas) res.status(404).json({error: 'not found'});
             res.status(200).json(Salas);
@@ -62,22 +59,8 @@ class SalasController {
 */
     async DeleteSala(req, res){
         try{
-			const token = securityService.verifyToken(req);
-			if(!token) return res.status(401).json({error: 'token not verify'})
+
             const Salas = await salasService.deleteSala(req.params.id);
-            if(!Salas) res.status(404).json({error: 'not found'});
-            res.status(200).json(Salas);
-        }catch(err){
-            res.status(500).json({error: err.message});
-        }
-    }
-/*
- * Modifica unicamente la pelicula de la sala
- * ?? quizas se deba eliminar
-*/
-    async ModificarPeliculaSala(req, res){
-        try{
-            const Salas = await salasService.ModificarPeliculaSala(req.params.id,req.params.idMovie);
             if(!Salas) res.status(404).json({error: 'not found'});
             res.status(200).json(Salas);
         }catch(err){

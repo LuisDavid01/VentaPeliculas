@@ -19,7 +19,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult Index()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion";
                 var response = http.GetAsync(url).Result;
@@ -37,7 +37,7 @@ namespace ventaPeliculaWeb.Controllers
         [HttpGet]
         public IActionResult CrearSesionNueva()
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var urlSalas = _configuration.GetSection("Variables:urlWebApi").Value + "Salas";
                 var urlPeliculas = _configuration.GetSection("Variables:urlWebApi").Value + "Movies";
@@ -90,7 +90,7 @@ namespace ventaPeliculaWeb.Controllers
             {
                 return View(model);
             }
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
@@ -107,7 +107,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult VerSesion(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;
@@ -124,7 +124,7 @@ namespace ventaPeliculaWeb.Controllers
 
         public IActionResult EditarSesion(string id)
         {
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 var response = http.GetAsync(url).Result;
@@ -166,7 +166,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EditarSesion(SesionModel model)
         {
             
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var sesionEditada = new
                 {
@@ -189,7 +189,7 @@ namespace ventaPeliculaWeb.Controllers
         public IActionResult EliminarSesion(string id)
         {
 
-            using (var http = _httpClient.CreateClient())
+            using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Sesion/" + id;
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);

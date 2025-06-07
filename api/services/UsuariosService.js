@@ -1,17 +1,19 @@
 
 import UsuariosModel from '../models/UsuariosModel.js';
-import SecurityService from './SecurityService.js';
-const securityService = new SecurityService;
+import bcrypt from 'bcryptjs';
+//import SecurityService from './SecurityService.js';
+//const securityService = new SecurityService;
 class UsuariosService{
 
 	// creamos un usuario
     async createUsuarios(data) {
-		
-			const usuario = new UsuariosModel(data);
-			usuario.token=null;
-			usuario.password = await securityService.hashPassword(usuario.password); 
-			await usuario.save();
-			return usuario;
+		const userLookUp = await this.userExist(data);
+		if( userLookUp === undefined ||userLookUp === true) throw new Error("ya existe este usuario")
+		const usuario = new UsuariosModel(data);
+		usuario.token=null;
+		usuario.password = await this.hashPassword(usuario.password); 
+		await usuario.save();
+		return usuario;
 			
 		
     }
@@ -59,6 +61,26 @@ class UsuariosService{
 
     }
 
+	//verficiar si un usuario existe
+	async userExist(data){
+		if(!data || !data.username || !data.email) throw new Error('Datos incompletos: username y email son requeridos');
+		const exist = await UsuariosModel.exists({
+      $or: [
+        { username: data.username },
+        { email: data.email }
+      ]});
+		return !!exist
+
+	}
+
+	//encripta la contraseña
+	async hashPassword(password){
+		const salt = parseInt(process.env.salt);
+		const userPassword = password.trim();
+		const hashedpassword = await bcrypt.hash(userPassword, salt);
+		return hashedpassword;
+
+	}
 
 
 }
