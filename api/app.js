@@ -1,6 +1,8 @@
 import express from "express";
+//import https from 'https';
+//import fs from 'fs';
+import { config } from "./config/config.js";
 //import { Server } from "socket.io";
-
 //import { createServer } from "node:http";
 import connectDB from "./config/db.js";
 import cors from "cors";
@@ -18,6 +20,7 @@ import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
 import webhookRouter from "./routes/WebhookRoutes.js";
+import helmet from "helmet";
 
 
 
@@ -25,11 +28,18 @@ const port = process.env.PORT ?? 8901;
 const app = express();
 
 //const server = createServer(app);
+// cargamos el archivo .pfx y su passphrase
+/*
+const options = {
+	pfx: fs.readFileSync('/app/certificate.pfx'),
+	passphrase: config.CERTIFICATE_PASSWORD
 
+};
+*/
 //endpoint del webhook
 app.use(webhookRouter);
 app.use(bodyParser.json({ limit: "5mb" }));
-
+app.use(helmet());
 app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
@@ -94,9 +104,10 @@ app.use('/api', teatroRouter );
 app.use('/api', userRouter );
 app.use('/api', authRouter);
 app.use('/api', compraRouter);
-
+//creamos el servidor https
+//const server = https.createServer(options, app)
 //iniciamos el servidor
-app.listen(port, () => console.log(`Servidor corriendo en el puerto: ${port} `));
+app.listen(port, () => console.log(`El servidor esta corriendo en: http://localhost:${port} `));
 
 
 

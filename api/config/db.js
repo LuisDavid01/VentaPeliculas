@@ -9,7 +9,7 @@ const connectDB = async () =>{
         });
         console.log('Mongodb conectado');
     }catch(err){
-        console.error(err.message);
+        console.error("base de datos: ", err.message);
         process.exit(1);
     }
 };
