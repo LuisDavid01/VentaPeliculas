@@ -19,7 +19,7 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 	},
 	precio:
 	{
-		type: Number,
+		type: mongoose.Schema.Types.Number,
 		required: true,
 	},
 	cantidad:

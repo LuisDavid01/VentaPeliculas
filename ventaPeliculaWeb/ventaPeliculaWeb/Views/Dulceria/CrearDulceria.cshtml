@@ -1,0 +1,31 @@
+﻿@model DulceriaModel
+
+<form asp-controller="Dulceria" asp-action="CrearDulceria" method="post" >
+    <div class="row">
+
+        <h2 class="text-center">crear Dulceria</h2>
+        <div class="form-group col-md-12 mb-4">
+
+            <input type="text" asp-for="nombre"/>
+
+        </div>
+
+        <div class="form-group col-md-12 mb-4">
+
+            <select asp-for="idDelteatro" required class="form-control input-lg">
+                @foreach (var teatro in Model.listaTeatros!)
+                {
+                    <option value="@teatro._id">@teatro.nombre</option>
+                }
+
+            </select>
+
+        </div>
+        <div class="col-md-12">
+
+            <button type="submit" class="btn btn-primary btn-pill mb-4">Crear</button>
+
+
+        </div>
+    </div>
+</form>

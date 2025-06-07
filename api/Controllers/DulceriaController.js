@@ -9,10 +9,11 @@ class DulceriaController {
     async createDulceria(req, res) {
       try {
 			
-			const Sala = await dulceriaService.createDulceria(req.body);
-			res.status(201).json(Sala);
+			const Dulceria = await dulceriaService.createDulceria(req.body);
+			if(!Dulceria) return res.status(400).json({error: 'Error al agragar la dulceria'})
+			return res.status(201).json(Dulceria);
       } catch (err) {
-			res.status(500).json({ error: err.message });
+			return res.status(500).json({ error: err.message });
       }
     }
 /*
@@ -20,11 +21,12 @@ class DulceriaController {
 */
     async getDulceria(req, res){
         try{
-            const Sala = await dulceriaService.getDulceria(req.params.id);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+			console.log(req.user ?? 'no encontrado')
+            const Dulceria = await dulceriaService.getDulceria(req.params.id);
+            if(!Dulceria) return res.status(404).json({error: 'not found'});
+            return res.status(200).json(Dulceria);
         }catch(err){
-            res.status(500).json({error: err.message});
+            return res.status(500).json({error: err.message});
         }
     }
 
@@ -34,11 +36,11 @@ class DulceriaController {
 */
     async getDulcerias(req, res){
         try{
-            const Sala = await dulceriaService.getDulcerias();
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const Dulceria = await dulceriaService.getDulcerias();
+            if(!Dulceria) res.status(404).json({error: 'not found'});
+            return res.status(200).json(Dulceria);
         }catch(err){
-            res.status(500).json({error: err.message});
+           return res.status(500).json({error: err.message});
         }
     }
 /*
@@ -47,11 +49,11 @@ class DulceriaController {
     async updateDulceria(req, res){
         try{
 			
-            const Sala = await dulceriaService.updateDulceria(req.params.id, req.body);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const Dulceria = await dulceriaService.updateDulceria(req.params.id, req.body);
+            if(!Dulceria) return res.status(404).json({error: 'not found'});
+            return res.status(200).json(Dulceria);
         }catch(err){
-            res.status(500).json({error: err.message});
+            return res.status(500).json({error: err.message});
         }
     }
 /*
@@ -60,11 +62,11 @@ class DulceriaController {
     async deleteDulceria(req, res){
         try{
 			
-            const Sala = await dulceriaService.deleteDulceria(req.params.id);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const Dulceria = await dulceriaService.deleteDulceria(req.params.id);
+            if(!Dulceria) return res.status(404).json({error: 'not found'});
+            return res.status(200).json(Dulceria);
         }catch(err){
-            res.status(500).json({error: err.message});
+            return res.status(500).json({error: err.message});
         }
     }
 

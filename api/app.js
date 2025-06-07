@@ -20,6 +20,8 @@ import userRouter from "./routes/UsuariosRoutes.js";
 import authRouter from "./routes/AuthRoutes.js";
 import compraRouter from "./routes/CompraRoutes.js";
 import webhookRouter from "./routes/WebhookRoutes.js";
+import dulceriaRouter from "./routes/DulceriaRoutes.js";
+import productoDulceriaRouter from "./routes/ProductoDulceriaRoutes.js";
 import helmet from "helmet";
 
 
@@ -104,6 +106,8 @@ app.use('/api', teatroRouter );
 app.use('/api', userRouter );
 app.use('/api', authRouter);
 app.use('/api', compraRouter);
+app.use('/api', dulceriaRouter);
+app.use('/api', productoDulceriaRouter);
 //creamos el servidor https
 //const server = https.createServer(options, app)
 //iniciamos el servidor

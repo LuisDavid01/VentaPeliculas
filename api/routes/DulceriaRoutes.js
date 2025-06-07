@@ -6,8 +6,9 @@ const Router = express.Router();
 
 
 Router.post('/Dulceria', verifyToken, validateRol('Admin'),dulceriaController.createDulceria);
-Router.get('/Dulceria', verifyToken ,dulceriaController.getDulcerias);
-Router.get('/Dulceria/:id', verifyToken ,dulceriaController.getDulceria);
+Router.get('/Dulceria' ,dulceriaController.getDulcerias);
+Router.get('/Admin/Dulceria' ,verifyToken, validateRol('Admin'),dulceriaController.getDulcerias);
+Router.get('/Dulceria/:id',dulceriaController.getDulceria);
 Router.put('/Dulceria/:id',verifyToken, validateRol('Admin') ,dulceriaController.updateDulceria);
 Router.delete('/Dulceria/:id',verifyToken, validateRol('Admin') ,dulceriaController.deleteDulceria);
 
