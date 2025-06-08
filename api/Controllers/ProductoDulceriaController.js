@@ -8,10 +8,14 @@ class ProductoDulceriaController {
 */
     async createProductoDulceria(req, res) {
       try {
-			
-			const Sala = await productoDulceriaService.createProductoDulceria(req.body);
-			res.status(201).json(Sala);
+		const productoData = {
+				...req.body,
+				file : req.file
+			}	
+			const producto = await productoDulceriaService.createProductoDulceria(productoData);
+			res.status(201).json(producto);
       } catch (err) {
+			console.log(err.message);
 			res.status(500).json({ error: err.message });
       }
     }
@@ -20,9 +24,9 @@ class ProductoDulceriaController {
 */
     async getProductoDulceria(req, res){
         try{
-            const Sala = await productoDulceriaService.getProductoDulceria(req.params.id);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const producto = await productoDulceriaService.getProductoDulceria(req.params.id);
+            if(!producto) res.status(404).json({error: 'not found'});
+            res.status(200).json(producto);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -34,9 +38,9 @@ class ProductoDulceriaController {
 */
     async getProductosDulcerias(req, res){
         try{
-            const Sala = await productoDulceriaService.getProductosDulceria();
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const producto = await productoDulceriaService.getProductosDulceria();
+            if(!producto) res.status(404).json({error: 'not found'});
+            res.status(200).json(producto);
         }catch(err){
             res.status(500).json({error: err.message});
         }
@@ -46,11 +50,15 @@ class ProductoDulceriaController {
 */
     async updateProductoDulceria(req, res){
         try{
-			
-            const Sala = await productoDulceriaService.updateProductoDulceria(req.params.id, req.body);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+			const productoData = {
+				...req.body,
+				file : req.file
+			}		
+            const producto = await productoDulceriaService.updateProductoDulceria(req.params.id, productoData);
+            if(!producto) res.status(404).json({error: 'not found'});
+            res.status(200).json(producto);
         }catch(err){
+			console.log(err.message);
             res.status(500).json({error: err.message});
         }
     }
@@ -60,10 +68,11 @@ class ProductoDulceriaController {
     async deleteProductoDulceria(req, res){
         try{
 			
-            const Sala = await productoDulceriaService.deleteProductoDulceria(req.params.id);
-            if(!Sala) res.status(404).json({error: 'not found'});
-            res.status(200).json(Sala);
+            const producto = await productoDulceriaService.deleteProductoDulceria(req.params.id);
+            if(!producto) res.status(404).json({error: 'not found'});
+            res.status(200).json(producto);
         }catch(err){
+			console.log(err.message);
             res.status(500).json({error: err.message});
         }
     }    

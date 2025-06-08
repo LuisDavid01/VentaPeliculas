@@ -1,7 +1,7 @@
 import express from "express";
 //import https from 'https';
 //import fs from 'fs';
-import { config } from "./config/config.js";
+//import { config } from "./config/config.js";
 //import { Server } from "socket.io";
 //import { createServer } from "node:http";
 import connectDB from "./config/db.js";

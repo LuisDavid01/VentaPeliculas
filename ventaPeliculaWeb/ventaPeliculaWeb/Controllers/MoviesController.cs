@@ -97,7 +97,6 @@ namespace ventaPeliculaWeb.Controllers
                 
                 if (model.imgFile != null && model.imgFile.Length > 0)
                 {
-                    Console.WriteLine(" largo de la imagen: " + model.imgFile.Length);
                     var streamContent = new StreamContent(model.imgFile.OpenReadStream());
                     streamContent.Headers.ContentType = new MediaTypeHeaderValue(model.imgFile.ContentType);
                     formData.Add(streamContent, "imgFile", model.imgFile.FileName);

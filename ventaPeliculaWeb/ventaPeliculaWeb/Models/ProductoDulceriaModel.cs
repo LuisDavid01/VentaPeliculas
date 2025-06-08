@@ -7,6 +7,7 @@ namespace ventaPeliculaWeb.Models
         public string? _id { get; set; }
         public string? nombre { get; set; }
         public string? imagen { get; set; }
+        public IFormFile? imgFile { get; set; }
         public string? descripcion { get; set; }
         public decimal? precio { get; set; }
         public uint? cantidad { get; set; }

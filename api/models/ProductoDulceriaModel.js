@@ -12,6 +12,10 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	storagePath:
+	{
+		type: String
+	},
 	descripcion:
 	{
 		type: String,

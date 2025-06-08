@@ -1,0 +1,52 @@
+﻿@model List<ProductoDulceriaModel>
+
+@if (Model == null || !Model.Any())
+{
+    <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-action="CrearProductoDulceria"> Crear nuevo Producto dulceria</a>
+    <p>No hay Dulcerias para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de Producto Dulcerias </h2>
+    <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-action="CrearProductoDulceria"> Crear nuevo Producto dulceria</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre de la dulceria</th>
+                <th>precio</th>
+                <th>Cantidad</th>
+                <th>dulceria</th>
+
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Producto in Model)
+            {
+                <tr>
+                    <td>@Producto.nombre</td>
+                    <td>$ @Producto.precio</td>
+                    <td>@Producto.cantidad</td>
+                    <td>
+                        @Producto.dulceria?.nombre
+                    </td>
+
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-route-id="@Producto._id" asp-action="EditarProductoDulceria"> Editar  Producto Dulceria</a>
+                        <form asp-controller="ProductoDulceria" asp-action="EliminarProductoDulceria" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Producto._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Dulceria?');">Eliminar Producto Dulceria</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
