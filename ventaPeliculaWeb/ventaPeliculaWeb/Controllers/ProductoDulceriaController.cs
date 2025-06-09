@@ -33,6 +33,23 @@ namespace ventaPeliculaWeb.Controllers
             }
         }
 
+        public IActionResult Dulceria(string id)
+        {
+            using (var http = _httpClient.CreateClient("DefaultClient"))
+            {
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "ProductoDulceria/dulceria/" + id;
+                var response = http.GetAsync(url).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = response.Content.ReadFromJsonAsync<List<ProductoDulceriaModel>>().Result;
+
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+
         [FiltroAdmin]
         public IActionResult VerProductoDulcerias()
         {

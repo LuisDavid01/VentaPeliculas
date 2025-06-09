@@ -47,6 +47,35 @@ namespace ventaPeliculaWeb.Controllers
             }
         }
 
+        [HttpPost]
+        public IActionResult RealizarCompraDulceria(DulceriaItemModel model)
+        {
+            if (model.ProductosSeleccionados == null || model.ProductosSeleccionados.Count <= 0)
+            {
+                return RedirectToAction("Index", "ProductoDulceria");
+            }
+            model.ProductosSeleccionados = model.ProductosSeleccionados
+            ?.Where(p => p.cantidad > 0)
+            .ToList();
+
+            using (var http = _httpClient.CreateClient("DefaultClient"))
+            {
+                
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "createCheckoutSessionDulceria";
+                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
+                var response = http.PostAsJsonAsync(url, model).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //todo hacer que redirija a la pagina de stripe
+                    var result = response.Content.ReadFromJsonAsync<CompraModel>().Result;
+
+                    return View(result);
+                }
+                return View();
+
+            }
+        }
+
         public IActionResult Success()
         {
 

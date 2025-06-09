@@ -35,7 +35,25 @@ class WebhookService{
 
 			case 'checkout.session.completed':
 				const checkout = event.data.object;
-				//console.log(checkout.customer_details)
+				if(checkout.metadata.tipo === 'dulceria'){
+					await this.DulceriaCheckout(checkout);
+			
+				}else{
+					 await this.MovieCheckout(checkout);
+				
+				}
+
+			break;
+			default:
+				console.log('unhandle event type' + event.type);
+				break;
+
+		}
+		
+	}
+
+	async MovieCheckout(checkout){
+			//console.log(checkout.customer_details)
 				const lineItems = await stripe.checkout.sessions.listLineItems(checkout.id);
 
 				const sesionid = checkout.metadata.sesionId		
@@ -74,15 +92,53 @@ class WebhookService{
 					const email = emailService.sendTickets(content)
 					if(email) console.log("se envio correctamente")
 				}
-
-			break;
-			default:
-				console.log('unhandle event type' + event.type);
-				break;
-
-		}
-		
 	}
+
+
+
+		async DulceriaCheckout(checkout){
+			//console.log(checkout.customer_details)
+				const lineItems = await stripe.checkout.sessions.listLineItems(checkout.id);
+
+				const sesionid = checkout.metadata.sesionId		
+				//console.log("items de la sesion: " + JSON.stringify(lineItems))
+				const numAsientos = lineItems.data.map(item => item.description);
+				const reservarAsientos = sesionService.updateAsientos(sesionid, numAsientos);
+				if(reservarAsientos){
+					const emailService = new EmailService;
+
+					const content = {
+						asientos : numAsientos,
+						precioAsiento: lineItems.data[0].price.unit_amount / 100,
+						email: checkout.customer_details.email,
+						nombre: checkout.customer_details.name,
+						movieTitle: checkout.metadata.movieTitle,
+						fecha: checkout.metadata.fecha,
+						horarioInicio: checkout.metadata.horarioInicio,
+						dateNow: new Date().toLocaleString(),
+						invoiceUrl: 'porfavor comunicarse con cineFlex para obtener su factura'
+
+					}
+					console.log(JSON.stringify(content))
+
+					const pdfStream = facturaService.createInvoice(content);
+
+					const invoiceData = {
+						name: checkout.customer_details.name,
+						mimetype: 'application/pdf'
+
+					}
+					const invoiceDownloadUrl = await firebaseService.UploadInvoice(invoiceData, pdfStream);
+					console.log(invoiceDownloadUrl)
+					content.invoiceUrl = invoiceDownloadUrl
+
+
+					const email = emailService.sendTickets(content)
+					if(email) console.log("se envio correctamente")
+				}
+	}
+
+
 
 
 }
