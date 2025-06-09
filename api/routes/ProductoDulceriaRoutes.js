@@ -25,6 +25,7 @@ const Router = express.Router();
 Router.post('/ProductoDulceria', verifyToken, validateRol('Admin'),upload.single('imgFile'),productoDulceriaController.createProductoDulceria);
 Router.get('/ProductoDulceria' ,productoDulceriaController.getProductosDulcerias);
 Router.get('/ProductoDulceria/:id',productoDulceriaController.getProductoDulceria);
+Router.get('/Productos/dulceria/:id',productoDulceriaController.getProductosByDulceria);
 Router.put('/ProductoDulceria/:id',upload.single('imgFile'),productoDulceriaController.updateProductoDulceria);
 Router.delete('/ProductoDulceria/:id',verifyToken, validateRol('Admin') ,productoDulceriaController.deleteProductoDulceria);
 

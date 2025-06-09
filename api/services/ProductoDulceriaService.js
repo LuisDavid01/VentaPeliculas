@@ -1,5 +1,5 @@
 import ProductoDulceriaModel from "../models/ProductoDulceriaModel.js";
-import { isValidObjectId } from "mongoose";
+import mongoose, { isValidObjectId } from "mongoose";
 import FirebaseService from "./FirebaseService.js";
 const firebaseService = new FirebaseService;
 class ProductoDulceriaService {
@@ -8,7 +8,6 @@ class ProductoDulceriaService {
     */
     async createProductoDulceria(data) {
      const imgUrl = await firebaseService.UploadImage(data.file,'products');
-		console.log(imgUrl);
 		if(!imgUrl) throw new Error('Imagen no generada  correctamente');
       const ProductoDulceria = new ProductoDulceriaModel(data);
        ProductoDulceria.imagen = imgUrl.signedUrl;
@@ -42,14 +41,11 @@ class ProductoDulceriaService {
     Actualiza un dulceria
     */
     async updateProductoDulceria(id, data){
-		console.log('este es el id: ', id);
-		console.log(data);
 		if(!isValidObjectId(id)) return;
 		//Si no hay un archivo de imagen,
 		//la imagen de la pelicula permanece
 		if(data.file != null){
 		const imgUrl = await firebaseService.UploadImage(data.file,'products');
-		console.log(imgUrl);
 		if(!imgUrl) return;
 		let oldImage = data.storagePath;
 		await firebaseService.deleteImage(oldImage);
@@ -72,6 +68,59 @@ class ProductoDulceriaService {
         return await ProductoDulceriaModel.findByIdAndDelete(id);
 
     }
+
+	async getProductoDulceriaByName(name){
+            return await ProductoDulceriaModel.findOne({nombre: name}).populate({
+    path: 'dulceria',
+    populate: {
+      path: 'id_teatro'
+    } 
+  });
+    }
+
+	async updateQuantityProductoDulceriaById(id, cantidad){
+            return await ProductoDulceriaModel.updateOne(
+			{_id: id},
+			{$inc: {cantidad: -cantidad}}
+		);
+	}
+
+	async getProductoDulceriaByDulceria(id){
+		if(!isValidObjectId(id)) return;
+		return await ProductoDulceriaModel.aggregate(
+			[
+  {
+    '$match': {
+      'dulceria': mongoose.Types.ObjectId.createFromHexString(id)
+    }
+  }, {
+    '$lookup': {
+      'from': 'dulcerias', 
+      'localField': 'dulceria', 
+      'foreignField': '_id', 
+      'as': 'dulceria'
+    }
+  }, {
+    '$unwind': {
+      'path': '$dulceria'
+    }
+  }, {
+    '$lookup': {
+      'from': 'teatro', 
+      'localField': 'dulceria.id_teatro', 
+      'foreignField': '_id', 
+      'as': 'dulceria.id_teatro'
+    }
+  }, {
+    '$unwind': {
+      'path': '$dulceria.id_teatro'
+    }
+  }
+]);
+
+	}
+
+
 }
 
 export default ProductoDulceriaService;

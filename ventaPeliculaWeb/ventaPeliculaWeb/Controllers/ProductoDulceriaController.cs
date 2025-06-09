@@ -37,7 +37,7 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient("DefaultClient"))
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "ProductoDulceria/dulceria/" + id;
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Productos/dulceria/" + id;
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {

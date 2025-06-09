@@ -4,7 +4,7 @@ using ventaPeliculaWeb.Models;
 
 namespace ventaPeliculaWeb.Controllers
 {
-    [FiltroSesion]
+    
     public class DulceriaController : Controller
     {
         private readonly IHttpClientFactory _httpClient;
@@ -33,7 +33,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        [FiltroSesion]
         [FiltroAdmin]
         public IActionResult VerDulcerias()
         {
@@ -52,6 +52,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+        [FiltroSesion]
         [FiltroAdmin]
         public IActionResult CrearDulceria()
         {
@@ -73,7 +74,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        [FiltroSesion]
         [FiltroAdmin]
         [HttpPost]
         
@@ -97,7 +98,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        [FiltroSesion]
         [FiltroAdmin]
         public IActionResult EditarDulceria(string id)
         {
@@ -119,7 +120,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
-
+        [FiltroSesion]
         [FiltroAdmin]
         [HttpPost]
         public IActionResult EditarDulceria(DulceriaModel model)
@@ -143,6 +144,7 @@ namespace ventaPeliculaWeb.Controllers
 
             }
         }
+        [FiltroSesion]
         [FiltroAdmin]
         public IActionResult EliminarDulceria(string id)
         {

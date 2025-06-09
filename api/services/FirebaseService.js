@@ -79,6 +79,36 @@ class FirebaseService{
 			return signedUrl;	
 	}
 
+
+	//sube una factura
+	async UploadInvoiceDulceria(invoiceData, stream){
+	    const bucket = getStorage().bucket();
+		const fileName = `facturas/dulceria/factura-${invoiceData.name}-${new Date().toISOString()}.pdf`
+		const loadInvoice = bucket.file(fileName);
+
+		 await new Promise((resolve, reject) => {
+    const writeStream = loadInvoice.createWriteStream({
+      metadata: {
+        contentType: invoiceData.mimetype || 'application/pdf',
+      },
+      resumable: false,
+    });
+
+    stream.pipe(writeStream)
+      .on('finish', resolve)
+      .on('error', reject);
+  });
+
+		const [signedUrl] = await loadInvoice.getSignedUrl({
+			action: 'read',
+			expires: Date.now() + 30 * 24 * 60 * 60 * 1000, // un mes
+		});
+
+			return signedUrl;	
+	}
+
+
+
 }
 
 export default FirebaseService;
