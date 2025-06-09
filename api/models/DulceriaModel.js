@@ -1,9 +1,13 @@
 import mongoose from "mongoose";
 const DulceriaSchema = new mongoose.Schema({
+	nombre:{
+		type: String,
+		required: true,
+	},
 	id_teatro:
 	{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'teatros'
+		ref: 'teatro',
 	},
 	createdBy: 
 	{

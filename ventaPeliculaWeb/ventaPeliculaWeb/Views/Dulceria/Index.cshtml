@@ -1,0 +1,14 @@
+﻿@model List<DulceriaModel>
+
+@if (Model == null || !Model.Any())
+{
+    <p>No hay Dulcerias para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Dulcerias</h2>
+    @foreach(var dulceria in Model){
+        <h4>@dulceria.nombre </h4>
+        <a class="btn btn-success" asp-controller="ProductoDulceria" asp-action="Dulceria" asp-route-id="@dulceria._id">Ver productos</a>
+    }
+}

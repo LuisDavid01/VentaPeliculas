@@ -1,0 +1,51 @@
+﻿@model ProductoDulceriaModel
+
+<form asp-controller="ProductoDulceria" asp-action="EditarProductoDulceria" enctype="multipart/form-data">
+    <div class="row">
+
+        <h2 class="text-center">Editar Producto</h2>
+        <div class="form-group col-md-12 mb-4">
+            <label for="imagen">Imagen</label>
+            <input type="hidden" asp-for="imagen" />
+            <img src="@Model.imagen" alt="Cartelera de la película" class="img-fluid" />
+        </div>
+        <div class="form-group col-md-12 mb-4">
+            <input type="text" required class="form-control input-lg" asp-for="nombre" placeholder="nombre">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+
+            <textarea class="form-control  input-lg" asp-for="descripcion" placeholder="descripcion">
+            </textarea>
+        </div>
+        <div class="form-group col-md-12 mb-4">
+            <input type="number" required class="form-control input-lg" asp-for="precio" placeholder="precio">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+            <input type="number" required class="form-control input-lg" asp-for="cantidad" placeholder="cantidad">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+
+            <select asp-for="id_dulceria" required class="form-control input-lg">
+                @foreach (var Dulceria in Model.ListaDulcerias!)
+                {
+                        <option value="@Dulceria._id">@Dulceria.nombre ( @Dulceria.id_teatro?.nombre )</option>
+                }
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group col-md-12 mb-4">
+            <label for="imgFile">Imagen</label>
+            <input type="file" class="form-control input-lg" asp-for="imgFile" >
+        </div>
+        <input type="hidden" asp-for="_id" />
+        <div class="col-md-12">
+
+            <button type="submit" class="btn btn-primary btn-pill mb-4">Editar</button>
+
+
+        </div>
+    </div>
+</form>

@@ -12,9 +12,10 @@ initializeApp({
 
 class FirebaseService{
 	//sube una imagen
-	async UploadImage(img){
+	async UploadImage(img,folderName){
+		if(!img || !folderName) return;
 	    const bucket = getStorage().bucket();
-		const fileName = `movies/${img.originalname}`
+		const fileName = `${folderName}/${img.originalname}`
 		const loadImg = bucket.file(fileName);
 		//si la imagen existe lanzamos un error
 		const [exists] = await loadImg.exists();
@@ -31,18 +32,16 @@ class FirebaseService{
 		});
 
 
-
-		return signedUrl;
+		return { 
+			signedUrl,
+			fileName
+		};
 
 	}
 	//Elimina una imagen
 	async deleteImage(filepath){
 	    const bucket = getStorage().bucket();
-		let relativePath = filepath;
-		if (filepath.startsWith(`https://storage.googleapis.com/${bucket.name}/`)) {
-			relativePath = filepath.replace(`https://storage.googleapis.com/${bucket.name}/`, '');
-		}
-		const file = bucket.file(relativePath);
+		const file = bucket.file(filepath);
 		//si la imagen no existe devolvemos true porque no hay que eliminar nada
 		const [exists] = await file.exists();
 		if(!exists) return true;
@@ -79,6 +78,36 @@ class FirebaseService{
 
 			return signedUrl;	
 	}
+
+
+	//sube una factura
+	async UploadInvoiceDulceria(invoiceData, stream){
+	    const bucket = getStorage().bucket();
+		const fileName = `facturas/dulceria/factura-${invoiceData.name}-${new Date().toISOString()}.pdf`
+		const loadInvoice = bucket.file(fileName);
+
+		 await new Promise((resolve, reject) => {
+    const writeStream = loadInvoice.createWriteStream({
+      metadata: {
+        contentType: invoiceData.mimetype || 'application/pdf',
+      },
+      resumable: false,
+    });
+
+    stream.pipe(writeStream)
+      .on('finish', resolve)
+      .on('error', reject);
+  });
+
+		const [signedUrl] = await loadInvoice.getSignedUrl({
+			action: 'read',
+			expires: Date.now() + 30 * 24 * 60 * 60 * 1000, // un mes
+		});
+
+			return signedUrl;	
+	}
+
+
 
 }
 

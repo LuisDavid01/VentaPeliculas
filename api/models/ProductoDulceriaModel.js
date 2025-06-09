@@ -12,6 +12,10 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	storagePath:
+	{
+		type: String
+	},
 	descripcion:
 	{
 		type: String,
@@ -19,7 +23,7 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 	},
 	precio:
 	{
-		type: Number,
+		type: mongoose.Schema.Types.Number,
 		required: true,
 	},
 	cantidad:

@@ -1,0 +1,52 @@
+﻿@model List<DulceriaModel>
+
+@if (Model == null || !Model.Any())
+{
+    <a class="btn btn-success " asp-area="" asp-controller="Dulceria" asp-action="CrearDulceria"> Crear nueva dulceria</a>
+    <p>No hay Dulcerias para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de Dulcerias de peliculas</h2>
+    <a class="btn btn-success " asp-area="" asp-controller="Dulceria" asp-action="CrearDulceria"> Crear nueva dulceria</a>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre de la dulceria</th>
+                <th>cine</th>
+                <th>ubicacion</th>
+
+                <th></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var Dulceria in Model)
+            {
+                <tr>
+                    <td>@Dulceria.nombre</td>
+                    <td>@Dulceria.id_teatro?.nombre</td>
+
+                    <td>
+                        @Dulceria.id_teatro?.ubicacion
+                    </td>
+
+                    <td>
+
+                        <a class="btn btn-success " asp-area="" asp-controller="Dulceria" asp-route-id="@Dulceria._id" asp-action="EditarDulceria"> Editar Dulceria</a>
+                        <form asp-controller="Dulceria" asp-action="EliminarDulceria" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@Dulceria._id" />
+                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Dulceria?');">Eliminar Dulceria</button>
+                        </form>
+
+                    </td>
+
+
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+

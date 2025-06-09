@@ -25,6 +25,9 @@ const MoviesSchema = new mongoose.Schema({
     { 
         type: String,
     },
+	storagePath:{
+		type: String
+	},
 
 },	{ collection: 'movies' });
 

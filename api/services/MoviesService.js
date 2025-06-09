@@ -8,9 +8,10 @@ class MoviesService {
     */
     async createMovie(data) {
 
-	  const imgUrl = await firebaseService.UploadImage(data.file);
+	  const imgUrl = await firebaseService.UploadImage(data.file,'movies');
       const movie = new moviesModel(data);
-       movie.cartelera = imgUrl;
+       movie.cartelera = imgUrl.signedUrl;
+	   movie.storagePath = imgUrl.fileName;	
       await movie.save();
       return movie;
     }
@@ -35,11 +36,13 @@ class MoviesService {
 		//Si no hay un archivo de imagen,
 		//la imagen de la pelicula permanece
 		if(data.file != null){
-		let oldImage = data.cartelera;
+		const imgUrl = await firebaseService.UploadImage(data.file,'movies');
+		if(!imgUrl) return;
+		let oldImage = data.storagePath;
 		await firebaseService.deleteImage(oldImage);
+		data.cartelera = imgUrl.signedUrl;
+		data.storagePath = imgUrl.fileName;	
 		
-		const imgUrl = await firebaseService.UploadImage(data.file);
-		data.cartelera = imgUrl;
 		}
 		return await moviesModel.findByIdAndUpdate(id,data, {new: true});
     }

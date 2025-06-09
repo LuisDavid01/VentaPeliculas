@@ -8,12 +8,11 @@ class WebhookController {
 */
      async registerEvent(req, res) {
       try {
-		const response = await webhookService.registerEvent(req);
-		if(!response) return res.status(400).json({error: 'no found'})
-        return res.status(200);
+		await webhookService.registerEvent(req);
+        return res.status(200).send();
       } catch (err) {
 			console.log(err.message);
-        res.status(500);
+        res.status(500).send();
       }
     }
 

@@ -10,13 +10,13 @@ namespace ventaPeliculaWeb.Controllers
     {
         private readonly IHttpClientFactory _httpClient;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<HomeController> _logger;
+        
 
-        public HomeController(IConfiguration configuration, IHttpClientFactory httpClient, ILogger<HomeController> logger)
+        public HomeController(IConfiguration configuration, IHttpClientFactory httpClient)
         {
             _httpClient = httpClient;
             _configuration = configuration;
-            _logger = logger;
+            
         }
 
         public IActionResult Index()
