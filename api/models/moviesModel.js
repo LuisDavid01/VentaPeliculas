@@ -29,6 +29,10 @@ const MoviesSchema = new mongoose.Schema({
 		type: String
 	},
 
-},	{ collection: 'movies' });
+},
+{
+	timestamps: true,
+	strict: true,
+ collection: 'movies' });
 
 export default mongoose.model('movies', MoviesSchema)

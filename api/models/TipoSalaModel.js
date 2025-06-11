@@ -8,6 +8,10 @@ const TipoSalaSchema = new mongoose.Schema({
 
     },
     
-},{ collection: 'tipoSala' });
+},
+{
+	timestamps: true,
+	strict: true,
+ collection: 'tipoSala' });
 
 export default mongoose.model('tipoSala', TipoSalaSchema)

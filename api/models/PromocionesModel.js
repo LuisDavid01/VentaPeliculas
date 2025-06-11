@@ -25,9 +25,8 @@ const PromocionesSchema = new mongoose.Schema({
     
 },
 	{
-		timestamps: true
-	},
-
-{ collection: 'promociones' });
+	timestamps: true,
+	strict: true,
+	collection: 'promociones' });
 
 export default mongoose.model('promociones', PromocionesSchema)

@@ -1,4 +1,5 @@
 import PromocionesModel from "../models/PromocionesModel.js";
+import { config } from "../config/config.js";
 import Stripe from "stripe";
 import {isValidObjectId} from "mongoose";
 const stripe = new Stripe(config.STRIPE_SECRET, {

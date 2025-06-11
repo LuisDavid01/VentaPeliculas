@@ -22,7 +22,10 @@ const FacturaSchema = new mongoose.Schema(
 		default: {}
       },
   },
-  { collection: "factura", timestamps: true }
+  {
+	timestamps: true,
+	strict: true,
+collection: "factura"}
 );
 
 export default mongoose.model("Factura", FacturaSchema);

@@ -20,6 +20,10 @@ const SalasSchema = new mongoose.Schema({
     { 
         type: Number
     }
-},{ collection: 'salas' });
+},
+{
+	timestamps: true,
+	strict: true,
+ collection: 'salas' });
 
 export default mongoose.model('salas', SalasSchema)

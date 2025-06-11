@@ -2,16 +2,12 @@ import express from "express";
 //import https from 'https';
 //import fs from 'fs';
 //import { config } from "./config/config.js";
-
-//import { createServer } from "node:http";
 import connectDB from "./config/db.js";
 import cors from "cors";
 import logger from "morgan";
 import bodyParser from "body-parser";
 import compression from "compression";
 import rateLimit from "express-rate-limit";
-import mongoSanatizer from "express-mongo-sanitize";
-//imports router
 import movieRouter from "./routes/MoviesRoutes.js";
 import tipoSalaRouter from "./routes/TipoSalaRoutes.js"
 import salasRouter from "./routes/SalasRoutes.js";
@@ -44,7 +40,6 @@ app.use(helmet());
 //endpoint del webhook
 app.use(webhookRouter);
 app.use(bodyParser.json({ limit: "5mb" }));
-app.use(mongoSanatizer())
 app.set("trust proxy", 1);
 //inicializamos el rate limit
 app.use(rateLimit({
