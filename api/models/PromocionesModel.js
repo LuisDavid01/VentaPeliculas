@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const DulceriaSchema = new mongoose.Schema({
+const PromocionesSchema = new mongoose.Schema({
 	nombre:{
 		type: String,
 		required: true,
@@ -28,6 +28,6 @@ const DulceriaSchema = new mongoose.Schema({
 		timestamps: true
 	},
 
-{ collection: 'dulceria' });
+{ collection: 'promociones' });
 
-export default mongoose.model('dulceria', DulceriaSchema)
+export default mongoose.model('promociones', PromocionesSchema)
