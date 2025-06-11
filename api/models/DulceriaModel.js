@@ -17,10 +17,9 @@ const DulceriaSchema = new mongoose.Schema({
 	}
     
 },
-	{
-		timestamps: true
-	},
-
-{ collection: 'dulceria' });
+{
+	timestamps: true,
+	strict: true,
+ collection: 'dulceria' });
 
 export default mongoose.model('dulceria', DulceriaSchema)

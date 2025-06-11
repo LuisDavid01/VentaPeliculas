@@ -37,6 +37,7 @@ class WebhookService{
 
 			case 'checkout.session.completed':
 				const checkout = event.data.object;
+				checkout.user = req.user
 				if(checkout.metadata.tipo === 'dulceria'){
 					await this.DulceriaCheckout(checkout);
 			
@@ -61,8 +62,8 @@ class WebhookService{
 				const sesionid = checkout.metadata.sesionId		
 				//console.log("items de la sesion: " + JSON.stringify(lineItems))
 				const numAsientos = lineItems.data.map(item => item.description);
-				const reservarAsientos = sesionService.updateAsientos(sesionid, numAsientos);
-				if(reservarAsientos){
+				await sesionService.updateAsientos(sesionid, numAsientos);
+				
 					const emailService = new EmailService;
 
 					const content = {
@@ -77,6 +78,14 @@ class WebhookService{
 						invoiceUrl: 'porfavor comunicarse con cineFlex para obtener su factura'
 
 					}
+					const facturaDb = {
+						cliente: checkout.user.id,
+						precioTotal: checkout.amount_total / 100,
+						metodoPago: 'tarjeta',
+						items: content
+
+					}
+					await facturaService.createFactura(facturaDb)
 					console.log(JSON.stringify(content))
 
 					const pdfStream = facturaService.createInvoice(content);
@@ -93,7 +102,7 @@ class WebhookService{
 
 					const email = emailService.sendTickets(content)
 					if(email) console.log("se envio correctamente")
-				}
+				
 	}
 
 
@@ -128,6 +137,15 @@ class WebhookService{
 
 					}
 					console.log(JSON.stringify(content))
+						const facturaDb = {
+						cliente: checkout.user.id,
+						precioTotal: checkout.amount_total / 100,
+						metodoPago: 'tarjeta',
+						items: content
+
+					}
+					await facturaService.createFactura(facturaDb)
+
 
 					const pdfStream = facturaService.createInvoiceDulceria(content);
 

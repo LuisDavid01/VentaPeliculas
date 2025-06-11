@@ -33,6 +33,10 @@ const SesionSchema = new mongoose.Schema({
 
 
     
-},{ collection: 'sesion' });
+},
+{
+	timestamps: true,
+	strict: true,
+ collection: 'sesion' });
 
 export default mongoose.model('sesion', SesionSchema)

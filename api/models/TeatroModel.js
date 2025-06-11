@@ -13,6 +13,10 @@ const TeatroSchema = new mongoose.Schema({
         default: "Sin especificar",
     }
     
-},{ collection: 'teatro' });
+},
+{
+	timestamps: true,
+	strict: true,
+ collection: 'teatro' });
 
 export default mongoose.model('teatro', TeatroSchema)

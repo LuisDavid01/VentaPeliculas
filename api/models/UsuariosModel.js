@@ -28,18 +28,9 @@ const UsuariosSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    token: 
-    {
-        type: String,
-    },
-    refreshtoken: 
-    {
-        type: String,
-    },
 },
-	{
-		timestamps: true
-	
-	}
-	,{ collection: 'usuarios' });
+{
+	timestamps: true,
+	strict: true,
+collection: 'usuarios' });
 export default mongoose.model('usuarios', UsuariosSchema)

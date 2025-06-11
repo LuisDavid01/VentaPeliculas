@@ -46,10 +46,9 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 	}
     
 },
-	{
-		timestamps: true
-	},
-
-{ collection: 'productoDulceria' });
+{
+	timestamps: true,
+	strict: true,
+ collection: 'productoDulceria' });
 
 export default mongoose.model('productoDulceria', ProductoDulceriaSchema)
