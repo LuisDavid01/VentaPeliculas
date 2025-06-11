@@ -2,12 +2,13 @@ import mongoose from "mongoose";
 
 const FacturaSchema = new mongoose.Schema(
   {
-    nombreCliente: {
-      type: String,
+    cliente: {
+      type: mongoose.Schema.Types.ObjectId,
+	  ref:"usuarios",
       required: true,
     },
     precioTotal: {
-      type: mongoose.SchemaTypes.Decimal128, 
+      type: Number, 
 			required: true,
     },
     metodoPago: {
@@ -15,16 +16,11 @@ const FacturaSchema = new mongoose.Schema(
       required: true,
       enum: ["tarjeta", "Stripe"], 
 		},
-    items: [
+    items:
       {
-        asientosSeleccionados: [{ type: String }],
-        fechaInicio: { type: Date },
-        cantidad: { type: Number },
-        nombrePelicula: { type: String },
-        tipoSala: { type: String },
-        nombreCine: { type: String },
+		type: mongoose.Schema.Types.Mixed,
+		default: {}
       },
-    ],
   },
   { collection: "factura", timestamps: true }
 );

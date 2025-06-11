@@ -1,7 +1,27 @@
 import pdf from 'pdfkit';
 import { PassThrough } from 'stream'
+import FacturaModel from '../models/FacturaModel.js';
 class FacturaService{
 	
+
+/*
+    Crea una factura
+    */
+    async createFactura(data) {
+      
+		const factura = new FacturaModel(data);
+       
+      await factura.save();
+      return factura;
+    }
+
+	async getFacturas(){
+	
+		return await FacturaModel.find().populate('cliente');
+
+	}
+
+
 	createInvoice(content){
 		const productos = content.productos
 		const FONT_SIZES = {
