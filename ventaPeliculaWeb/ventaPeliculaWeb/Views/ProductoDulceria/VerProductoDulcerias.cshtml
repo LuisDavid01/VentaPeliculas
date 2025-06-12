@@ -1,5 +1,7 @@
 ﻿@model List<ProductoDulceriaModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-action="CrearProductoDulceria"> Crear nuevo Producto dulceria</a>
@@ -9,7 +11,7 @@ else
 {
     <h2 class="text-center">Consulta de Producto Dulcerias </h2>
     <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-action="CrearProductoDulceria"> Crear nuevo Producto dulceria</a>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Nombre de la dulceria</th>
@@ -36,9 +38,9 @@ else
                     <td>
 
                         <a class="btn btn-success " asp-area="" asp-controller="ProductoDulceria" asp-route-id="@Producto._id" asp-action="EditarProductoDulceria"> Editar  Producto Dulceria</a>
-                        <form asp-controller="ProductoDulceria" asp-action="EliminarProductoDulceria" method="post" style="display:inline;">
+                        <form asp-controller="ProductoDulceria" asp-action="EliminarProductoDulceria" method="post" style="display:inline;" class="delete-form">
                             <input type="hidden" name="id" value="@Producto._id" />
-                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Dulceria?');">Eliminar Producto Dulceria</button>
+                            <button type="submit" class="btn btn-warning" >Eliminar Producto Dulceria</button>
                         </form>
 
                     </td>

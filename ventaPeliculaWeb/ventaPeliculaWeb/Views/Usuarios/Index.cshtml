@@ -1,5 +1,7 @@
 ﻿@model List<UsuariosModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     <p>No hay Usuarios para mostrar.</p>
@@ -7,7 +9,7 @@
 else
 {
     <h2 class="text-center">Consulta de Usuarios</h2>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>nombre</th>
@@ -37,8 +39,8 @@ else
                         @if (Usuarios.rol != "Admin")
                         {
                             <a class="btn btn-success " asp-area="" asp-controller="Usuarios" asp-route-id="@Usuarios._id" asp-action="VerUsuario"> Editar usuario</a>
-                        
-                            <form asp-controller="Usuarios" asp-action="EliminarUsuario" method="post" style="display:inline;">
+
+                            <form asp-controller="Usuarios" asp-action="EliminarUsuario" method="post" style="display:inline;" class="delete-form">
                                 <input type="hidden" name="id" value="@Usuarios._id" />
                                 <button type="submit" class="btn btn-warning">Eliminar sala</button>
                             </form>

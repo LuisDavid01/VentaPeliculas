@@ -1,5 +1,7 @@
 ﻿@model List<TipoSalaModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     <p>No hay TipoSala para mostrar.</p>
@@ -8,7 +10,7 @@ else
 {
     <h2 class="text-center">Consulta de peliculas</h2>
     <a class="btn btn-success " asp-area="" asp-controller="TipoSala" asp-action="CrearTipoSala"> Crear pelicula</a>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>nombre</th>
@@ -26,9 +28,9 @@ else
                     <td>
 
                         <a class="btn btn-success " asp-area="" asp-controller="TipoSala" asp-route-id="@TipoSala._id" asp-action="VerTipoSala"> Editar tipo de sala</a>
-                        <form asp-controller="TipoSala" asp-action="EliminarTipoSala" method="post" style="display:inline;">
+                        <form asp-controller="TipoSala" asp-action="EliminarTipoSala" method="post" style="display:inline;" class="delete-form">
                             <input type="hidden" name="id" value="@TipoSala._id" />
-                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar esta pelicula?');">Eliminar tipo de sala</button>
+                            <button type="submit" class="btn btn-warning" >Eliminar tipo de sala</button>
                         </form>
 
                     </td>

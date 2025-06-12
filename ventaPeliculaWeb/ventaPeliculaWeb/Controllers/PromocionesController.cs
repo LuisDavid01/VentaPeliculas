@@ -19,7 +19,6 @@ namespace ventaPeliculaWeb.Controllers
             using (var http = _httpClient.CreateClient("DefaultClient"))
             {
                 var url = _configuration.GetSection("Variables:urlWebApi").Value + "Promociones";
-                http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
                 {
@@ -36,7 +35,7 @@ namespace ventaPeliculaWeb.Controllers
         {
             using (var http = _httpClient.CreateClient("DefaultClient"))
             {
-                var url = _configuration.GetSection("Variables:urlWebApi").Value + "Promociones";
+                var url = _configuration.GetSection("Variables:urlWebApi").Value + "admin/Promociones";
                 http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Request.Cookies["Token"]);
                 var response = http.GetAsync(url).Result;
                 if (response.IsSuccessStatusCode)
