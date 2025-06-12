@@ -12,7 +12,7 @@
 
     }
     public class Peliculas { 
-        public string? nombre { get; set; }
+        public MoviesModel? pelicula { get; set; }
         public List<Sala>? salas { get; set; }
     }
     public class SesionesPorPelicula

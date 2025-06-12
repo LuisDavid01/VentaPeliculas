@@ -20,6 +20,6 @@ const DulceriaSchema = new mongoose.Schema({
 {
 	timestamps: true,
 	strict: true,
- collection: 'dulceria' });
+ collection: 'dulcerias' });
 
-export default mongoose.model('dulceria', DulceriaSchema)
+export default mongoose.model('dulcerias', DulceriaSchema)
