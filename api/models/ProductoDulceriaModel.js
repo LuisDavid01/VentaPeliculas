@@ -35,7 +35,7 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 	dulceria:
 	{
 		type: mongoose.Schema.Types.ObjectId,
-		ref: 'dulceria',
+		ref: 'dulcerias',
 		required: true,
 	},
 	createdBy: 
@@ -49,6 +49,6 @@ const ProductoDulceriaSchema = new mongoose.Schema({
 {
 	timestamps: true,
 	strict: true,
- collection: 'productoDulceria' });
+ collection: 'productodulcerias' });
 
-export default mongoose.model('productoDulceria', ProductoDulceriaSchema)
+export default mongoose.model('productodulcerias', ProductoDulceriaSchema)

@@ -1,5 +1,7 @@
 ﻿@model List<SalasModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSalaNueva"> Crear sala nueva</a>
@@ -9,7 +11,7 @@ else
 {
     <h2 class="text-center">Consulta de salas de peliculas</h2>
     <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-action="CrearSalaNueva"> Crear sala nueva</a>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>nombre de la sala</th>
@@ -37,9 +39,9 @@ else
                     <td>
 
                         <a class="btn btn-success " asp-area="" asp-controller="Salas" asp-route-id="@Salas._id" asp-action="EditarSala"> Editar sala</a>
-                        <form asp-controller="Salas" asp-action="EliminarSala" method="post" style="display:inline;">
+                        <form asp-controller="Salas" asp-action="EliminarSala" method="post" style="display:inline;" class="delete-form">
                             <input type="hidden" name="id" value="@Salas._id" />
-                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Sala?');">Eliminar sala</button>
+                            <button type="submit" class="btn btn-warning">Eliminar sala</button>
                         </form>
 
                     </td>

@@ -354,7 +354,7 @@ class SesionService {
     '$group': {
       '_id': {
         'teatro': '$teatro.nombre', 
-        'pelicula': '$pelicula.titulo', 
+        'pelicula': '$pelicula', 
         'sala': '$sala.nombre'
       }, 
       'sesiones': {
@@ -383,7 +383,7 @@ class SesionService {
       '_id': '$_id.teatro', 
       'peliculas': {
         '$push': {
-          'nombre': '$_id.pelicula', 
+          'pelicula': '$_id.pelicula', 
           'salas': '$salas'
         }
       }
@@ -400,7 +400,7 @@ class SesionService {
     }
   }
 ]
-					);
+		);
 
 
 	}

@@ -4,7 +4,7 @@ function verifyToken(req, res, next){
 	//agarramos el header del request
 	const tokenHeader = req.headers['authorization'];
 		if (!tokenHeader || !tokenHeader.startsWith('Bearer ')) {
-			return res.status(400).json({error: 'El token no esta presente'})
+			return res.status(403).json({error: 'El token no esta presente'})
 		}
 
 	try{

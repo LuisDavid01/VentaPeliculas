@@ -9,6 +9,8 @@ body {
     flex-direction: column; /* Coloca los elementos en columna */
     min-height: 100%; /* Asegura que el body ocupe al menos la altura de html */
     margin: 0; /* Elimina márgenes predeterminados */
+    overflow-x: hidden;
+    overscroll-behavior: none;
 }
 
 main {

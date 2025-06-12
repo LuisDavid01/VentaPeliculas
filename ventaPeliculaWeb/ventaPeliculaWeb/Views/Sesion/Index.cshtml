@@ -1,5 +1,7 @@
 ﻿@model List<SesionModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-action="CrearSesionNueva"> Crear Sesion nueva</a>
@@ -9,7 +11,7 @@ else
 {
     <h2 class="text-center">Consulta de Sesions de peliculas</h2>
     <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-action="CrearSesionNueva"> Crear Sesion nueva</a>
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>fecha de inicio</th>
@@ -35,9 +37,9 @@ else
                     <td>
 
                         <a class="btn btn-success " asp-area="" asp-controller="Sesion" asp-route-id="@Sesions._id" asp-action="EditarSesion"> Editar Sesion</a>
-                        <form asp-controller="Sesion" asp-action="EliminarSesion" method="post" style="display:inline;">
+                        <form asp-controller="Sesion" asp-action="EliminarSesion" method="post" style="display:inline;" class="delete-form">
                             <input type="hidden" name="id" value="@Sesions._id" />
-                            <button type="submit" class="btn btn-warning" onclick="return confirm('¿Seguro que quieres eliminar este Sesion?');">Eliminar Sesion</button>
+                            <button type="submit" class="btn btn-warning" >Eliminar Sesion</button>
                         </form>
 
                     </td>

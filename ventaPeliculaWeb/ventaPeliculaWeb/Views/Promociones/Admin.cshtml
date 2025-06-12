@@ -1,8 +1,8 @@
 ﻿@model List<PromocionesModel>
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
 
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 
 @if (Model == null || !Model.Any())
 {
@@ -43,12 +43,3 @@ else
         </tbody>
     </table>
 }
-
-<!-- Scripts -->
-
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-        $(document).ready( function () {
-        $('#myTable').DataTable();
-    } );
-</script>

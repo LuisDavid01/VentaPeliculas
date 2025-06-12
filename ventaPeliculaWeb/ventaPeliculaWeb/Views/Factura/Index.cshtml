@@ -1,5 +1,7 @@
 ﻿@model List<FacturaModel>
-
+@{
+    Layout = "~/Views/Shared/_LayoutTables.cshtml";
+}
 @if (Model == null || !Model.Any())
 {
     
@@ -8,8 +10,8 @@
 else
 {
     <h2 class="text-center">Consulta de Facturas</h2>
-    
-    <table class="table">
+
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>Cliente</th>
