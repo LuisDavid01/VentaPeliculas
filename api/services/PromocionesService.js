@@ -20,8 +20,9 @@ class PromocionesService {
 	  const promoCode = await stripe.promotionCodes.create({
 			coupon: coupon.id,
 			code: promocion.code,
-			expires_at: Math.floo(promocion.expirationDate.getTime() / 1000)
+			expires_at: Math.floor(promocion.expirationDate.getTime() / 1000)
 		});
+		promocion.createdBy = data.user._id
 		promocion.couponId = coupon.id;
 		promocion.promoCodeId = promoCode;
 		await promocion.save();
@@ -31,13 +32,13 @@ class PromocionesService {
     Obtiene una promocion por id
     */
     async getPromocion(id){
-            return await PromocionesModel.findById(id);
+            return await PromocionesModel.findById(id).populate('createdBy');
     }
     /*
     Obtiene todos las promociones
     */
     async getPromociones(){
-        return await PromocionesModel.find();
+        return await PromocionesModel.find().populate('createdBy');
     }
 
     /*

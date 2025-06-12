@@ -1,0 +1,27 @@
+﻿@model PromocionesModel
+
+
+    <div class="row">
+
+        <h2 class="text-center">Promocion</h2>
+
+        <div class="form-group col-md-12 mb-4">
+        <input type="text" required class="form-control input-lg" asp-for="code" readonly placeholder="codigo de promocion">
+        </div>
+        <div class="form-group col-md-12 mb-4">
+
+        <textarea class="form-control  input-lg" asp-for="descripcion" readonly placeholder="descripcion">
+            </textarea>
+        </div>
+        <div class="form-group col-md-12 mb-4">
+        <input type="number" required class="form-control input-lg" readonly asp-for="discountPercentage" placeholder="descuento aplicado">
+        </div>
+
+        <div class="form-group col-md-12 mb-4">
+            <input type="datetime-local" readonly required class="form-control input-lg" asp-for="expirationDate" placeholder="Fecha de expiracion">
+        </div>
+
+
+        
+    </div>
+

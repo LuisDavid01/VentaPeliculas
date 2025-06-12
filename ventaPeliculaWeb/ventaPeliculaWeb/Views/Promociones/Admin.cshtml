@@ -1,0 +1,54 @@
+﻿@model List<PromocionesModel>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.datatables.net/2.3.2/js/dataTables.js"></script>
+<script src="https://cdn.datatables.net/2.3.2/js/dataTables.bootstrap5.js"></script>
+
+
+@if (Model == null || !Model.Any())
+{
+    <a class="btn btn-success" asp-area="" asp-controller="promociones" asp-action="CrearPromocion">Crear promoción</a>
+    <p>No hay promociones para mostrar.</p>
+}
+else
+{
+    <h2 class="text-center">Consulta de promociones</h2>
+    <a class="btn btn-success mb-3" asp-area="" asp-controller="promociones" asp-action="CrearPromocion">Crear promoción</a>
+    <table class="table table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th>Creado por</th>
+                <th>% Descuento</th>
+                <th>Descripción</th>
+                <th>Expiración</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var promocion in Model)
+            {
+                <tr>
+                    <td>@(promocion.createdBy?.nombre ?? "Anonimo")</td>
+                    <td>@promocion.discountPercentage %</td>
+                    <td>@promocion.descripcion</td>
+                    <td>@promocion.expirationDate</td>
+                    <td>
+                        <a class="btn btn-success btn-sm" asp-area="" asp-controller="promociones" asp-route-id="@promocion._id" asp-action="Detalle">Detalle</a>
+                        <form asp-controller="promociones" asp-action="EliminarPromocion" method="post" style="display:inline;" class="delete-form">
+                            <input type="hidden" name="id" value="@promocion._id" />
+                            <button type="submit" class="btn btn-warning btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<!-- Scripts -->
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+        $(document).ready( function () {
+        $('#myTable').DataTable();
+    } );
+</script>
