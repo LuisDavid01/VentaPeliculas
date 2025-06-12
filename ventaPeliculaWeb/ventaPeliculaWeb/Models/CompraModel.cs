@@ -8,5 +8,7 @@
 
         public List<string>? asientosSeleccionados { get; set; }
         public string? clientSecret { get; set;}
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
     }
 }

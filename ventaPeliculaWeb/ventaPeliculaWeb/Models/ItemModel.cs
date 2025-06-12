@@ -13,6 +13,8 @@
         public string? NombreCine { get; set; }
         public string? TipoSala { get; set; }
         public string? id_sesion { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
 
         public List<AsientosModel>? asientos { get; set; }
 

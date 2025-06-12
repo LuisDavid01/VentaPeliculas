@@ -8,7 +8,7 @@ class DulceriaController {
 */
     async createDulceria(req, res) {
       try {
-			
+				
 			const Dulceria = await dulceriaService.createDulceria(req.body);
 			if(!Dulceria) return res.status(400).json({error: 'Error al agragar la dulceria'})
 			return res.status(201).json(Dulceria);

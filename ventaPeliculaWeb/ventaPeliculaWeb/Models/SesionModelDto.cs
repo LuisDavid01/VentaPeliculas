@@ -13,5 +13,7 @@
 
         public List<SalasModel>? salas { get; set; }
         public List<MoviesModel>? peliculas { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
     }
 }

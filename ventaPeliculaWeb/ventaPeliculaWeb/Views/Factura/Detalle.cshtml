@@ -1,0 +1,44 @@
+﻿@model FacturaModel
+@using System.Text.Json
+<div class="row">
+
+
+    <p>@Model.cliente?.nombre</p>
+    <p>@Model.cliente?.username</p>
+    <p>@Model.cliente?.email</p>
+
+
+    <p>@Model.metodoPago</p>
+    <p>Items: </p>
+    @foreach (var (clave, valor) in Model.Items!)
+    {
+        if (valor is JsonElement jsonValue)
+        {
+            switch (jsonValue.ValueKind)
+            {
+                case JsonValueKind.Array:
+                    <p><strong>@clave:</strong></p>
+                    <ul>
+                        @foreach (var item in jsonValue.EnumerateArray())
+                        {
+                            <li>@item.ToString()</li>
+                        }
+                    </ul>
+                    break;
+                default:
+                    <p><strong>@clave:</strong> @jsonValue.ToString()</p>
+                    break;
+            }
+        }
+        else
+        {
+            <p><strong>@clave:</strong> @valor</p>
+        }
+    }
+    <p>@Model.createdAt</p>
+    <p>@Model.precioTotal</p>
+
+    
+
+   
+</div>

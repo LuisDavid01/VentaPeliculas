@@ -11,6 +11,7 @@ class CompraService{
 	// crea uan sesion de compra de stripe
 	// to do: crear sesion personalizada
 	async createCheckoutSession(data){
+		console.log(data.user)
 		if(!data.asientosSeleccionados || data.asientosSeleccionados.length <= 0) return;
 		const item = await sesionService.getSesion(data.id_sesion);
 		//console.log(JSON.stringify(item))
@@ -30,8 +31,9 @@ class CompraService{
 	allow_promotion_codes: true,
     mode: 'payment',
     ui_mode: 'embedded',
-    return_url: 'https://dotnet-test:7294/compra/success',
+    return_url: 'https://localhost:7294/compra/success',
 	 metadata: {
+	usuarioId: data.user._id,
     sesionId: data.id_sesion,
 	movieTitle: item.id_movie.titulo,
 	fecha: fecha.toLocaleDateString(),
@@ -82,6 +84,7 @@ class CompraService{
     ui_mode: 'embedded',
     return_url: 'https://localhost:7294/compra/success',
 	 metadata: {
+	usuarioId: data.user._id,
 	tipo: 'dulceria',
 	products: JSON.stringify(products.map(p => ({
     _id: p._id
