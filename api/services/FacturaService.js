@@ -20,10 +20,16 @@ class FacturaService{
 		return await FacturaModel.find().populate('cliente');
 
 	}
+	async getFactura(id){
+	
+		return await FacturaModel.findById(id).populate('cliente');
+
+	}
+
 
 
 	createInvoice(content){
-		const productos = content.productos
+		const asientos = content.asientos
 		const FONT_SIZES = {
 		TITLE: 20,
 		SUBTITLE: 14,
@@ -86,10 +92,10 @@ class FacturaService{
     .font('Bold')
     .text('Asientos:');
 		//mostrar productos adquiridos
-		productos.forEach((producto, index) => {
+		 asientos.forEach((asiento, index) => {
       doc
         .font('Regular')
-        .text(`- Asiento ${index + 1}: ${producto}`);
+        .text(`- Asiento ${index + 1}: ${asiento}`);
     });
 	doc
     .moveDown(0.5)
@@ -104,7 +110,7 @@ class FacturaService{
   doc
     .font('Bold')
     .fontSize(FONT_SIZES.SUBTITLE)
-    .text(`Total: ${content.precioAsiento * content.productos.length}`, { align: 'right' })
+    .text(`Total: ${content.precioAsiento * content.asientos.length}`, { align: 'right' })
     .moveDown(1);
 	
 		//footer

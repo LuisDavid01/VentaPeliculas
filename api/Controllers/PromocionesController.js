@@ -8,11 +8,15 @@ class PromocionesController {
 */
     async createPromocion(req, res) {
       try {
-			
-			const promociones = await promocionesService.createPromocion(req.body);
+			const body = {
+				...req.body,
+				user: req.user
+			}
+			const promociones = await promocionesService.createPromocion(body);
 			if(!promociones) return res.status(400).json({error: 'Error al agragar la Promocion'})
 			return res.status(201).json(promociones);
       } catch (err) {
+			console.log(err.message)
 			return res.status(500).json({ error: err.message });
       }
     }

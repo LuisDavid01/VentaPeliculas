@@ -10,6 +10,8 @@
         public UsuariosModel? createdBy { get; }
 
         public List<TeatroModel>? listaTeatros { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
 
     }
 }

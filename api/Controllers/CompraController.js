@@ -9,8 +9,12 @@ class CompraController {
 */
 	async createCheckoutSession(req, res){
 		try{
+			const body = {
+				...req.body,
+				user: req.user
 
-			const session = await compraService.createCheckoutSession(req.body);
+			}
+			const session = await compraService.createCheckoutSession(body);
 			return res.status(200).json({clientSecret: session});
 
 		}catch(err){
@@ -29,9 +33,12 @@ class CompraController {
 */
 	async createCheckoutSessionDulceria(req, res){
 		try{
+			const body = {
+				...req.body,
+				user: req.user
 
-			const session = await compraService.createCheckoutSessionDulceria(req.body);
-			console.log('secreto ', session)
+			}
+			const session = await compraService.createCheckoutSessionDulceria(body);
 			return res.status(200).json({clientSecret: session});
 
 		}catch(err){

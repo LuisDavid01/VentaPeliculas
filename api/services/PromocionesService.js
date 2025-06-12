@@ -14,14 +14,16 @@ class PromocionesService {
        
 			const coupon = await stripe.coupons.create({
 			duration: 'forever',
-			percent_off: promocion.DiscountPercentage
+			percent_off: promocion.discountPercentage
 
 		});
 	  const promoCode = await stripe.promotionCodes.create({
 			coupon: coupon.id,
-			code: promocion.code
+			code: promocion.code,
+			expires_at: Math.floor(promocion.expirationDate.getTime() / 1000)
 		});
-		promocion.CouponId = coupon.id;
+		promocion.createdBy = data.user._id
+		promocion.couponId = coupon.id;
 		promocion.promoCodeId = promoCode;
 		await promocion.save();
       return promocion;
@@ -30,13 +32,13 @@ class PromocionesService {
     Obtiene una promocion por id
     */
     async getPromocion(id){
-            return await PromocionesModel.findById(id);
+            return await PromocionesModel.findById(id).populate('createdBy');
     }
     /*
     Obtiene todos las promociones
     */
     async getPromociones(){
-        return await PromocionesModel.find();
+        return await PromocionesModel.find().populate('createdBy');
     }
 
     /*
@@ -48,7 +50,7 @@ class PromocionesService {
 		const deletedPromocion = await PromocionesModel.findByIdAndDelete(id);
 		if(!deletedPromocion) return false
 
-		const deleted = await stripe.coupons.del(deletedPromocion.CouponId);
+		const deleted = await stripe.coupons.del(deletedPromocion.couponId);
 		const promotionCode = await stripe.promotionCodes.update(
 			deletedPromocion.promoCodeId,{ active: false });
 		return true;

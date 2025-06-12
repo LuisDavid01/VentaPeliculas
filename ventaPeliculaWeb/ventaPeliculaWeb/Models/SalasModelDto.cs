@@ -11,5 +11,7 @@
         public List<TipoSalaModel>? ListaTipo_sala { get; set; }
         public List<MoviesModel>? ListaMovie { get; set; }
         public List<TeatroModel>? ListaTeatro { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
     }
 }

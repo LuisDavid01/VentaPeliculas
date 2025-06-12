@@ -9,5 +9,7 @@ namespace ventaPeliculaWeb.Models
         public TeatroModel? teatro { get; set; }
         public TipoSalaModel? tipoSala { get; set; }
         public decimal? precioAsiento { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
     }
 }

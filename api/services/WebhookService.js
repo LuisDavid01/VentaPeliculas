@@ -37,7 +37,8 @@ class WebhookService{
 
 			case 'checkout.session.completed':
 				const checkout = event.data.object;
-				checkout.user = req.user
+				console.log('usuario: ',checkout.metadata.usuarioId ?? 'no hay usuario')
+				//checkout.user = req.user
 				if(checkout.metadata.tipo === 'dulceria'){
 					await this.DulceriaCheckout(checkout);
 			
@@ -78,15 +79,7 @@ class WebhookService{
 						invoiceUrl: 'porfavor comunicarse con cineFlex para obtener su factura'
 
 					}
-					const facturaDb = {
-						cliente: checkout.user.id,
-						precioTotal: checkout.amount_total / 100,
-						metodoPago: 'tarjeta',
-						items: content
-
-					}
-					await facturaService.createFactura(facturaDb)
-					console.log(JSON.stringify(content))
+										console.log(JSON.stringify(content))
 
 					const pdfStream = facturaService.createInvoice(content);
 
@@ -98,6 +91,15 @@ class WebhookService{
 					const invoiceDownloadUrl = await firebaseService.UploadInvoice(invoiceData, pdfStream);
 					console.log(invoiceDownloadUrl)
 					content.invoiceUrl = invoiceDownloadUrl
+						const facturaDb = {
+						cliente: checkout.metadata.usuarioId,
+						precioTotal: checkout.amount_total / 100,
+						metodoPago: 'tarjeta',
+						items: content
+
+					}
+
+					await facturaService.createFactura(facturaDb)
 
 
 					const email = emailService.sendTickets(content)
@@ -123,7 +125,6 @@ class WebhookService{
 
 			await productoDulceriaService.updateQuantityProductoDulceriaById(productosId[i], productos[i].cantidad);
 			}
-		console.log(JSON.stringify(productos))
 				if(productos){
 					const emailService = new EmailService;
 
@@ -136,16 +137,7 @@ class WebhookService{
 						invoiceUrl: 'porfavor comunicarse con cineFlex para obtener su factura'
 
 					}
-					console.log(JSON.stringify(content))
-						const facturaDb = {
-						cliente: checkout.user.id,
-						precioTotal: checkout.amount_total / 100,
-						metodoPago: 'tarjeta',
-						items: content
-
-					}
-					await facturaService.createFactura(facturaDb)
-
+					console.log(JSON.stringify(content))	
 
 					const pdfStream = facturaService.createInvoiceDulceria(content);
 
@@ -157,6 +149,16 @@ class WebhookService{
 					const invoiceDownloadUrl = await firebaseService.UploadInvoiceDulceria(invoiceData, pdfStream);
 					console.log(invoiceDownloadUrl)
 					content.invoiceUrl = invoiceDownloadUrl
+					const facturaDb = {
+						cliente: checkout.metadata.usuarioId,
+						precioTotal: checkout.amount_total / 100,
+						metodoPago: 'tarjeta',
+						items: content
+
+					}
+
+					await facturaService.createFactura(facturaDb)
+
 
 
 					const email = emailService.sendDulceriaInvoice(content)

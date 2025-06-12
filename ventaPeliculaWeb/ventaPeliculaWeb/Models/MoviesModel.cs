@@ -11,6 +11,8 @@ namespace ventaPeliculaWeb.Models
         public string? productora { get; set; } 
         public string? cartelera { get; set; }
         public IFormFile? imgFile { get; set; }
+        public DateTime? createdAt { get; set; }
+        public DateTime? updatedAt { get; set; }
 
     }
 }

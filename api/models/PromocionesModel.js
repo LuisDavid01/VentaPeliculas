@@ -1,21 +1,20 @@
 import mongoose from "mongoose";
 const PromocionesSchema = new mongoose.Schema({
-	nombre:{
-		type: String,
-		required: true,
-	},
 	code:
 	{
 		type: String,
+		unique: true,
 		required: true
 	},
-	DiscountPercentage:
+	descripcion: { type: String },
+	expirationDate: { type: Date },
+	discountPercentage:
 	{
 		type: Number,
 		required: true
 	},
 	promoCodeId:{ type: String},
-	CouponId: {type: String },
+	couponId: {type: String },
 	createdBy: 
 	{
 		type: mongoose.Schema.Types.ObjectId,
