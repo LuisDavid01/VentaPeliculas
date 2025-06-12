@@ -4,6 +4,8 @@
 ***
 
 ## Introduccion
+DISCLAIMER: **Este proyecto fue hecho con fines educativos**, **NADA** de este proyecto es **utlizado para generar un centimo** y le doy el credito a los creadores originales de los assets (como imagenes) que son utlizados en este proyecto.
+</br>
 ![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png)
 ![Firebase](https://img.icons8.com/color/48/000000/firebase.png)
 ![Stripe](https://img.icons8.com/color/48/000000/stripe.png)
@@ -13,15 +15,17 @@
 ![Docker](https://img.icons8.com/color/48/000000/docker.png)
 # Instalacion
 ### Docker (Instalacion recomendada)
-1. Dentro de la raiz del proyecto se necesita el archivo .env con todas las variables de entorno para los contenedores.
-   Los contenedores ya tienen todas las configuraciones para correr el proyecto unicamente se necesitan las diferentes variables de entorno que necesitan
-   las diferentes dependencias,
-   se necesita un certificado ssl dentro de la carpeta ventaPeliculaWeb con el nombre "certificate.pfx"
-2. Correr todos los contenedores
-   ```bash
-   docker compose up
-   ```
-3. listo! 😁👌
+1. Clonar el repositorio
+```bash
+git clone https://github.com/LuisDavid01/VentaPeliculas
+```
+2. Dentro de la raiz del proyecto se necesita un archivo .env con todas las variables de entorno para los contenedores. Puede consultar el archivo .env.example como referencia
+3. se necesita un certificado ssl dentro de la carpeta ventaPeliculaWeb con el nombre "certificate.pfx", si desea correrlo de manera local.
+4. Correr todos los contenedores.
+```bash
+docker compose up
+```
+5. listo! 😁👌
 ### Instalacion general
 1. Se requiere de tener Node v22.13 instalado en su equipo Puede descargarlo desde [la pagina oficial](https://nodejs.org/en) o bien desde cualquier [Node Version Manager](https://github.com/nvm-sh/nvm) que prefiera.
 
@@ -34,7 +38,6 @@ git clone https://github.com/LuisDavid01/VentaPeliculas
 4. Revisar el archivo .env.example para ver como configurar las variables de entorno para correr el api
 
 5. Instalacion de dependecias del api
-   Alternativamente para desarrollo, usar npm run dev aunque aveces causa problemas.
   ```bash
   cd api
   npm install
