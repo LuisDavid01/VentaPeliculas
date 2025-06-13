@@ -41,8 +41,8 @@ namespace ventaPeliculaWeb.Controllers
                 if (response.IsSuccessStatusCode)
                 {
                     var result = response.Content.ReadFromJsonAsync<List<PromocionesModel>>().Result;
-                    ViewData["Exito"] = TempData["Exito"]?.ToString();
-                    ViewData["Error"] = TempData["Error"]?.ToString();
+                    ViewData["Exito"] = TempData["Exito"]?.ToString() ?? null;
+                    ViewData["Error"] = TempData["Error"]?.ToString()?? null;
                     return View(result);
                 }
                 return View();
@@ -84,7 +84,7 @@ namespace ventaPeliculaWeb.Controllers
                 var response = http.PostAsJsonAsync(url,model).Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    var result = response.Content.ReadFromJsonAsync<List<PromocionesModel>>().Result;
+                    
 
                     TempData["Exito"] = "Se creo correctamente";
                     return RedirectToAction("Admin", "Promociones");

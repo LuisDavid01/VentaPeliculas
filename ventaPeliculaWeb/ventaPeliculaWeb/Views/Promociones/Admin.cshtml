@@ -32,8 +32,8 @@ else
                     <td>@promocion.descripcion</td>
                     <td>@promocion.expirationDate</td>
                     <td>
-                        <a class="btn btn-success btn-sm" asp-area="" asp-controller="promociones" asp-route-id="@promocion._id" asp-action="Detalle">Detalle</a>
-                        <form asp-controller="promociones" asp-action="EliminarPromocion" method="post" style="display:inline;" class="delete-form">
+                        <a class="btn btn-success btn-sm" asp-area="" asp-controller="Promociones" asp-route-id="@promocion._id" asp-action="Detalle">Detalle</a>
+                        <form asp-controller="Promociones" asp-action="EliminarPromocion" method="post" style="display:inline;" class="delete-form">
                             <input type="hidden" name="id" value="@promocion._id" />
                             <button type="submit" class="btn btn-warning btn-sm">Eliminar</button>
                         </form>

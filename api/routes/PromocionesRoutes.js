@@ -5,7 +5,7 @@ const promocionesController = new PromocionesController;
 const Router = express.Router();
 
 
-Router.post('/Promociones',promocionesController.createPromocion);
+Router.post('/Promociones',verifyToken,validateRol('Admin'),promocionesController.createPromocion);
 Router.get('/Promociones',promocionesController.getPromociones);
 Router.get('/Admin/Promociones' ,verifyToken, validateRol('Admin'),promocionesController.getPromociones);
 Router.get('/Promociones/:id', promocionesController.getPromocion);
