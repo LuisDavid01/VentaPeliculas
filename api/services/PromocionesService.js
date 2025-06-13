@@ -22,9 +22,10 @@ class PromocionesService {
 			code: promocion.code,
 			expires_at: Math.floor(promocion.expirationDate.getTime() / 1000)
 		});
+		console.log('user', data.user._id);
 		promocion.createdBy = data.user._id
 		promocion.couponId = coupon.id;
-		promocion.promoCodeId = promoCode;
+		promocion.promoCodeId = promoCode.id;
 		await promocion.save();
       return promocion;
     }
