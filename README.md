@@ -11,7 +11,9 @@ DISCLAIMER: **Este proyecto fue hecho con fines educativos**, **NADA** de este p
 ![Express](https://img.icons8.com/ios/50/000000/express-js.png)
 ![Golang](https://img.icons8.com/color/48/000000/golang.png)
 ![MongoDB](https://img.icons8.com/color/48/000000/mongodb.png)
+![Postgresql](https://img.icons8.com/?size=48&id=Pv4IGT0TSpt8&format=png&color=000000)
 ![Firebase](https://img.icons8.com/color/48/000000/firebase.png)
+![Supabase](https://img.icons8.com/color/48/000000/supabase.png)
 ![Stripe](https://img.icons8.com/color/48/000000/stripe.png)
 ![Docker](https://img.icons8.com/color/48/000000/docker.png)
 # Instalacion
